@@ -136,9 +136,9 @@ return [
 
     'providers' => [
 
-        /*
-         * Laravel Framework Service Providers...
-         */
+            /*
+             * Laravel Framework Service Providers...
+             */
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -162,16 +162,16 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        /*
-         * Package Service Providers...
-         */
-
-        /*
-         * Application Service Providers...
-         */
+            /*
+             * Package Service Providers...
+             */
+        Mews\Captcha\CaptchaServiceProvider::class,
+            /*
+             * Application Service Providers...
+             */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+            // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\PermissionsServiceProvider::class,
@@ -232,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ],
 
 ];

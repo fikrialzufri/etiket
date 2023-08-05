@@ -70,4 +70,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha' => captcha_img()]);
+    }
 }

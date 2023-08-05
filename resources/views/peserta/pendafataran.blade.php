@@ -41,12 +41,12 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 m-auto">
                     <div class="authentication-form mx-auto">
                         <div class="logo-centered">
-                            <a href="#"><img width="50%" src="{{ asset('KPU_Logo.png') }}" alt="Borneo Corner"></a>
+                            <a href="#"><img width="20%" src="{{ asset('KPU_Logo.png') }}" alt="Borneo Corner"></a>
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div>
-                                <label for="nama">Nama Peserta</label>
+                                <span style="font-size: 9pt" for="nama">Nama Peserta</span>
                             </div>
                             <div class="form-group">
                                 <input id="nama" type="text" placeholder="Nama Peserta"
@@ -61,7 +61,7 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="email">Email Peserta</label>
+                                <span style="font-size: 9pt" for="email">Email Peserta</span>
                             </div>
                             <div class="form-group">
                                 <input id="email" type="email" placeholder="etiket@gmail.com"
@@ -75,7 +75,7 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="no_hp">No Hp Peserta</label>
+                                <span for="no_hp" style="font-size: 9pt">No Hp Peserta</span>
                             </div>
                             <div class="form-group">
                                 <input id="no_hp" type="text" placeholder="0813 1313 1313"
@@ -89,7 +89,7 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="bidang_id">Pilih KPU Provinsi / Kabupaten</label>
+                                <span style="font-size: 9pt" for="bidang_id">Pilih KPU Provinsi / Kota / Kabupaten</span>
                             </div>
                             <div class="form-group">
                                 <select class="form-control select2" id="bidang_id" required oninvalid="this.setCustomValidity('Pilih Kantor KPU Anda, Kantor KPU Anda harus dipilih')" oninput="this.setCustomValidity('')">
@@ -106,13 +106,39 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="jabatan_id">Pilih Jabatan</label>
+                                <span style="font-size: 9pt" for="jabatan_id">Pilih Jabatan</span>
                             </div>
                             <div class="form-group">
                                 <select class="form-control select2" id="jabatan_id" required oninvalid="this.setCustomValidity('Pilih Jabatan, Jabatan harus dipilih')" oninput="this.setCustomValidity('')">
                                     {{-- <option value="">Pilih Jabtan</option> --}}
                                 </select>
                                 @error('jabatan_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group text-center ">
+                                <span style="font-size: 9pt" for="captcha" class="col-md-4 col-form-label text-md-right">Captcha</span>
+                                <div class="col-md-12 captcha">
+                                    <span>{!! captcha_img() !!}</span>
+                                </div>
+
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-danger" class="reload" id="reload" style="font-size: 9pt">
+                                    &#x21bb; Reload Captcha
+                                </button>
+                            </div>
+                            <div>
+                                <span for="captcha" style="font-size: 9pt">Masukan Captcha</span>
+                            </div>
+                            <div class="form-group">
+                                <input id="captcha" type="text" placeholder="" class="form-control @error('captcha') is-invalid @enderror"
+                                    name="captcha" value="{{ old('captcha') }}"
+                                    oninvalid="this.setCustomValidity('Captcha tidak Boleh kosong')"
+                                    oninput="this.setCustomValidity('')" required autocomplete="captcha">
+                                @error('captcha')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -171,6 +197,15 @@
         });
         $("#jabatan_id").select2();
         $("#jabatan_id").on("change", function(e) {
+        });
+        $('#reload').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'reload-captcha',
+                success: function (data) {
+                    $(".captcha span").html(data.captcha);
+                }
+            });
         });
     </script>
     {{-- Firebase --}}
