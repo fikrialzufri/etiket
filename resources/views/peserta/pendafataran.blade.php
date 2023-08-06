@@ -42,6 +42,8 @@
                     <div class="authentication-form mx-auto">
                         <div class="logo-centered">
                             <a href="#"><img width="20%" src="{{ asset('KPU_Logo.png') }}" alt="Borneo Corner"></a>
+                            <h6>Rapat Kordinasi <br> Pemetaan Potensi Permaslahan Hukum</h6>
+                            <h6>Banjarbaru <br> 21 - 23 Agustus 2023</h6>
                         </div>
                         @if (session('message'))
                         <div class="row pt-10" id="#success-alert">
@@ -120,7 +122,12 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control select2" id="jabatan_id" name="jabatan_id" required oninvalid="this.setCustomValidity('Pilih Jabatan, Jabatan harus dipilih')" oninput="this.setCustomValidity('')">
-                                    {{-- <option value="">Pilih Jabtan</option> --}}
+                                    @foreach ($dataJabatanOld as $bidang)
+
+                                    <option value="{{ $bidang->id }}" id="bidang_{{ $bidang->id }}" data-max="{{ $bidang->jumlah_max }}"
+                                        data-min="{{ $bidang->jumlah_min }}" {{ old('bidang_id')==$bidang->id ? "selected" : '' }}>{{ $bidang->nama}}
+                                    </option>
+                                    @endforeach
                                 </select>
                                 @error('jabatan_id')
                                 <span class="invalid-feedback" role="alert">

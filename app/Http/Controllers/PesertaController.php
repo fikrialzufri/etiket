@@ -91,9 +91,18 @@ class PesertaController extends Controller
 
     function pendaftaran()
     {
-        $dataBidang = Bidang::orderBy('nama')->get();
-        $dataJabatan = Jabatan::orderBy('nama')->get();
-        return view('peserta.pendafataran', compact('dataBidang', 'dataJabatan'));
+        $dataBidang = Bidang::orderBy('kode')->get();
+        $dataJabatan = Jabatan::orderBy('created_at', 'desc')->get();
+        $dataJabatanOld = [];
+        if (old('bidang_id')) {
+            $bidang_id = old('bidang_id');
+            $bidang = Bidang::find($bidang_id);
+            if ($bidang) {
+                $dataJabatanOld = Jabatan::where('jumlah_min', '>=', $bidang->jumlah_min)->orderBy('created_at', 'desc')->get();
+            }
+        }
+
+        return view('peserta.pendafataran', compact('dataBidang', 'dataJabatan', 'dataJabatanOld'));
     }
     function simpanpendaftaran(Request $request)
     {
