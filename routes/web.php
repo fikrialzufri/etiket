@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', BerandaController::class)->name('beranda');
 
 Route::get('/pendaftaran', [PesertaController::class, 'pendaftaran'])->name('peserta.pendaftaran');
+Route::post('/simpanpendaftaran', [PesertaController::class, 'simpanpendaftaran'])->name('simpan.pendaftaran');
+
 Route::get('/reload-captcha', [RegisterController::class, 'reloadCaptcha']);
 Auth::routes();
 
@@ -56,7 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('bidang', BidangController::class);
         Route::resource('jabatan', JabatanController::class);
 
-        // pendaftara
+        // pendaftaran
+
 
 
 

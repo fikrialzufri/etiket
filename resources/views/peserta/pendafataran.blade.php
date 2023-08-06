@@ -43,7 +43,17 @@
                         <div class="logo-centered">
                             <a href="#"><img width="20%" src="{{ asset('KPU_Logo.png') }}" alt="Borneo Corner"></a>
                         </div>
-                        <form method="POST" action="{{ route('login') }}">
+                        @if (session('message'))
+                        <div class="row pt-10" id="#success-alert">
+                            <div class="container-fluid alert alert-{{ session('Class') }} alert-dismissible fade show" role="alert">
+                                {{ session('message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        @endif
+                        <form method="POST" action="{{ route('simpan.pendaftaran') }}">
                             @csrf
                             <div>
                                 <span style="font-size: 9pt" for="nama">Nama Peserta</span>
@@ -89,14 +99,14 @@
                                 @enderror
                             </div>
                             <div>
-                                <span style="font-size: 9pt" for="bidang_id">Pilih KPU Provinsi / Kota / Kabupaten</span>
+                                <span style="font-size: 9pt" for="bidang_id">Pilih KPU Provinsi / Kota / Kabupaten </span>
                             </div>
                             <div class="form-group">
-                                <select class="form-control select2" id="bidang_id" required oninvalid="this.setCustomValidity('Pilih Kantor KPU Anda, Kantor KPU Anda harus dipilih')" oninput="this.setCustomValidity('')">
+                                <select class="form-control select2" id="bidang_id" name="bidang_id" required oninvalid="this.setCustomValidity('Pilih Kantor KPU Anda, Kantor KPU Anda harus dipilih')" oninput="this.setCustomValidity('')">
                                     <option value="">Pilih KPU</option>
                                     @foreach ($dataBidang as $bidang)
 
-                                    <option value="{{ $bidang->id }}" id="bidang_{{ $bidang->id }}" data-max="{{ $bidang->jumlah_max }}" data-min="{{ $bidang->jumlah_min }}">{{ $bidang->nama}}</option>
+                                    <option value="{{ $bidang->id }}" id="bidang_{{ $bidang->id }}" data-max="{{ $bidang->jumlah_max }}" data-min="{{ $bidang->jumlah_min }}" {{ old('bidang_id') == $bidang->id ? "selected" : '' }}>{{ $bidang->nama}}</option>
                                     @endforeach
                                 </select>
                                 @error('bidang_id')
@@ -109,7 +119,7 @@
                                 <span style="font-size: 9pt" for="jabatan_id">Pilih Jabatan</span>
                             </div>
                             <div class="form-group">
-                                <select class="form-control select2" id="jabatan_id" required oninvalid="this.setCustomValidity('Pilih Jabatan, Jabatan harus dipilih')" oninput="this.setCustomValidity('')">
+                                <select class="form-control select2" id="jabatan_id" name="jabatan_id" required oninvalid="this.setCustomValidity('Pilih Jabatan, Jabatan harus dipilih')" oninput="this.setCustomValidity('')">
                                     {{-- <option value="">Pilih Jabtan</option> --}}
                                 </select>
                                 @error('jabatan_id')
@@ -135,7 +145,7 @@
                             </div>
                             <div class="form-group">
                                 <input id="captcha" type="text" placeholder="" class="form-control @error('captcha') is-invalid @enderror"
-                                    name="captcha" value="{{ old('captcha') }}"
+                                    name="captcha" value=""
                                     oninvalid="this.setCustomValidity('Captcha tidak Boleh kosong')"
                                     oninput="this.setCustomValidity('')" required autocomplete="captcha">
                                 @error('captcha')
@@ -162,6 +172,7 @@
     <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
+
     <script>
         const dataJabatan = @json($dataJabatan);
         console.log(dataJabatan);
@@ -198,6 +209,10 @@
         $("#jabatan_id").select2();
         $("#jabatan_id").on("change", function(e) {
         });
+
+    </script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+    <script>
         $('#reload').click(function () {
             $.ajax({
                 type: 'GET',
@@ -208,23 +223,7 @@
             });
         });
     </script>
-    {{-- Firebase --}}
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import {
-            initializeApp
-        } from "https://www.gstatic.com/firebasejs/9.6.9/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-    </script>
 </body>
 
 </html>

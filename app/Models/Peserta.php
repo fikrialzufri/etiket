@@ -12,7 +12,7 @@ class Peserta extends Model
 {
     use HasFactory, UsesUuid, SoftDeletes;
 
-    protected $table = 'event';
+    protected $table = 'peserta';
     protected $guarded = ['id'];
     protected $fillable = [
         'nama',
@@ -20,6 +20,8 @@ class Peserta extends Model
         'slug',
         'no_hp',
         'email',
+        'bidang_id',
+        'jabatan_id',
         'tanggal_lahir',
         'alamat',
         'status',

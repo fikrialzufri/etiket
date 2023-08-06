@@ -7,6 +7,7 @@ use App\Models\Jabatan;
 use App\Models\Peserta;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Request;
+use DB;
 
 class PesertaController extends Controller
 {
@@ -93,6 +94,54 @@ class PesertaController extends Controller
         $dataBidang = Bidang::orderBy('nama')->get();
         $dataJabatan = Jabatan::orderBy('nama')->get();
         return view('peserta.pendafataran', compact('dataBidang', 'dataJabatan'));
+    }
+    function simpanpendaftaran(Request $request)
+    {
+        $messages = [
+            'required' => ':attribute tidak boleh kosong',
+            'unique' => ':attribute tidak boleh sama',
+        ];
+
+        // return $request;
+
+        $this->validate(request(), [
+            'nama' => 'required|unique:peserta',
+            'email' => 'required|unique:peserta',
+            'no_hp' => 'required|unique:peserta',
+            'bidang_id' => 'required',
+            'jabatan_id' => 'required',
+            'captcha' => 'required|captcha',
+        ], $messages);
+
+        $checkBidang = Bidang::find($request->bidang_id);
+
+        $countBidangPeserta = Peserta::where('bidang_id', $request->bidang_id)->count();
+
+        if ($checkBidang->jumlah_max == $countBidangPeserta) {
+            return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' sudah melebihi limit')->with('Class', 'danger');
+        }
+        DB::beginTransaction();
+        try {
+            $data = $this->model();
+            $data->nama = $request->nama;
+            $data->email = $request->email;
+            $data->no_hp = $request->no_hp;
+            $data->bidang_id = $request->bidang_id;
+            $data->jabatan_id = $request->jabatan_id;
+            $data->save();
+
+            // kirim ke email
+            DB::commit();
+            return redirect()->route("peserta.pendaftaran")->with('message', "Peserta Berhasil Mendaftar silahkan check email atau hubungi admin acara")->with('Class', 'success');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route("peserta.pendaftaran")->with('message', "Jaringan Bermasalah hubungi admin acara")->with('Class', 'warning');
+        }
+
+
+
+
+
     }
 
     public function model()
