@@ -30,10 +30,6 @@ class BidangController extends Controller
                 'alias' => 'Nama Bidang',
             ],
             [
-                'name' => 'jumlah_min',
-                'alias' => 'Jumlah Minimal Peserta',
-            ],
-            [
                 'name' => 'jumlah_max',
                 'alias' => 'Jumlah Maksimal Peserta',
             ],
@@ -71,12 +67,6 @@ class BidangController extends Controller
                 'input' => 'text',
                 'alias' => 'Nama Bidang',
                 'validasi' => ['required', 'unique'],
-            ],
-            [
-                'name' => 'jumlah_min',
-                'input' => 'nominal',
-                'alias' => 'Jumlah Minimal Perserta',
-                'validasi' => ['required'],
             ],
             [
                 'name' => 'jumlah_max',

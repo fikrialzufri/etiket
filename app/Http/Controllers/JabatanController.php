@@ -58,18 +58,7 @@ class JabatanController extends Controller
                 'alias' => 'Nama Jabatan',
                 'validasi' => ['required', 'unique', 'min:1'],
             ],
-            [
-                'name' => 'jumlah_min',
-                'input' => 'nominal',
-                'alias' => 'Jumlah Minimal Perserta',
-                'validasi' => ['required'],
-            ],
-            [
-                'name' => 'jumlah_max',
-                'input' => 'nominal',
-                'alias' => 'Jumlah Maksimal Perserta',
-                'validasi' => ['required'],
-            ],
+
         ];
     }
 

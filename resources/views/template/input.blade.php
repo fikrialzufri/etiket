@@ -103,7 +103,14 @@
                             <label>
                                 <input type="radio" name="{{ $item['name'] }}" value="{{ $val }}"
                                     @if ($store == 'update') {{ $data[$item['name']] == $val ? 'checked' : '' }} @else {{ old($item['name']) == $val ? 'checked' : '' }} {{ $item['default'] == $val ? 'checked' : '' }} @endif>
-                                <i class="helper"></i>{{ ucfirst($val) }}
+                                <i class="helper"></i>
+                                @if($val == "1")
+                                Aktif
+                                @elseif ($val == "0")
+                                Tidak Aktif
+                                @else
+                                {{ ucfirst($val) }}
+                                @endif
                             </label>
                         </div>
                     @endforeach
@@ -302,7 +309,13 @@
                     <label>
                         <input type="radio" name="{{ $item['name'] }}" value="{{ $val }}"
                             @if ($store == 'update') {{ $data[$item['name']] == $val ? 'checked' : '' }} @else {{ old($item['name']) == $val ? 'checked' : '' }} {{ $item['default'] == $val ? 'checked' : '' }} @endif>
-                        <i class="helper"></i>{{ ucfirst($val) }}
+                        <i class="helper"></i>@if($val == "1")
+                        Aktif
+                        @elseif ($val == "0")
+                        Tidak Aktif
+                        @else
+                        {{ ucfirst($val) }}
+                        @endif
                     </label>
                 </div>
             @endforeach

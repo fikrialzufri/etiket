@@ -32,6 +32,30 @@ class Peserta extends Model
         $this->attributes['nama'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    public function hasBidang()
+    {
+        return $this->hasOne(Bidang::class, 'id', 'bidang_id');
+    }
+
+    public function getBidangAttribute()
+    {
+        if ($this->hasBidang) {
+            return $this->hasBidang->nama;
+        }
+    }
+
+    public function hasJabatan()
+    {
+        return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+    }
+
+    public function getJabatanAttribute()
+    {
+        if ($this->hasJabatan) {
+            return $this->hasJabatan->nama;
+        }
+    }
     public static function boot()
     {
         parent::boot();

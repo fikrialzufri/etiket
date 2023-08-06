@@ -33,6 +33,22 @@ class PesertaController extends Controller
                 'name' => 'nama',
                 'alias' => 'Nama Peserta',
             ],
+            [
+                'name' => 'no_hp',
+                'alias' => 'No HP Peserta',
+            ],
+            [
+                'name' => 'email',
+                'alias' => 'Email Peserta',
+            ],
+            [
+                'name' => 'bidang',
+                'alias' => 'KPU',
+            ],
+            [
+                'name' => 'jabatan',
+                'alias' => 'Jabatan',
+            ],
         ];
     }
     public function configSearch()
@@ -49,6 +65,20 @@ class PesertaController extends Controller
                 'input' => 'text',
                 'alias' => 'Nama Peserta',
                 'value' => null
+            ],
+            [
+                'name' => 'bidang_id',
+                'input' => 'combo',
+                'alias' => 'KPU',
+                'value' => $this->combobox('Bidang', null, null, null, 'nama'),
+                'validasi' => ['required']
+            ],
+            [
+                'name' => 'jabatan_id',
+                'input' => 'combo',
+                'alias' => 'Jabatan',
+                'value' => $this->combobox('Jabatan', null, null, null, 'nama'),
+                'validasi' => ['required']
             ],
         ];
     }
@@ -74,17 +104,39 @@ class PesertaController extends Controller
                 'alias' => 'Email Peserta',
                 'validasi' => ['required', 'unique', 'min:1'],
             ],
+            // [
+            //     'name' => 'tanggal_lahir',
+            //     'input' => 'date',
+            //     'alias' => 'Tanggal Lahir Peserta',
+            //     'validasi' => null,
+            // ],
             [
-                'name' => 'tanggal_lahir',
-                'input' => 'date',
-                'alias' => 'Tanggal Lahir Peserta',
-                'validasi' => null,
+                'name' => 'bidang_id',
+                'input' => 'combo',
+                'alias' => 'KPU',
+                'value' => $this->combobox('Bidang', null, null, null, 'nama'),
+                'validasi' => ['required']
+            ],
+            [
+                'name' => 'jabatan_id',
+                'input' => 'combo',
+                'alias' => 'Jabatan',
+                'value' => $this->combobox('Jabatan', null, null, null, 'nama'),
+                'validasi' => ['required']
             ],
             [
                 'name' => 'alamat',
                 'input' => 'textarea',
                 'alias' => 'Alamat Peserta',
                 'validasi' => null,
+            ],
+            [
+                'name' => 'status',
+                'input' => 'radio',
+                'alias' => 'Status',
+                'value' => ['0', '1'],
+                'default' => '0',
+                'multiple' => true,
             ],
         ];
     }
