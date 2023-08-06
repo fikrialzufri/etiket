@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>@yield('title', '') | Sandi Cargo</title>
+    <title>@yield('title', '') | Borneo Corner</title>
     <!-- initiate head with meta tags, css and script -->
     @include('template.head')
     <style>

@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Login | Sandi Cargo</title>
+    <title>Login | Borneo Corner</title>
     <meta name="description" content="">
-    <meta name="keywords" content="Sandi Cargo">
+    <meta name="keywords" content="Borneo Corner">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" href="{{ asset('favicon.jpg') }}" type="image/x-icon" />
@@ -40,7 +40,7 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 m-auto">
                     <div class="authentication-form mx-auto">
                         <div class="logo-centered">
-                            <a href="#"><img width="90%" src="{{ asset('img/logo.png') }}" alt="Sandi Cargo"></a>
+                            <a href="#"><img width="90%" src="{{ asset('img/logo.png') }}" alt="Borneo Corner"></a>
                         </div>
                         <p>Welcome back! </p>
                         <form method="POST" action="{{ route('login') }}">
