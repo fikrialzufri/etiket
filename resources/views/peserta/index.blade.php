@@ -227,14 +227,25 @@
     <div class="row">
         @forelse ($cetak as $item)
         <div class="col-6 col-md-6 col-lg-6 text-center">
-            <span style="font-size: 12pt">{{ $item->nama }}</span>
-            <br>
-            <span style="font-size: 12pt">{{ $item->jabatan }}</span>
-            <br>
-            <span style="font-size: 12pt">{{ $item->bidang }}</span>
-            <br>
-            <span style="font-size: 12pt">{{ $item->KPU }}</span>
-            {{ QrCode::size(100)->generate($item->kode) }}<br>
+            <div >
+
+                <span style="width: 14rem;  font-size: 12pt">{{ $item->nama }}</span>
+
+            </div>
+            <div >
+
+                <span style="width: 14rem;  font-size: 12pt">{{ $item->jabatan }}</span>
+
+            </div>
+            <div style="display: flex;justify-content: center;">
+
+
+                <p class="" style="width: 14rem; font-size: 12pt">{{ $item->bidang }}</p>
+            </div>
+            <div class="">
+
+                {{ QrCode::size(100)->generate($item->kode) }}<br>
+            </div>
             <br>
         </div>
 

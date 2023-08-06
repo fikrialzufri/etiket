@@ -74,6 +74,14 @@ class BidangController extends Controller
                 'alias' => 'Jumlah Maksimal Perserta',
                 'validasi' => ['required'],
             ],
+            [
+                'name' => 'status',
+                'input' => 'radio',
+                'alias' => 'Status',
+                'value' => ['0', '1'],
+                'default' => '0',
+                'multiple' => true,
+            ],
         ];
     }
 
