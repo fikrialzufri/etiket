@@ -188,7 +188,7 @@
             let listJabatanArray = '';
 
             listJabatan = Object.fromEntries(filterJabatan);
-            listJabatanArray += `<option value="">Pilih Jenis Pembayaran</option>`;
+            listJabatanArray += `<option value=""> Pilih Jabatan</option>`;
 
             $.each( listJabatan, function( key, value ) {
                 listJabatanArray += `
