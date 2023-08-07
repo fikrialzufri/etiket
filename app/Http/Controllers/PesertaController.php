@@ -10,6 +10,7 @@ use App\Traits\CrudTrait;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class PesertaController extends Controller
 {
@@ -297,14 +298,12 @@ class PesertaController extends Controller
 
                     $value = $value['value'];
                     $query->$field($value);
-
                 } else {
                     $field = $value['field'];
 
                     $query->$field();
                     // $query->$queryScope();
                 }
-
             }
         }
 
@@ -417,11 +416,6 @@ class PesertaController extends Controller
             DB::rollback();
             return redirect()->route("peserta.pendaftaran")->with('message', "Email anda tidak valid / Jaringan Bermasalah silahkan hubungi admin acara")->with('Class', 'alert');
         }
-
-
-
-
-
     }
 
     function kirimemail(Peserta $peserta)
@@ -433,7 +427,6 @@ class PesertaController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route("peserta.pendaftaran")->with('message', "Email / Jaringan Bermasalah hubungi support Borneo Corner")->with('Class', 'alert');
         }
-
     }
 
     public function model()
