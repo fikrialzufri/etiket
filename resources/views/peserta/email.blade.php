@@ -14,12 +14,14 @@
     <p>{{ $mailInfo->nama }}</p>
     <p>{{ $mailInfo->jabatan }}</p>
     <p>{{ $mailInfo->bidang }}</p>
-
+    {{ QrCode::size(100)->generate($mailInfo->kode) }}
+    {!! QrCode::size(100)->generate($mailInfo->kode) !!}
+    <br>
     @php
     $qrCodeAsPng = QrCode::format('png')->size(200)->generate($mailInfo->kode);
     @endphp
     <img src="{{ $message->embedData($qrCodeAsPng, $mailInfo->kode .'.png') }}" />
-    <br>
+
 
 </body>
 
