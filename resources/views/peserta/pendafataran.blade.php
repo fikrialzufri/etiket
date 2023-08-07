@@ -155,9 +155,10 @@
                                     name="captcha" value=""
                                     oninvalid="this.setCustomValidity('Captcha tidak Boleh kosong')"
                                     oninput="this.setCustomValidity('')" required autocomplete="captcha">
+                                <i class="ik ik-paperclip"></i>
                                 @error('captcha')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    <strong>Captcha Salah</strong>
                                 </span>
                                 @enderror
                             </div>

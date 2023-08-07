@@ -10,8 +10,8 @@ use Illuminate\Queue\SerializesModels;
 class SendTiket extends Mailable
 {
     use Queueable, SerializesModels;
-    protected $mailData;
 
+    protected $mailData;
     /**
      * Create a new message instance.
      *
@@ -29,20 +29,8 @@ class SendTiket extends Mailable
      */
     public function build()
     {
-        $address = $this->mailData->to;
-        $subject = $this->mailData->subject;
-        $name = $this->mailData->name;
-        $cc = $this->mailData->cc;
-        $bcc = $this->mailData->bcc;
-        $from = $this->mailData->from;
-        return $this->view('peserta.email')
-            ->text('peserta.email_text')
-            ->from($from, $name)
-            ->cc($address, $name)
-            ->bcc($cc, $name)
-            ->replyTo($from, $name)
-            ->subject($subject)
-            ->with(['mailMessage' => $this->mailData]);
-        ;
+        $mailInfo = $this->mailData;
+        return $this->view('peserta.email', compact('mailInfo'))->subject($mailInfo->subject);
+
     }
 }
