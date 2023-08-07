@@ -7,15 +7,17 @@
 </head>
 
 <body>
+
     <p>Terimakasih, Anda sudah terdaftar menjadi peserta Rakor pemetaan potensi permasalahan hukum di Kalimantan Selatan
     Gelombang ke I <br>
     Banjarmasin 21-23 Agustus 2023</p>
     <br>
+    <img width="20%" src="{{ asset('KPU_Logo.png') }}" alt="Borneo Corner" />
+    <br>
+
     <p>{{ $mailInfo->nama }}</p>
     <p>{{ $mailInfo->jabatan }}</p>
     <p>{{ $mailInfo->bidang }}</p>
-    {{ QrCode::size(100)->generate($mailInfo->kode) }}
-    {!! QrCode::size(100)->generate($mailInfo->kode) !!}
     <br>
     @php
     $qrCodeAsPng = QrCode::format('png')->size(200)->generate($mailInfo->kode);

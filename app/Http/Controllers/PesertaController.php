@@ -403,7 +403,6 @@ class PesertaController extends Controller
             $data->save();
 
             // kirim ke email
-            DB::commit();
 
 
 
@@ -411,16 +410,29 @@ class PesertaController extends Controller
                 ->send(new SendTiket($data));
 
             // return $request;
+            DB::commit();
 
             return redirect()->route("peserta.pendaftaran")->with('message', "Peserta Berhasil Mendaftar silahkan check email (spam email) atau hubungi admin acara")->with('Class', 'success');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route("peserta.pendaftaran")->with('message', "Email / Jaringan Bermasalah hubungi admin acara")->with('Class', 'warning');
+            return redirect()->route("peserta.pendaftaran")->with('message', "Email anda tidak valid / Jaringan Bermasalah silahkan hubungi admin acara")->with('Class', 'alert');
         }
 
 
 
 
+
+    }
+
+    function kirimemail(Peserta $peserta)
+    {
+        try {
+            Mail::to($peserta->email)
+                ->send(new SendTiket($peserta));
+            return redirect()->route("peserta.index")->with('message', "Berhasil kirim ulang email")->with('Class', 'success');
+        } catch (\Throwable $th) {
+            return redirect()->route("peserta.pendaftaran")->with('message', "Email / Jaringan Bermasalah hubungi support Borneo Corner")->with('Class', 'alert');
+        }
 
     }
 

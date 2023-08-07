@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('bidang', BidangController::class);
         Route::resource('jabatan', JabatanController::class);
 
+        Route::get('/kirimemail/{peserta}', [PesertaController::class, 'kirimemail'])->name('peserta.kirimemail');
         // pendaftaran
 
 

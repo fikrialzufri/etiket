@@ -166,9 +166,9 @@
                                         <td>{{ $item[$header['name']] }}</td>
                                     @endif
                                 @endforeach
-                                @if ($edit != 'false'|| $hapus != 'false')
-                                    @canany(['edit-' . $route, 'delete-' . $route])
-                                    <td class="text-center">
+                                <td class="text-center">
+                                    @if ($edit != 'false'|| $hapus != 'false')
+                                        @canany(['edit-' . $route, 'delete-' . $route])
                                         @if (isset($button))
                                         @foreach ($button as $key => $val)
                                         @include('template.button')
@@ -198,9 +198,13 @@
                                         </button>
                                         @endcan
                                         @endif
+
+                                        @endcan
+                                        @endif
+                                        <a href="{{ route('peserta.kirimemail', $item->id) }}" class="btn btn-sm btn-primary text-light" data-toggle="tooltip"
+                                            data-placement="top" title="Kirim Email">
+                                            <i class="nav-icon fas fa-envelope"></i> Kirim Email</a>
                                     </td>
-                                    @endcan
-                                @endif
                             </tr>
                             @empty
                             <tr>
