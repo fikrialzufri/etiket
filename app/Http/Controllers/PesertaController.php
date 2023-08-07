@@ -352,7 +352,7 @@ class PesertaController extends Controller
     }
     function pendaftaran()
     {
-        $dataBidang = Bidang::orderBy('kode')->get();
+        $dataBidang = Bidang::whereStatus(1)->orderBy('kode')->get();
         $dataJabatan = Jabatan::orderBy('created_at', 'desc')->get();
         $dataJabatanOld = [];
         if (old('bidang_id')) {
