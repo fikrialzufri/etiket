@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendTiket;
 use App\Models\Bidang;
 use App\Models\Jabatan;
 use App\Models\Peserta;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Mail;
 
 class PesertaController extends Controller
 {
@@ -375,34 +377,52 @@ class PesertaController extends Controller
         // return $request;
 
         $this->validate(request(), [
-            'nama' => 'required|unique:peserta',
-            'email' => 'required|unique:peserta',
-            'no_hp' => 'required|unique:peserta',
+            // 'nama' => 'required|unique:peserta',
+            // 'email' => 'required|unique:peserta',
+            // 'no_hp' => 'required|unique:peserta',
             'bidang_id' => 'required',
             'jabatan_id' => 'required',
-            'captcha' => 'required|captcha',
+            // 'captcha' => 'required|captcha',
         ], $messages);
 
         $checkBidang = Bidang::find($request->bidang_id);
 
         $countBidangPeserta = Peserta::where('bidang_id', $request->bidang_id)->count();
 
-        if ($checkBidang->jumlah_max == $countBidangPeserta) {
-            return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' sudah melebihi limit')->with('Class', 'danger');
-        }
+        // if ($checkBidang->jumlah_max == $countBidangPeserta) {
+        //     return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' sudah melebihi limit')->with('Class', 'danger');
+        // }
         DB::beginTransaction();
-        try {
-            $data = $this->model();
-            $data->nama = $request->nama;
-            $data->email = $request->email;
-            $data->no_hp = $request->no_hp;
-            $data->bidang_id = $request->bidang_id;
-            $data->jabatan_id = $request->jabatan_id;
-            $data->save();
+        $data = $this->model();
+        $data->nama = $request->nama;
+        $data->email = $request->email;
+        $data->no_hp = $request->no_hp;
+        $data->bidang_id = $request->bidang_id;
+        $data->jabatan_id = $request->jabatan_id;
+        $data->save();
 
-            // kirim ke email
-            DB::commit();
-            return redirect()->route("peserta.pendaftaran")->with('message', "Peserta Berhasil Mendaftar silahkan check email atau hubungi admin acara")->with('Class', 'success');
+        // kirim ke email
+        DB::commit();
+
+        $mailInfo = new \stdClass();
+        $mailInfo->recieverName = $request->nama;
+        $mailInfo->sender = "Team E-Tiket";
+        $mailInfo->senderCompany = "BC";
+        $mailInfo->from = "etiket@bornecorner.com";
+        $mailInfo->to = $data->email;
+        $mailInfo->kode = $data->kode;
+        $mailInfo->subject = "Etiket - Rakor Pemetaan Potensi Permasalahan Hukum Gelombang ke I";
+        $mailInfo->title = "Etiket - Rakor Pemetaan Potensi Permasalahan Hukum Gelombang ke I";
+        $mailInfo->name = "Mike";
+        $mailInfo->cc = "etiket@borneocorner.com";
+        $mailInfo->bcc = "etiket@borneocorner.com";
+
+        Mail::to($data->email)
+            ->send(new SendTiket($mailInfo));
+
+
+        return redirect()->route("peserta.pendaftaran")->with('message', "Peserta Berhasil Mendaftar silahkan check email (spam email) atau hubungi admin acara")->with('Class', 'success');
+        try {
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route("peserta.pendaftaran")->with('message', "Jaringan Bermasalah hubungi admin acara")->with('Class', 'warning');
