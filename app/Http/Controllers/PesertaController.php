@@ -377,9 +377,9 @@ class PesertaController extends Controller
         // return $request;
 
         $this->validate(request(), [
-            'nama' => 'required|unique:peserta',
-            'email' => 'required|unique:peserta',
-            'no_hp' => 'required|unique:peserta',
+            'nama' => 'required|unique:peserta,nama,NULL,id,deleted_at,NULL',
+            'email' => 'required|unique:peserta,email,NULL,id,deleted_at,NULL',
+            'no_hp' => 'required|unique:peserta,no_hp,NULL,id,deleted_at,NULL',
             'bidang_id' => 'required',
             'jabatan_id' => 'required',
             'captcha' => 'required|captcha',
