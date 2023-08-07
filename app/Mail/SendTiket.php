@@ -30,7 +30,7 @@ class SendTiket extends Mailable
     public function build()
     {
         $mailInfo = $this->mailData;
-        return $this->view('peserta.email', compact('mailInfo'))->subject($mailInfo->subject);
+        return $this->view('peserta.email', compact('mailInfo'))->subject("Etiket - Rapat Kordinasi Pemetaan Potensi Permaslahan Hukum");
 
     }
 }
