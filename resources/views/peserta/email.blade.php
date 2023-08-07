@@ -12,7 +12,7 @@
     Gelombang ke I <br>
     Banjarmasin 21-23 Agustus 2023</p>
     <br>
-    <img width="20%" src="{{ asset('KPU_Logo.png') }}" alt="Borneo Corner" />
+    <img width="10%" src="{{ asset('img/headeremailtiket.png') }}" alt="Borneo Corner" />
     <br>
 
     <p>{{ $mailInfo->nama }}</p>
