@@ -20,6 +20,8 @@ class CreateEntrancesTable extends Migration
             $table->string('peserta_id')->references('id')->on('peserta');
             $table->string('event_id')->references('id')->on('event');
             $table->string('kota_id')->references('id')->on('kota');
+             $table->string('bidang_id')->references('id')->on('bidang');
+            $table->string('jabatan_id')->references('id')->on('jabatan');
 
             $table->softDeletes();
             $table->timestamps();
