@@ -53,6 +53,14 @@ class PesertaController extends Controller
                 'name' => 'jabatan',
                 'alias' => 'Jabatan',
             ],
+            [
+                'name' => 'hadir',
+                'alias' => 'Kehadiran',
+            ],
+            [
+                'name' => 'catatan',
+                'alias' => 'Catatan Tidak Hadir',
+            ],
         ];
     }
     public function configSearch()
@@ -315,7 +323,7 @@ class PesertaController extends Controller
                 $data = $query->orderBy($this->sort);
             }
         }
-        $cetak = $query->get();
+        $cetak = $this->model()::where('hadir','hadir')->get();
         //mendapilkan data model setelah query pencarian
         if ($paginate) {
             $data = $query->paginate($paginate);
@@ -392,21 +400,23 @@ class PesertaController extends Controller
             return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' sudah melebihi limit')->with('Class', 'danger');
         }
         DB::beginTransaction();
+        $data = $this->model();
+        $data->nama = $request->nama;
+        $data->email = $request->email;
+        $data->no_hp = $request->no_hp;
+        $data->hadir = $request->hadir;
+        $data->catatan = $request->catatan;
+        $data->bidang_id = $request->bidang_id;
+        $data->jabatan_id = $request->jabatan_id;
+        $data->save();
+
+        // kirim ke email
+
+
+
+        Mail::to($data->email)
+            ->send(new SendTiket($data));
         try {
-            $data = $this->model();
-            $data->nama = $request->nama;
-            $data->email = $request->email;
-            $data->no_hp = $request->no_hp;
-            $data->bidang_id = $request->bidang_id;
-            $data->jabatan_id = $request->jabatan_id;
-            $data->save();
-
-            // kirim ke email
-
-
-
-            Mail::to($data->email)
-                ->send(new SendTiket($data));
 
             // return $request;
             DB::commit();
@@ -414,7 +424,7 @@ class PesertaController extends Controller
             return redirect()->route("peserta.pendaftaran")->with('message', "Peserta Berhasil Mendaftar silahkan check email (spam email) atau hubungi admin acara")->with('Class', 'success');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route("peserta.pendaftaran")->with('message', "Email anda tidak valid / Jaringan Bermasalah silahkan hubungi admin acara")->with('Class', 'alert');
+            return redirect()->route("peserta.pendaftaran")->with('message', "Email anda tidak valid / Jaringan Bermasalah silahkan hubungi admin acara")->with('Class', 'danger');
         }
     }
 
@@ -425,7 +435,7 @@ class PesertaController extends Controller
                 ->send(new SendTiket($peserta));
             return redirect()->route("peserta.index")->with('message', "Berhasil kirim ulang email")->with('Class', 'success');
         } catch (\Throwable $th) {
-            return redirect()->route("peserta.pendaftaran")->with('message', "Email / Jaringan Bermasalah hubungi support Borneo Corner")->with('Class', 'alert');
+            return redirect()->route("peserta.pendaftaran")->with('message', "Email / Jaringan Bermasalah hubungi support Borneo Corner")->with('Class', 'danger');
         }
     }
 

@@ -25,6 +25,8 @@ class CreatePesertasTable extends Migration
             $table->integer('status')->default(0);
             $table->string('bidang_id')->references('id')->on('bidang');
             $table->string('jabatan_id')->references('id')->on('jabatan');
+            $table->enum('hadir', ['Hadir', 'Tidak Hadir'])->default('Tidak Hadir');
+            $table->text('catatan')->nullable();
             $table->softDeletes();
 
             $table->timestamps();

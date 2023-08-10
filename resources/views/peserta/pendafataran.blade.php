@@ -135,6 +135,38 @@
                                 </span>
                                 @enderror
                             </div>
+                             <div class="form-radio">
+
+                                    <div class="radio radiofill radio-inline">
+                                        <label>
+                                            <input type="radio" class="checkbox" name="hadir" value="Hadir" checked="checked">
+                                            <i class="helper"></i>Akan Hadir
+                                        </label>
+                                    </div>
+                                    <div class="radio radiofill radio-inline">
+                                        <label>
+                                            <input type="radio"  class="checkbox"  name="hadir"  value="Tidak Hadir">
+                                            <i class="helper"></i>Tidak Dapat Hadir
+                                        </label>
+                                    </div>
+
+                            </div>
+                            <div class="catatan_kehadiran" style="display: none">
+
+                                <div>
+                                    <span style="font-size: 9pt" for="catatan">Alasan Tidak Hadir </span>
+                                </div>
+                                 <div class="form-group">
+                                    <textarea name="catatan" id="catatan" cols="30" rows="40"  class="form-control "></textarea>
+
+                                    <i class="ik ik-pencil"></i>
+                                    @error('catatan')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="form-group text-center ">
                                 <span style="font-size: 9pt" for="captcha" class="col-md-4 col-form-label text-md-right">Captcha</span>
                                 <div class="col-md-12 captcha">
@@ -217,6 +249,20 @@
         $("#jabatan_id").select2();
         $("#jabatan_id").on("change", function(e) {
         });
+
+        // $(".checkbox").change(function() {
+        //     console.log($("input[type='checkbox']").val());
+
+        // });
+    $(document).on('change', 'input[class="checkbox"]', function (e) {
+        let kehadrian  = $(this).val();
+        if (kehadrian == 'Tidak Hadir') {
+            $(".catatan_kehadiran").css("display","");
+        }else{
+            $('#catatan').val('')
+            $(".catatan_kehadiran").css("display","none");
+        }
+    });
 
     </script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}

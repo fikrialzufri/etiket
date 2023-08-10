@@ -24,6 +24,8 @@ class Peserta extends Model
         'jabatan_id',
         'tanggal_lahir',
         'alamat',
+        'hadir',
+        'catatan',
         'status',
     ];
 
