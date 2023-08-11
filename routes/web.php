@@ -13,6 +13,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\MonitorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,8 @@ Route::get('/reload-captcha', [RegisterController::class, 'reloadCaptcha']);
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('monitor',MonitorController::class);
+
     Route::prefix('admin')->group(function () {
 
         Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -62,6 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
         // pendaftaran
 
 
+        // monitor
 
 
         // ubah profile

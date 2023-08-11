@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Str;
+use Carbon\Carbon;
 
 class Event extends Model
 {
@@ -27,11 +28,25 @@ class Event extends Model
         'status',
 
     ];
+    // protected $casts = [
+    //     // 'started_at' => 'datetime',
+    //     // 'due_time' => 'datetime',
+    //     'tanggal_mulai'=> 'datetime',
+    //     'tanggal_selesai'=> 'datetime',
+    // ];
 
     public function setNamaAttribute($value)
     {
         $this->attributes['nama'] = $value;
         $this->attributes['slug'] = Str::slug($value);
+    }
+
+    public function getStartAttribute()  {
+        return tanggal_indonesia_waktu($this->tanggal_mulai);
+    }
+
+    public function getEndAttribute()  {
+        return tanggal_indonesia_waktu($this->tanggal_selesai);
     }
 
     public static function boot()

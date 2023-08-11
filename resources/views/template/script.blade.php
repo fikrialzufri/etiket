@@ -2,8 +2,8 @@
 {{-- <script src="{{ asset('js/datatables.js') }}"></script> --}}
 <script src="{{ asset('all.js') }}"></script>
 <script src="{{ asset('plugins/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>
-<script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
-<script src="{{ asset('js/datatables.js') }}"></script>
+{{-- <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/datatables.js') }}"></script> --}}
 <!-- Stack array for including inline js or scripts -->
 <script>
     $("#success-alert").fadeTo(15000, 500).slideUp(15000, function() {

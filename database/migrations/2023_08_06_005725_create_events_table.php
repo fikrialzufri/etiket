@@ -17,6 +17,7 @@ class CreateEventsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('nama');
             $table->string('slug');
+            $table->string('kode');
             $table->dateTime('tanggal_mulai');
             $table->dateTime('tanggal_selesai');
             $table->string('diskripsi')->nullable();

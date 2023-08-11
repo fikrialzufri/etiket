@@ -143,6 +143,7 @@
                     @if ($store == 'update') value="{{ $data[$item['name']] }}" @else value="{{ old($item['name']) }}" @endif>
             @endif
             @if ($item['input'] == 'datetimepicker')
+
                 <input type="text" id="{{ $item['name'] }}" name="{{ $item['name'] }}"
                     @if ($store == 'update') value="{{ $data[$item['name']] }}" @else value="{{ old($item['name']) }}" @endif
                     class="form-control {{ $errors->has($item['name']) ? 'is-invalid' : '' }}">
@@ -390,11 +391,6 @@
         @endif
 
     @endif
-    @if ($item['input'] == 'datetimepicker')
-        <input type="text" id="{{ $item['name'] }}" name="{{ $item['name'] }}"
-            @if ($store == 'update') value="{{ $data[$item['name']] }}" @else value="{{ old($item['name']) }}" @endif
-            class="form-control {{ $errors->has($item['name']) ? 'is-invalid' : '' }}">
-    @endif
     @if ($item['input'] == 'year')
         <input type="text" id="{{ $item['name'] }}" name="{{ $item['name'] }}"
             @if ($store == 'update') value="{{ $data[$item['name']] }}" @else value="{{ old($item['name']) }}" @endif
@@ -405,6 +401,14 @@
             placeholder="{{ $item['alias'] }}"
             class="form-control {{ $errors->has($item['name']) ? 'is-invalid' : '' }}"
             @if ($store == 'update') value="{{ $data[$item['name']] }}" @else value="{{ old($item['name']) }}" @endif>
+    @endif
+    @if ($item['input'] == 'datetime')
+
+
+        <input type="datetime-local" name="{{ $item['name'] }}" id="{{ $item['name'] }}"
+            placeholder="{{ $item['alias'] }}"
+            class="form-control {{ $errors->has($item['name']) ? 'is-invalid' : '' }}"
+            @if ($store == 'update') value="{{ $data[$item['name']]}}" @else value="{{ old($item['name']) }}" @endif>
     @endif
     @if ($item['input'] == 'image')
         <input type="file" value="{{ old($item['name']) }}" name="{{ $item['name'] }}"
@@ -604,42 +608,45 @@
             <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
             <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
             <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-            @if ($store == 'update')
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $("#{{ $item['name'] }}").daterangepicker({
-                            timePicker: true,
-                            timePicker24Hour: true,
-                            timePickerIncrement: 1,
-                            timePickerSeconds: true,
-                            locale: {
-                                format: 'DD/M/Y HH:mm:ss'
-                            }
+
+                  @if ($store == 'update')
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $("#{{ $item['name'] }}").daterangepicker({
+                                timePicker: true,
+                                timePicker24Hour: true,
+                                timePickerIncrement: 1,
+                                timePickerSeconds: true,
+                                locale: {
+                                    format: 'DD/M/Y HH:mm:ss'
+                                }
+                            })
                         })
-                    })
-                </script>
-            @else
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        let start = moment().startOf('month')
-                        let end = moment().endOf('month')
-                        $("#{{ $item['name'] }}").daterangepicker({
-                            startDate: start,
-                            endDate: end,
-                            timePicker: true,
-                            timePicker24Hour: true,
-                            timePickerIncrement: 1,
-                            timePickerSeconds: true,
-                            minDate: start,
-                            locale: {
-                                format: 'DD/M/Y HH:mm:ss'
-                            }
-                        })
-                    })
-                </script>
-            @endif
+                    </script>
+                    @else
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                let start = moment().startOf('month')
+                                let end = moment().endOf('month')
+                                $("#{{ $item['name'] }}").daterangepicker({
+                                    startDate: start,
+                                    endDate: end,
+                                    timePicker: true,
+                                    timePicker24Hour: true,
+                                    timePickerIncrement: 1,
+                                    timePickerSeconds: true,
+                                    minDate: start,
+                                    locale: {
+                                        format: 'DD/M/Y HH:mm:ss'
+                                    }
+                                })
+                            })
+                        </script>
+                    @endif
+
+
         @endif
-        @if ($item['input'] == 'year')
+        @if ($item['input'] == 'year' )
             <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
             <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
@@ -670,6 +677,7 @@
                 </script>
             @endif
         @endif
+
         @if ($item['input'] == 'image')
             <script>
                 function readURL(input) {

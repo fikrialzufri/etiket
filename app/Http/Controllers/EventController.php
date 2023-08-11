@@ -30,6 +30,14 @@ class EventController extends Controller
                 'name' => 'nama',
                 'alias' => 'Nama event',
             ],
+            [
+                'name' => 'start',
+                'alias' => 'Tanggal Mulai',
+            ],
+            [
+                'name' => 'end',
+                'alias' => 'Tanggal Selesai',
+            ],
         ];
     }
     public function configSearch()
@@ -56,20 +64,36 @@ class EventController extends Controller
             [
                 'name' => 'nama',
                 'input' => 'text',
-                'alias' => 'Nama event',
+                'alias' => 'Nama Event',
                 'validasi' => ['required', 'unique', 'min:1'],
             ],
-            [
-                'name' => 'jumlah_min',
-                'input' => 'nominal',
-                'alias' => 'Jumlah Minimal Perserta',
-                'validasi' => ['required'],
-            ],
+
             [
                 'name' => 'jumlah_max',
                 'input' => 'nominal',
                 'alias' => 'Jumlah Maksimal Perserta',
                 'validasi' => ['required'],
+            ],
+            [
+                'name' => 'tanggal_mulai',
+                'input' => 'datetime',
+                'alias' => 'Tanggal & Jam Mulai Event',
+                'validasi' => ['required'],
+            ],
+            [
+                'name' => 'tanggal_selesai',
+                'input' => 'datetime',
+                'alias' => 'Tanggal & Jam Mulai Event',
+                'validasi' => ['required'],
+            ],
+            [
+                'name'    => 'kota_id',
+                'input'    => 'combo',
+                'alias'    => 'Kota',
+                'value' => $this->combobox(
+                    'Kota'
+                ),
+                'validasi'    => ['required'],
             ],
         ];
     }
