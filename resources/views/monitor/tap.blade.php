@@ -58,35 +58,12 @@
                                     <div class="input-group-prepend">
                                         <button class="btn btn-primary" type="button">Scan Qrcode</button>
                                     </div>
-                                    <input type="text" class="form-control" name="barcode" placeholder="Scan Qrcode" autofocus>
+                                    <input type="text" class="form-control" name="barcode" placeholder="Scan Qrcode"
+                                        autofocus>
                                     <input type="hidden" name="event_id" value="{{$dataEvent->id}}">
                                 </div>
                             </form>
                         </div>
-                    </div>
-                    <div class="row">
-                        @if (session('message'))
-                        <div class="col-md-6 col-lg-6  m-auto  pt-10" id="#success-alert">
-                            <div class="container-fluid alert alert-{{ session('Class') }} alert-dismissible fade show"
-                                role="alert">
-                                {{ session('message') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                        @endif
-                        @if (session('peserta'))
-                        <div class="col-md-6 col-lg-6  m-auto  pt-10" id="#success-alert">
-                            <div class="container-fluid alert alert-{{ session('Class') }} alert-dismissible fade show"
-                                role="alert">
-                                {{ session('peserta') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                        @endif
                     </div>
                 </div>
 
@@ -94,6 +71,120 @@
             </div>
         </div>
     </div>
+    @if(session('success'))
+
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    <script type="text/javascript">
+        var timerInterval;
+
+        Swal.fire({
+            title: 'Peserta Dipersilahakan masuk',
+            html: "",
+            timer: 5000,
+            didOpen: () => {
+                const content = Swal.getHtmlContainer()
+                const $ = content.querySelector.bind(content)
+
+                const stop = $('#stop')
+                const resume = $('#resume')
+                const toggle = $('#toggle')
+                const increase = $('#increase')
+
+                Swal.showLoading()
+
+                function toggleButtons() {
+                    stop.disabled = !Swal.isTimerRunning()
+                    resume.disabled = Swal.isTimerRunning()
+                }
+
+                stop.addEventListener('click', () => {
+                    Swal.stopTimer()
+                    toggleButtons()
+                })
+
+                resume.addEventListener('click', () => {
+                    Swal.resumeTimer()
+                    toggleButtons()
+                })
+
+                toggle.addEventListener('click', () => {
+                    Swal.toggleTimer()
+                    toggleButtons()
+                })
+
+                increase.addEventListener('click', () => {
+                    Swal.increaseTimer(5000)
+                })
+
+                timerInterval = setInterval(() => {
+                    Swal.getHtmlContainer().querySelector('strong')
+                        .textContent = (Swal.getTimerLeft() / 1000)
+                        .toFixed(0)
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        })
+    </script>
+    @endif
+    @if(session('message'))
+
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    <script type="text/javascript">
+        var timerInterval;
+
+        Swal.fire({
+            title: "{{session('message')}}",
+            html: "",
+            timer: 5000,
+            didOpen: () => {
+                const content = Swal.getHtmlContainer()
+                const $ = content.querySelector.bind(content)
+
+                const stop = $('#stop')
+                const resume = $('#resume')
+                const toggle = $('#toggle')
+                const increase = $('#increase')
+
+                Swal.showLoading()
+
+                function toggleButtons() {
+                    stop.disabled = !Swal.isTimerRunning()
+                    resume.disabled = Swal.isTimerRunning()
+                }
+
+                stop.addEventListener('click', () => {
+                    Swal.stopTimer()
+                    toggleButtons()
+                })
+
+                resume.addEventListener('click', () => {
+                    Swal.resumeTimer()
+                    toggleButtons()
+                })
+
+                toggle.addEventListener('click', () => {
+                    Swal.toggleTimer()
+                    toggleButtons()
+                })
+
+                increase.addEventListener('click', () => {
+                    Swal.increaseTimer(5000)
+                })
+
+                timerInterval = setInterval(() => {
+                    Swal.getHtmlContainer().querySelector('strong')
+                        .textContent = (Swal.getTimerLeft() / 1000)
+                        .toFixed(0)
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        })
+    </script>
+    @endif
 
     <script src="{{ asset('src/js/vendor/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('plugins/popper.js/dist/umd/popper.min.js') }}"></script>

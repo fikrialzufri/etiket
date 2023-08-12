@@ -55,7 +55,7 @@ class MonitorController extends Controller
             $hadir->tanggal_masuk = $now;
             $hadir->save();
 
-            return redirect()->route("monitor.show", $dataEvent->id)->with('message', "Peserta dipersilahkan masuk")->with('Class', 'primary');
+            return redirect()->route("monitor.show", $dataEvent->id)->with('success', "Peserta dipersilahkan masuk")->with('Class', 'primary');
 
             // return view('monitor.tap',compact('dataEvent'));
         }
