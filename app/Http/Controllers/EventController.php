@@ -83,7 +83,7 @@ class EventController extends Controller
             [
                 'name' => 'tanggal_selesai',
                 'input' => 'datetime',
-                'alias' => 'Tanggal & Jam Mulai Event',
+                'alias' => 'Tanggal & Jam Selesai Event',
                 'validasi' => ['required'],
             ],
             [

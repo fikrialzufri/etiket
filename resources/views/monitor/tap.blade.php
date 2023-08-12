@@ -50,16 +50,24 @@
 
                         <b> {{$dataEvent->nama}}</b>
                     </h1>
+
                     <div class="row">
                         <div class="col-sm-6 m-auto">
-                            <form method="POST" action="{{ route('monitor.store') }}">
+
+                            <form method="POST" action="{{ route('monitor.store') }}" id="tabqrcode">
                                 @csrf
+                                <div class="d-flex justify-content-center">
+                                    <div class="text-center">
+                                        <div id="qr-reader" style="width:300px"></div>
+                                    </div>
+
+                                </div>
                                 <div class="input-group input-group-button">
                                     <div class="input-group-prepend">
                                         <button class="btn btn-primary" type="button">Scan Qrcode</button>
                                     </div>
-                                    <input type="text" class="form-control" name="barcode" placeholder="Scan Qrcode"
-                                        autofocus>
+                                    <input type="text" class="form-control" name="barcode" id="barcode"
+                                        placeholder="Scan Qrcode" autofocus>
                                     <input type="hidden" name="event_id" value="{{$dataEvent->id}}">
                                 </div>
                             </form>
@@ -191,7 +199,51 @@
     <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
+    <script>
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
 
+        Html5Qrcode.getCameras().then(devices => {
+            if (devices && devices.length) {
+                var cameraId;
+                var cameraLabel;
+                if (devices.length === 1) {
+                    cameraId = devices[0].id;
+                } else {
+                    cameraId = devices[1].id;
+                    if (cameraLabel.includes("front")) {
+                        cameraId = devices[2].id;
+                    }
+                }
+
+                const html5QrCode = new Html5Qrcode("qr-reader");
+                html5QrCode.start(
+                        cameraId, {
+                            fps: 10,
+                            qrbox: 250
+                        },
+                        qrCodeMessage => {
+                            //Things you want to do when you match a QR Code
+
+                            if (qrCodeMessage) {
+                                $('#barcode').val(qrCodeMessage);
+                                $('#tabqrcode').first().trigger("submit");
+                            }
+                        },
+                        errorMessage => {
+                            // parse error, ignore it.
+                        })
+                    .catch(err => {
+                        // Start failed, handle it.
+                    });
+
+                }
+                 html5QrCode.render(onScanSuccess);
+        }).catch(err => {
+
+        });
+    </script>
 </body>
 
 </html>

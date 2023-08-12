@@ -19,4 +19,38 @@ class Entrance extends Model
         'peserta_id',
         'event_id',
     ];
+
+    public function hasJabatan()
+    {
+        return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+    }
+
+    public function getJabatanAttribute()
+    {
+        if ($this->hasJabatan) {
+            return $this->hasJabatan->nama;
+        }
+    }
+    public function hasPeserta()
+    {
+        return $this->hasOne(Peserta::class, 'id', 'peserta_id');
+    }
+
+    public function getPesertaAttribute()
+    {
+        if ($this->hasPeserta) {
+            return $this->hasPeserta->nama;
+        }
+    }
+    public function hasBidang()
+    {
+        return $this->hasOne(Bidang::class, 'id', 'bidang_id');
+    }
+
+    public function getBidangAttribute()
+    {
+        if ($this->hasBidang) {
+            return $this->hasBidang->nama;
+        }
+    }
 }

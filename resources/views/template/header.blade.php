@@ -25,6 +25,9 @@
                                 <a class="dropdown-item" href="{{ route('user.ubah') }}"><i
                                         class="ik ik-user dropdown-icon"></i>
                                     {{ __('Profile') }}</a>
+                                <a class="dropdown-item" href="{{ route('monitor.index') }}"><i
+                                        class="ik ik-user dropdown-icon"></i>
+                                    {{ __('Monitor') }}</a>
                                 {{-- <a class="dropdown-item" href="#"><i class="ik ik-navigation dropdown-icon"></i>
                             {{ __('Message') }}</a> --}}
                                 <a class="dropdown-item" href="{{ route('logout') }}"

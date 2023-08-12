@@ -23,12 +23,20 @@ class EntranceController extends Controller
     {
         return [
             [
-                'name' => 'kode',
-                'alias' => 'Kode Entrance',
+                'name' => 'peserta',
+                'alias' => 'Peserta',
             ],
             [
-                'name' => 'nama',
-                'alias' => 'Nama Entrance',
+                'name' => 'bidang',
+                'alias' => 'KPU',
+            ],
+            [
+                'name' => 'jabatan',
+                'alias' => 'Jabatan',
+            ],
+            [
+                'name' => 'created_at',
+                'alias' => 'Tanggal Masuk',
             ],
         ];
     }

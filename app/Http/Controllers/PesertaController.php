@@ -105,6 +105,11 @@ class PesertaController extends Controller
     {
 
         return [
+             [
+                'name' => 'kode',
+                'input' => 'text',
+                'alias' => 'Kode Peserta',
+            ],
             [
                 'name' => 'nama',
                 'input' => 'text',
