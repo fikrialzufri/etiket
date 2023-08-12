@@ -48,6 +48,18 @@ class EntranceController extends Controller
                 'input' => 'daterange',
                 'alias' => 'Tanggal',
             ],
+            [
+                'name' => 'event_id',
+                'input' => 'combo',
+                'alias' => 'Event',
+                'value' => $this->combobox('Event', null, null, null, 'nama'),
+            ],
+            [
+                'name' => 'bidang_id',
+                'input' => 'combo',
+                'alias' => 'Bidang',
+                'value' => $this->combobox('Bidang', null, null, null, 'nama'),
+            ],
         ];
     }
     public function configForm()

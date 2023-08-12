@@ -28,4 +28,15 @@ class Bidang extends Model
         $this->attributes['nama'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    function hasEntrance()
+    {
+        // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+        return $this->hasMany(Entrance::class,'bidang_id','id');
+    }
+    function hasEntranceById($id)
+    {
+        // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+        return $this->hasMany(Entrance::class,'bidang_id','id')->where('event_id',$id);
+    }
 }

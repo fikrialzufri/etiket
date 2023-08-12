@@ -5,14 +5,36 @@
     <div class="container-fluid">
         <div class="row">
             <!-- page statustic chart start -->
-            <div class="col-xl-12 col-md-12">
-                <div class="col-xl-12 col-xl-12 mb-10">
-                    <div class="owl-container">
-                        <div class="owl-carousel basic">
+            <div class="col-lg-12 col-md-12">
 
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered nowrap  ">
+                            <thead>
+                                <th >No.</th>
+                                <th >KPU</th>
+                                @foreach ($dataEvent as $event)
+                                <th width="15%" class="text-center">
+                                    {{$event->nama}}
+                                </th>
+                                    @endforeach
+                            </thead>
+                            <tbody>
+                                @forelse ($dataBidang as $index => $bidang)
+                                <tr>
+                                    <td>{{$index + 1}} </td>
+                                    <td>{{$bidang->nama}} </td>
+                                     @foreach ($dataEvent as $event)
 
+                                    <td class="text-center">{{$bidang->hasEntranceById($event->id)->count()}} </td>
 
-                        </div>
+                                    @endforeach
+                                </tr>
+                                @empty
+
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

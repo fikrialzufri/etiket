@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bidang;
 use App\Models\Element;
+use App\Models\Event;
 use App\Models\Group;
 use App\Models\JenisUnit;
 use App\Models\SubElement;
@@ -43,6 +45,9 @@ class HomeController extends Controller
         $pekerjaanCount = 0;
         $rekananCount = 0;
 
+        $dataEvent =Event::get();
+        $dataBidang =Bidang::orderBy('kode')->get();
+
         return view('home.index', compact(
             'title',
             'pegawai',
@@ -52,6 +57,8 @@ class HomeController extends Controller
             'dataUnit',
             'dataJenisUnit',
             'anggota',
+            'dataEvent',
+            'dataBidang',
             'aduanCount',
             'rapat',
             'jenisRapat'
