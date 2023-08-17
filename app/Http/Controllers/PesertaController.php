@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportPeserta;
 use App\Mail\SendTiket;
 use App\Models\Bidang;
 use App\Models\Jabatan;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use Excel;
 
 class PesertaController extends Controller
 {
@@ -95,9 +97,9 @@ class PesertaController extends Controller
              [
                 'name' => 'hadir',
                 'input' => 'radio',
-                'alias' => 'Hadir',
-                'value' => ['Tidak Hadir ', 'Hadir'],
-                'default' => 'Hadir',
+                'alias' => 'Kehadiran',
+                'value' => [ 'Hadir', 'Tidak Hadir'],
+                'default' => null,
             ],
         ];
     }
@@ -165,7 +167,7 @@ class PesertaController extends Controller
              [
                 'name' => 'hadir',
                 'input' => 'radio',
-                'alias' => 'Hadir',
+                'alias' => 'Kehadiran',
                 'value' => ['Tidak Hadir ', 'Hadir'],
                 'default' => 'Hadir',
             ],
@@ -356,7 +358,7 @@ class PesertaController extends Controller
             $template = $this->index . '.index';
         }
 
-        // return $data;
+        // return $hasilSearch;
 
         return view(
             $template,
@@ -461,5 +463,11 @@ class PesertaController extends Controller
     public function model()
     {
         return new Peserta();
+    }
+
+    public function excelpeserta()
+    {
+        $now = Carbon::now();
+        return Excel::download(new ExportPeserta(), 'Export Peserta '.$now.'.xlsx');
     }
 }

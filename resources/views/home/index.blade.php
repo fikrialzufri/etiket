@@ -6,10 +6,15 @@
         <div class="row">
             <!-- page statustic chart start -->
             <div class="col-lg-12 col-md-12">
-
                 <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}">
+                            <i class="fa fa-file"></i> Download Peserta
+                        </a>
+
+                    </div>
                     <div class="card-body">
-                        <table class="table table-striped table-bordered nowrap  ">
+                        <table class="table table-striped table-bordered nowrap  " id="tablePeserta">
                             <thead>
                                 <th >No.</th>
                                 <th >KPU</th>
@@ -26,7 +31,9 @@
                                     <td>{{$bidang->nama}} </td>
                                      @foreach ($dataEvent as $event)
 
-                                    <td class="text-center">{{$bidang->hasEntranceById($event->id)->count()}} </td>
+                                    <td class="text-center">
+                                        {{$bidang->hasEntranceById($event->id)->count()}}
+                                    </td>
 
                                     @endforeach
                                 </tr>
@@ -34,6 +41,17 @@
 
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td  class="text-right" colspan="2">Total Peserta</td>
+                                     @foreach ($dataEvent as $event)
+
+                                    <td class="text-center">{{$event->hasEntrance()->count()}} </td>
+
+                                    @endforeach
+
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -83,24 +101,10 @@
     </style>
     <link rel="stylesheet" href="http://radmin.test/plugins/owl.carousel/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="http://radmin.test/plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
-@endpush
-@push('script')
-    <script src="{{ asset('plugins/owl.carousel/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('plugins/chartist/dist/chartist.min.js') }}"></script>
-    <script src="{{ asset('plugins/flot-charts/jquery.flot.js') }}"></script>
-    <script src="{{ asset('plugins/flot-charts/jquery.flot.categories.js') }}"></script>
-    <script src="{{ asset('plugins/flot-charts/curvedLines.js') }}"></script>
-    <script src="{{ asset('plugins/flot-charts/jquery.flot.tooltip.min.js') }}"></script>
-
-    <script src="{{ asset('plugins/amcharts/amcharts.js') }}"></script>
-    <script src="{{ asset('plugins/amcharts/serial.js') }}"></script>
-    <script src="{{ asset('plugins/amcharts/themes/light.js') }}"></script>
-
-
-    <script src="{{ asset('js/widget-statistic.js') }}"></script>
-    <script src="{{ asset('js/widget-data.js') }}"></script>
-    <script src="{{ asset('js/dashboard-charts.js') }}"></script>
     <script>
-        let grafikGroup = @json($grafikGroup);
+        setTimeout(function(){
+            $( "#tablePeserta" ).load( "#tablePeserta" );
+            console.log("refresh ");
+        }, 5000);
     </script>
 @endpush

@@ -62,6 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('jabatan', JabatanController::class);
 
         Route::get('/kirimemail/{peserta}', [PesertaController::class, 'kirimemail'])->name('peserta.kirimemail');
+
+        Route::get('/excelpeserta', [PesertaController::class, 'excelpeserta'])->name('peserta.excelpeserta');
         // pendaftaran
 
 

@@ -273,7 +273,7 @@ trait CrudTrait
             $template = $this->index . '.index';
         }
 
-        // return $data;
+        // return $hasilSearch;
 
         return view(
             $template,

@@ -46,7 +46,7 @@ class HomeController extends Controller
         $rekananCount = 0;
 
         $dataEvent =Event::get();
-        $dataBidang =Bidang::orderBy('kode')->get();
+          $dataBidang =Bidang::with('hasEntrance')->withCount('hasEntrance')->orderBy('kode')->get();
 
         return view('home.index', compact(
             'title',

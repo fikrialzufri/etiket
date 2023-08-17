@@ -215,7 +215,7 @@
 
     <script>
         const dataJabatan = @json($dataJabatan);
-        console.log(dataJabatan);
+        // console.log(dataJabatan);
         $("#bidang_id").select2({
             placeholder: '--- Pilih KPU ---',
         });
@@ -223,6 +223,7 @@
             let id = $(this).val();
             let max = $('#bidang_'+ id).attr('data-max');
             let min = $('#bidang_'+ id).attr('data-min');
+            // jika min2 maka jabatan 3
             const filterJabatan = Object.entries(dataJabatan).filter(([key, value])=> value.jumlah_min >= min);
             let listJabatan = [];
             let listJabatanArray = '';

@@ -49,6 +49,11 @@ class Event extends Model
         return tanggal_indonesia_waktu($this->tanggal_selesai);
     }
 
+    function hasEntrance()
+    {
+        return $this->hasMany(Entrance::class,'event_id','id');
+    }
+
     public static function boot()
     {
         parent::boot();
