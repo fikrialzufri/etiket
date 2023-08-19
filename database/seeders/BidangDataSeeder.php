@@ -25,19 +25,23 @@ class BidangDataSeeder extends Seeder
             ],
             [
                 "kode" => "BDG2",
-                "nama" => "KPU KABUPATEN KUANTAN SINGINGI"
+                "nama" => "KPU KABUPATEN KUANTAN SINGINGI",
+                "parent_id" => "BDG1",
             ],
             [
                 "kode" => "BDG3",
-                "nama" => "KPU KABUPATEN INDRAGIRI HULU"
+                "nama" => "KPU KABUPATEN INDRAGIRI HULU",
+                "parent_id" => "BDG1",
             ],
             [
                 "kode" => "BDG4",
-                "nama" => "KPU KABUPATEN INDRAGIRI HILIR"
+                "nama" => "KPU KABUPATEN INDRAGIRI HILIR",
+                "parent_id" => "BDG1",
             ],
             [
                 "kode" => "BDG5",
-                "nama" => "KPU KABUPATEN PELALAWAN"
+                "nama" => "KPU KABUPATEN PELALAWAN",
+                "parent_id" => "BDG1",
             ],
             [
                 "kode" => "BDG6",

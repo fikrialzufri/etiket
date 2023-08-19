@@ -346,7 +346,7 @@ class PesertaController extends Controller
                 $data = $query->orderBy($this->sort);
             }
         }
-        $cetak = $this->model()::where('hadir','Hadir')->get();
+        $cetak = $this->model()::where('hadir','Hadir')->paginate(20);
         $pesertaHadir = $this->model()::where('hadir','Hadir')->count();
         $pesertaTidakHadir = $this->model()::where('hadir','Tidak Hadir')->count();
         //mendapilkan data model setelah query pencarian
