@@ -257,12 +257,12 @@
         <div class="col-3 col-md-3 col-lg-3 text-center">
             <div >
 
-                <span style="width: 14rem;  font-size: 8pt; color: #ffff;">{{ $item->kode }}</span>
+                <span style="width: 14rem;  font-size: 8pt; ">{{ $item->kode }}</span>
 
             </div>
             <div >
 
-                <span style="width: 14rem;  font-size: 14pt; color: #ffff;">
+                <span style="width: 14rem;  font-size: 14pt; >
                    <b>{{ strtoupper($item->nama) }}</b>
                 </span>
 
@@ -275,10 +275,10 @@
             <div style="display: flex;justify-content: center;">
 
 
-                <p class="" style="width: 14rem; font-size: 10pt; color: #ffff;">{{ strtoupper($item->bidang) }}</p>
+                <p class="" style="width: 14rem; font-size: 10pt;>{{ strtoupper($item->bidang) }}</p>
             </div>
             <div  class="d-inline-flex p-2">
-                <div width="50%" style="background: #ffffff; padding:10px">
+                <div >
                     {{ QrCode::size(80)->generate($item->kode) }}<br>
                 </div>
             </div>
