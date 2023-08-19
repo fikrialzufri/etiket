@@ -254,7 +254,12 @@
 <page id="contentStriker" style="display: none">
     <div class="row">
         @forelse ($cetak as $item)
-        <div class="col-6 col-md-6 col-lg-6 text-center">
+        <div class="col-3 col-md-3 col-lg-3 text-center">
+            <div >
+
+                <span style="width: 14rem;  font-size: 8pt">{{ $item->kode }}</span>
+
+            </div>
             <div >
 
                 <span style="width: 14rem;  font-size: 12pt">{{ $item->nama }}</span>
