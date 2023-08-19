@@ -46,7 +46,7 @@ class HomeController extends Controller
         $pekerjaanCount = 0;
         $rekananCount = 0;
 
-        $dataEvent =Event::get();
+        $dataEvent =Event::orderBy('nama')->get();
         $dataBidang =Bidang::with('hasEntrance')->get()->sortBy(function($value){
                  return (int) str_replace("BDG","",$value->kode);;
         });

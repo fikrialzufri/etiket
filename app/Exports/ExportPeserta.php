@@ -13,7 +13,7 @@ class ExportPeserta implements FromView
 
     public function view(): View
     {
-        $dataEvent =Event::get();
+        $dataEvent =Event::orderBy('nama')->get();
 
         $dataBidang =Bidang::with('hasEntrance')->get()->sortBy(function($value){
                  return (int) str_replace("BDG","",$value->kode);;
