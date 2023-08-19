@@ -63,6 +63,9 @@
             <td style="text-align: center; border: 3px solid #000000;" colspan="2">
               <b>Total Peserta</b>
             </td>
+            <td style="text-align: center;border: 3px solid #000000;">
+              <b> {{$pesertaCount}} </b>
+            </td>
             @foreach ($dataEvent as $event)
 
             <td style="text-align: center;border: 3px solid #000000;">

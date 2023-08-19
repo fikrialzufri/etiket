@@ -11,7 +11,9 @@
                         <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}">
                             <i class="fa fa-file"></i> Download Peserta
                         </a>
-
+                        @php
+                            $number = 1;
+                        @endphp
                     </div>
                     <div class="card-body">
                         <table class="table table-striped table-bordered nowrap  " id="tablePeserta">
@@ -28,7 +30,7 @@
                             <tbody>
                                 @forelse ($dataBidang as $index => $bidang)
                                 <tr>
-                                    <td>{{$index + 1}} </td>
+                                    <td>{{$number ++}} </td>
                                     <td>{{$bidang->nama}} </td>
                                     <td class="text-center">{{$bidang->hasPeserta()->count()}} </td>
                                      @foreach ($dataEvent as $event)
@@ -46,6 +48,7 @@
                             <tfoot>
                                 <tr>
                                     <td  class="text-right" colspan="2">Total Peserta</td>
+                                    <td class="text-center">{{$pesertaCount}}</td>
                                      @foreach ($dataEvent as $event)
 
                                     <td class="text-center">{{$event->hasEntrance()->count()}} </td>

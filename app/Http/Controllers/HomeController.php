@@ -7,6 +7,7 @@ use App\Models\Element;
 use App\Models\Event;
 use App\Models\Group;
 use App\Models\JenisUnit;
+use App\Models\Peserta;
 use App\Models\SubElement;
 use App\Models\Unit;
 use Auth;
@@ -46,11 +47,16 @@ class HomeController extends Controller
         $rekananCount = 0;
 
         $dataEvent =Event::get();
-          $dataBidang =Bidang::with('hasEntrance')->withCount('hasEntrance')->orderBy('kode')->get();
+        $dataBidang =Bidang::with('hasEntrance')->get()->sortBy(function($value){
+                 return (int) str_replace("BDG","",$value->kode);;
+        });
+
+        $pesertaCount = Peserta::where('hadir','Hadir')->count();
 
         return view('home.index', compact(
             'title',
             'pegawai',
+            'pesertaCount',
             'pekerjaanCount',
             'grafikGroup',
             'rekananCount',
