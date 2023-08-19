@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportPeserta;
+use App\Exports\ExportListPeserta;
 use App\Mail\SendTiket;
 use App\Models\Bidang;
 use App\Models\Jabatan;
@@ -472,6 +473,11 @@ class PesertaController extends Controller
     public function excelpeserta()
     {
         $now = Carbon::now();
-        return Excel::download(new ExportPeserta(), 'Export Peserta '.$now.'.xlsx');
+        return Excel::download(new ExportPeserta(), 'Export Kehadiran Peserta '.$now.'.xlsx');
+    }
+    public function excellistpeserta()
+    {
+        $now = Carbon::now();
+        return Excel::download(new ExportListPeserta(), 'Export Daftar Peserta '.$now.'.xlsx');
     }
 }

@@ -83,6 +83,9 @@
                         <span class="btn btn-sm btn-warning float-right text-light mr-5" id="cetakStiker">
                             <i class="fa fa-file"></i> Cetak Qrcode
                         </span>
+                        <a class="btn btn-sm btn-success float-right text-light mr-5" href="{{route('peserta.excellistpeserta')}}">
+                            <i class="ik ik-file-text"></i> Export Peserta
+                        </a>
 
                     </div>
                 </div>
