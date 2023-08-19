@@ -423,8 +423,15 @@ class PesertaController extends Controller
 
         $countBidangPeserta = Peserta::where('bidang_id', $request->bidang_id)->count();
 
+        $countBidangJabatanPeserta = Peserta::where('bidang_id', $request->bidang_id)->where('jabatan_id', $request->jabatan_id)->count();
+
+        $dataJabatan = Jabatan::find($request->jabatan_id);
+
         if ($checkBidang->jumlah_max == $countBidangPeserta) {
             return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' sudah melebihi limit')->with('Class', 'danger');
+        }
+        if ($countBidangJabatanPeserta > 1) {
+            return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' Jabatan '.$dataJabatan->nama.' sudah di isi')->with('Class', 'danger');
         }
         DB::beginTransaction();
         try {

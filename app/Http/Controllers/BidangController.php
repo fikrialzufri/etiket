@@ -75,6 +75,13 @@ class BidangController extends Controller
                 'validasi' => ['required'],
             ],
             [
+                'name' => 'parent_id',
+                'input' => 'combo',
+                'alias' => 'KPU Provinsi',
+                'value' => $this->combobox('Bidang', null, null, null, 'nama'),
+                'validasi' => null
+            ],
+            [
                 'name' => 'status',
                 'input' => 'radio',
                 'alias' => 'Status',
