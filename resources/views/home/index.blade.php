@@ -18,6 +18,7 @@
                             <thead>
                                 <th >No.</th>
                                 <th >KPU</th>
+                                <th class="text-center">Jumlah Peserta</th>
                                 @foreach ($dataEvent as $event)
                                 <th width="15%" class="text-center">
                                     {{$event->nama}}
@@ -29,6 +30,7 @@
                                 <tr>
                                     <td>{{$index + 1}} </td>
                                     <td>{{$bidang->nama}} </td>
+                                    <td class="text-center">{{$bidang->hasPeserta()->count()}} </td>
                                      @foreach ($dataEvent as $event)
 
                                     <td class="text-center">
