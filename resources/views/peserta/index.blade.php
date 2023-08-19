@@ -213,6 +213,27 @@
                             </tr>
                             @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7" class="text-right">
+                                   <b>Total Peserta Hadir</b>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <b>{{$pesertaHadir}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" class="text-right">
+                                  <b>Total Peserta Tidak Hadir</b>
+                                </td>
+                                <td>:</td>
+                                <td>
+                                    <b>  {{$pesertaTidakHadir}}</b>
+
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <!-- /.card-body -->
