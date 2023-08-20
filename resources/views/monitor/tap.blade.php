@@ -215,7 +215,6 @@
             if (decodedText !== lastResult) {
                 ++countResults;
                 lastResult = decodedText;
-                console.log("event_id",event_id);
 
                 // Handle on success condition with the decoded message.
                 // var $tes = 'https://192.168.1.19/absensi-qr/public/absen/' + decodedText + '/hadir';
