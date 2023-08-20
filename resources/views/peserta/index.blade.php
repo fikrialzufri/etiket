@@ -260,7 +260,7 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </div>
-<page id="contentStriker" style="display: block;" >
+<page id="contentStriker" style="display: none;" >
     <div class="row pt-15">
         @forelse ($cetak as $item)
         <div class="col-md-3point5 text-center" style="border: 1pt solid; ">
