@@ -462,6 +462,7 @@ class PesertaController extends Controller
         }
     }
 
+
     function kirimemail(Peserta $peserta)
     {
         try {

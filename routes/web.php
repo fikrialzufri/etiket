@@ -65,6 +65,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/excelpeserta', [PesertaController::class, 'excelpeserta'])->name('peserta.excelpeserta');
         Route::get('/excellistpeserta', [PesertaController::class, 'excellistpeserta'])->name('peserta.excellistpeserta');
+
+        Route::post('/monitortap', [MonitorController::class, 'tap'])->name('monitor.tab');
         // pendaftaran
 
 

@@ -59,4 +59,50 @@ class MonitorController extends Controller
 
             // return view('monitor.tap',compact('dataEvent'));
         }
+        function tap(Request $request) {
+            $event_id = $request->event_id;
+            $barcode = $request->barcode;
+
+             $dataEvent = Event::find($event_id);
+
+            //  check Event
+            if (!$dataEvent) {
+                  return $this->sendError("Event tidak ada", "", 404);
+
+            }
+            //  check Peserta
+
+             $peserta = Peserta::whereKode($barcode)->first();
+            if (!$peserta) {
+                  return $this->sendError("Peserta tidak ada", "", 404);
+            }
+
+             $hadir = Entrance::where('event_id', $event_id)->where('peserta_id',$peserta->id)->first();
+
+            if ($hadir) {
+                  return $this->sendError("Peserta sudah masuk", "", 404);
+
+            }
+            $now = Carbon::now();
+
+            $hadir = new Entrance();
+            $hadir->peserta_id = $peserta->id;
+            $hadir->bidang_id = $peserta->bidang_id;
+            $hadir->jabatan_id = $peserta->jabatan_id;
+            $hadir->event_id = $dataEvent->id;
+            $hadir->kota_id = $dataEvent->kota_id;
+            $hadir->tanggal_masuk = $now;
+            $hadir->save();
+
+            $response = [
+                'success' => false,
+                'message' => "Peserta dipersilahkan masuk",
+                'code' => '200'
+            ];
+
+            return response()->json($response, 200);
+
+
+            // return view('monitor.tap',compact('dataEvent'));
+        }
 }

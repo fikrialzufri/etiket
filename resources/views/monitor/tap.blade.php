@@ -68,7 +68,7 @@
                                     </div>
                                     <input type="text" class="form-control" name="barcode" id="barcode"
                                         placeholder="Scan Qrcode" autofocus>
-                                    <input type="hidden" name="event_id" value="{{$dataEvent->id}}">
+                                    <input type="hidden" name="event_id" id="event_id" value="{{$dataEvent->id}}">
                                 </div>
                             </form>
                         </div>
@@ -79,9 +79,9 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
     @if(session('success'))
 
-    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
     <script type="text/javascript">
         var timerInterval;
 
@@ -138,7 +138,7 @@
     @endif
     @if(session('message'))
 
-    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    {{-- <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script> --}}
     <script type="text/javascript">
         var timerInterval;
 
@@ -200,20 +200,65 @@
     <script src="{{ asset('plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
     <script>
         var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
 
         function onScanSuccess(decodedText, decodedResult) {
+
+            console.log(decodedResult);
+            let event_id = $('#event_id').val();
+
+
             if (decodedText !== lastResult) {
                 ++countResults;
                 lastResult = decodedText;
+                console.log("event_id",event_id);
+
                 // Handle on success condition with the decoded message.
                 // var $tes = 'https://192.168.1.19/absensi-qr/public/absen/' + decodedText + '/hadir';
-                var $tes = decodedText;
-                $('#barcode').val(decodedText);
-                $('#tabqrcode').first().trigger("submit");
+                // var $tes = decodedText;
+                $.ajax({
+                    type: 'post',
+                    url: "{{ route('monitor.tab') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "barcode":lastResult,
+                        "event_id":event_id
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        swall2a(data)
+                        // $("#no_ticket").val(data.data);
+                    }, error: function(data) {
+                        swall2a(data.responseJSON)
+                        // $("#no_ticket").val(data.data);
+                    },
+                });
             }
+            if (lastResult != '') {
+
+
+            }
+        }
+
+        function swall2a(data) {
+        var timerInterval;
+
+        console.log(data.code);
+            let title = data.code == 200 ? "Absensi Sukses" : "Absensi gagal";
+            let type = data.code == 200 ? "success" : "error";
+           swal({
+           title: title,
+           text: data.message,
+           type: type,
+           timer:3000
+       });
         }
 
         // Html5Qrcode.getCameras().then(devices => {
