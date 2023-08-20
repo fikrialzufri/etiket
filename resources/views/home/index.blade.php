@@ -62,7 +62,7 @@
                                 @foreach ($dataEvent as $event)
                                 <td class="text-center {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() == 0 ? "bg-danger" : ""}}"
                                     >
-                                    {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() >= 1 ? "Absen" : "Tidak Absen"}}</td>
+                                    {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() > 0 ? "Absen" : "Tidak Absen"}}</td>
                                 @endforeach
 
                                 {{-- <td>{{$peserta->jabatan_no_urut}}</td> --}}
