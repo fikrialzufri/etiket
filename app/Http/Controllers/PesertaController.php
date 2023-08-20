@@ -24,7 +24,7 @@ class PesertaController extends Controller
         $this->route = 'peserta';
         $this->index = 'peserta';
         $this->sort = 'nama';
-        $this->paginate = 20;
+        $this->paginate = 165;
         $this->middleware('permission:view-' . $this->route, ['only' => ['index', 'show']]);
         $this->middleware('permission:create-' . $this->route, ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-' . $this->route, ['only' => ['edit', 'update']]);
@@ -364,7 +364,7 @@ class PesertaController extends Controller
 
         }
 
-        $cetak = $query->where('hadir','Hadir')->orderBy('nama')->paginate(20);
+        $cetak = $query->where('hadir','Hadir')->orderBy('nama')->paginate(15);
 
         if ($hadir) {
             $query->where('hadir',$hadir);

@@ -35,13 +35,22 @@
         width: 100%;
     }
 
+    .col-md-3point5{
+        width: 6.8cm;
+        height: 6.5cm;
+        /* background-image:""; */
+        background: url("{{ asset('img/back-emoney.jpg') }}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
     @media print {
 
         body,
-        page[size="legal"] {
-            background: #680101;
+        page[size="a4"] {
+            /* background: #680101; */
             width: 21cm;
-            padding: 40px;
+            padding: 10px;
             height: 29.7cm;
             display: block;
             margin: 0 auto;
@@ -251,34 +260,34 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </div>
-<page id="contentStriker" style="display: none; background-color:#680101;" >
+<page id="contentStriker" style="display: block;" >
     <div class="row pt-15">
         @forelse ($cetak as $item)
-        <div class="col-3 col-md-3 col-lg-3 text-center" style="border: 1pt solid;">
-            <div >
-
-                <span style="width: 14rem;  font-size: 8pt; color: #ffff;">{{ $item->kode }}</span>
-
+        <div class="col-md-3point5 text-center" style="border: 1pt solid; ">
+             <div class="">
+                <span style="width: 14rem;  font-size: 8pt; color:#ffff;">{{ $item->kode }}</span>
             </div>
             <div >
 
-                <span style="width: 14rem;  font-size: 14pt; color: #ffff;">
+                <span style="width: 14rem;  font-size: 14pt;color:#ffff;">
                    <b>{{ strtoupper($item->nama) }}</b>
                 </span>
 
             </div>
             @if ($item->kpu !== $item->bidang)
 
-            <div style="display: flex;justify-content: center;">
-                <p class="" style="width: 14rem; font-size: 10pt; color: #ffff;">{{ strtoupper($item->kpu) }}</p>
+            <div style="display: flex;justify-content: center; ">
+                <p class="" style="width: 14rem; font-size: 10pt;color:#ffff;">{{ strtoupper($item->kpu) }}</p>
             </div>
             @endif
             <div style="display: flex;justify-content: center; margin-top:-5px" class="pb-1">
-                <p class="" style="width: 14rem; font-size: 10pt; color: #ffff;">{{ strtoupper($item->bidang) }}</p>
+                <p class="" style="width: 14rem; font-size: 10pt;color:#ffff;">{{ strtoupper($item->bidang) }}</p>
             </div>
-            <div  class="d-inline-flex p-2">
-                <div width="50%" style="background-color: #ffff; padding:10px">
-                    {{ QrCode::size(80)->generate($item->kode) }}<br>
+
+            <div  class="d-inline-flex p-1" >
+                <div width="50%" style="background-color: #ffff; padding:8px; margin-top:-10px;">
+                    {{ QrCode::size(50)->generate($item->kode) }}<br>
+
                 </div>
             </div>
             <br>
