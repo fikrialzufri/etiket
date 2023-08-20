@@ -31,6 +31,10 @@ class BidangController extends Controller
                 'alias' => 'Nama Bidang',
             ],
             [
+                'name' => 'kpu',
+                'alias' => 'Provinsi',
+            ],
+            [
                 'name' => 'jumlah_max',
                 'alias' => 'Jumlah Maksimal Peserta',
             ],

@@ -29,6 +29,20 @@ class Bidang extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
+    function hasKpu()
+    {
+        // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+        return $this->hasOne(Bidang::class,'id','parent_id');
+    }
+
+    public function getKpuAttribute()
+    {
+        if ($this->hasKpu) {
+            # code...
+           return  $this->hasKpu->nama;
+        }
+    }
+
     function hasEntrance()
     {
         // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
