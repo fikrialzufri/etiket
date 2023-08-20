@@ -149,6 +149,12 @@
          $('#cmbFilter').change(function(){
             $('#form').submit();
         });
+        setInterval(() => {
+
+            // console.log("refresh 2");
+            $("#tablePeserta").load(location.href + " #tablePeserta");
+        }, 5000);
+
 
     </script>
 @endpush
