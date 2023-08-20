@@ -211,7 +211,8 @@
                 // Handle on success condition with the decoded message.
                 // var $tes = 'https://192.168.1.19/absensi-qr/public/absen/' + decodedText + '/hadir';
                 var $tes = decodedText;
-                window.location.href = $tes;
+                $('#barcode').val(decodedText);
+                $('#tabqrcode').first().trigger("submit");
             }
         }
 
