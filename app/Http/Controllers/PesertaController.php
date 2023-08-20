@@ -327,22 +327,36 @@ class PesertaController extends Controller
         // relatio
         // sort by
         $bidang_id = request()->bidang_id;
+        $kode = request()->kode;
         $nama = request()->nama;
+        $jabatan_id = request()->jabatan_id;
+        $hadir = request()->hadir;
         // $bidang_id = request()->bidang_id;
 
         if ($nama) {
-            # code...
-            $query->where('nama', $nama);
+            $query->where('nama', "like",'%'.$nama.'%');
+        }
+        if ($kode) {
+            $query->where('kode', "like",'%'.$kode.'%');
+        }
+        if ($jabatan_id) {
+            $query->where('jabatan_id',$jabatan_id);
         }
         if ($bidang_id) {
             $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
-            // return $DaTabidangId;
+
             $bidang_id = $DaTabidangId->pluck('id');
             $query->where(function($subquery)  use ($bidang_id){
 
                     $subquery->whereIn('bidang_id',$bidang_id);
             });
 
+        }
+
+        $cetak = $query->where('hadir','Hadir')->orderBy('nama')->paginate(20);
+
+        if ($hadir) {
+            $query->where('hadir',$hadir);
         }
 
         if ($this->sort) {
@@ -352,7 +366,6 @@ class PesertaController extends Controller
                 $data = $query->orderBy($this->sort);
             }
         }
-        $cetak = $this->model()::where('hadir','Hadir')->orderBy('nama')->paginate(20);
         $pesertaHadir = $this->model()::where('hadir','Hadir')->count();
         $pesertaTidakHadir = $this->model()::where('hadir','Tidak Hadir')->count();
         //mendapilkan data model setelah query pencarian
