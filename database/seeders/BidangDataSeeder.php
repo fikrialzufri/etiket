@@ -31,17 +31,17 @@ class BidangDataSeeder extends Seeder
             [
                 "kode" => "BDG3",
                 "nama" => "KPU KABUPATEN INDRAGIRI HULU",
-                "parent_id" => "BDG1",
+
             ],
             [
                 "kode" => "BDG4",
                 "nama" => "KPU KABUPATEN INDRAGIRI HILIR",
-                "parent_id" => "BDG1",
+
             ],
             [
                 "kode" => "BDG5",
                 "nama" => "KPU KABUPATEN PELALAWAN",
-                "parent_id" => "BDG1",
+
             ],
             [
                 "kode" => "BDG6",

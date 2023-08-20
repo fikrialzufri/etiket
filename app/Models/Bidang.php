@@ -54,11 +54,24 @@ class Bidang extends Model
         // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
         return $this->hasMany(Peserta::class);
     }
+    function hasJabatan()
+    {
+        // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+        return $this->hasMany(Jabatan::class);
+    }
 
     function hasEntranceById($id)
     {
         // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
         return $this->hasMany(Entrance::class,'bidang_id','id')->where('event_id',$id);
+    }
+
+    function hasEntranceByIdPeserta($id)
+    {
+        // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+        $event_id = $id[0];
+        $peserta_id = $id[1];
+        return $this->hasMany(Entrance::class,'bidang_id','id')->where('event_id',$event_id)->where('peserta_id',$peserta_id);
     }
 
     public function EnteranceCount($id)

@@ -2,114 +2,149 @@
 @section('title', ucwords(str_replace([':', '_', '-', '*'], ' ', $title)))
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <!-- page statustic chart start -->
-            <div class="col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}">
-                            <i class="fa fa-file"></i> Download Peserta
-                        </a>
-                        @php
-                            $number = 1;
-                        @endphp
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped table-bordered nowrap  " id="tablePeserta">
-                            <thead>
-                                <th >No.</th>
-                                <th >KPU</th>
-                                <th class="text-center">Jumlah Peserta</th>
-                                @foreach ($dataEvent as $event)
-                                <th width="15%" class="text-center">
-                                    {{$event->nama}}
-                                </th>
-                                    @endforeach
-                            </thead>
-                            <tbody>
-                                @forelse ($dataBidang as $index => $bidang)
-                                <tr>
-                                    <td>{{$number ++}} </td>
-                                    <td>{{$bidang->nama}} </td>
-                                    <td class="text-center">{{$bidang->hasPeserta()->count()}} </td>
-                                     @foreach ($dataEvent as $event)
+<div class="container-fluid">
+    <div class="row">
+        <!-- page statustic chart start -->
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    {{-- <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}">
+                    <i class="fa fa-file"></i> Download Peserta
+                    </a> --}}
+                    <div class="col-lg-2">
 
-                                    <td class="text-center">
-                                        {{$bidang->hasEntranceById($event->id)->count()}}
-                                    </td>
-
-                                    @endforeach
-                                </tr>
-                                @empty
-
-                                @endforelse
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td  class="text-right" colspan="2">Total Peserta</td>
-                                    <td class="text-center">{{$pesertaCount}}</td>
-                                     @foreach ($dataEvent as $event)
-
-                                    <td class="text-center">{{$event->hasEntrance()->count()}} </td>
-
-                                    @endforeach
-
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <div class="form-group ">
+                            <label >Filter KPU</label>
+                            <select name="cmb" class="selected2 form-control" id="cmbFilter" required>
+                                <option value="">--Pilih KPU--</option>
+                                @foreach ($dataBidang as $bd)
+                                <option value="{{ $bd->id }}" {{ old('rule') == $bd->id ? 'selected' : '' }}>
+                                    {{ $bd->nama }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
+                <div class="card-body">
+                    <table class="table table-bordered nowrap  " id="tablePeserta">
+                        <thead>
+                            <th>No.</th>
+                            <th>KPU</th>
+                            <th class="text-center">Jumlah Peserta</th>
+                            <th>Nama Peserta</th>
+                            <th>No Hp Peserta</th>
+                            <th width="25%">Jabatan </th>
+                            @foreach ($dataEvent as $event)
+                            <th width="15%" class="text-center" rowspan="3">
+                                {{$event->nama}}
+                            </th>
+                            @endforeach
+                        </thead>
+                        <tbody>
+                            @forelse ($dataBidang as $index => $bidang)
+                            <tr>
+                                <td rowspan="{{$bidang->hasPeserta()->count() + 1}}">{{$index +1}} </td>
+                                <td rowspan="{{$bidang->hasPeserta()->count() + 1}}">{{$bidang->nama}} </td>
+                                <td class="text-center" rowspan="{{$bidang->hasPeserta()->count() + 1}} ">
+                                    {{$bidang->hasPeserta()->count()}} </td>
+
+                                @forelse ($bidang->hasPeserta()->get()->sortBy(function($value){
+                                return $value->jabatan_no_urut;
+                                }) as $peserta)
+                            <tr>
+
+                                <td>{{$peserta->nama}}</td>
+                                <td>{{$peserta->no_hp}}</td>
+                                <td>{{$peserta->jabatan}}</td>
+                                @foreach ($dataEvent as $event)
+                                <td class="text-center"
+                                    {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() > 1 ? "bg-pink" : ""}}>
+                                    {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count()}}</td>
+                                @endforeach
+
+                                {{-- <td>{{$peserta->jabatan_no_urut}}</td> --}}
+                            </tr>
+                            @empty
+                            {{-- <td rowspan="3"></td> --}}
+                            @endforelse
+
+                            </tr>
+                            @empty
+
+                            @endforelse
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-right" colspan="2">Total Peserta</td>
+                                <td class="text-center">{{$pesertaCount}}</td>
+                                <td colspan="3" class="text-right">Total Peserta Hadir</td>
+                                @foreach ($dataEvent as $event)
+
+                                <td class="text-center">{{$event->hasEntrance()->count()}} </td>
+
+                                @endforeach
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
-
-
         </div>
+
+
     </div>
+</div>
 @stop
 
 @push('chart')
 @endpush
 @push('style')
-    <style>
-        .logox {
-            height: 10px;
-            top: 0;
+<style>
+    .logox {
+        height: 10px;
+        top: 0;
+    }
+
+    @media (max-width: 500px) {
+        #perda {
+            height: 52px;
         }
+    }
 
-        @media (max-width: 500px) {
-            #perda {
-                height: 52px;
-            }
-        }
+    .modal {
+        text-align: center;
+    }
 
-        .modal {
-            text-align: center;
-        }
-
-        @media screen and (min-width: 768px) {
-            .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                position: absolute;
-                height: 100%;
-
-            }
-        }
-
-        .modal-dialog {
+    @media screen and (min-width: 768px) {
+        .modal:before {
             display: inline-block;
-            text-align: left;
             vertical-align: middle;
-            top: 50%;
+            content: " ";
+            position: absolute;
+            height: 100%;
+
         }
-    </style>
-    <link rel="stylesheet" href="http://radmin.test/plugins/owl.carousel/dist/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="http://radmin.test/plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
+    }
+
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+        top: 50%;
+    }
+</style>
+
+
+@endpush
+@push('script')
+    <script script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"> </script>
     <script>
-        setTimeout(function(){
-            $( "#tablePeserta" ).load( "#tablePeserta" );
-            console.log("refresh ");
-        }, 5000);
+         $('#cmbFilter').select2({
+                placeholder: '--- Pilih Hak Akses ---',
+                width: '100%'
+            });
     </script>
 @endpush
+
+

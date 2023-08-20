@@ -46,6 +46,12 @@ class Peserta extends Model
             return $this->hasBidang->nama;
         }
     }
+    public function getKpuAttribute()
+    {
+        if ($this->hasBidang) {
+            return $this->hasBidang->kpu;
+        }
+    }
 
     public function hasJabatan()
     {
@@ -56,6 +62,12 @@ class Peserta extends Model
     {
         if ($this->hasJabatan) {
             return $this->hasJabatan->nama;
+        }
+    }
+    public function getJabatanNoUrutAttribute()
+    {
+        if ($this->hasJabatan) {
+            return $this->hasJabatan->no_urut;
         }
     }
     public static function boot()

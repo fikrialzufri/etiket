@@ -251,7 +251,7 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </div>
-<page id="contentStriker"  style="display: none;">
+<page id="contentStriker" style="display: block; backgroud-color:#680101;" >
     <div class="row">
         @forelse ($cetak as $item)
         <div class="col-3 col-md-3 col-lg-3 text-center">
@@ -267,9 +267,13 @@
                 </span>
 
             </div>
+            @if ($item->kpu !== $item->bidang)
+
             <div style="display: flex;justify-content: center;">
-
-
+                <p class="" style="width: 14rem; font-size: 10pt; color: #ffff;">{{ strtoupper($item->kpu) }}</p>
+            </div>
+            @endif
+            <div style="display: flex;justify-content: center;" class="pb-1">
                 <p class="" style="width: 14rem; font-size: 10pt; color: #ffff;">{{ strtoupper($item->bidang) }}</p>
             </div>
             <div  class="d-inline-flex p-2">
@@ -289,13 +293,10 @@
 @endsection
 
 @push('style')
-<!-- DataTables -->
-<link rel="stylesheet" href="{{ asset('plugins/DataTables/css/datatables.css') }}">
 @endpush
 @push('script')
 
 <!-- DataTables -->
-<script src="{{ asset('plugins/DataTables/datatables.js') }}"></script>
 <script>
     $(function() {
         $('.image').on('click', function() {

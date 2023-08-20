@@ -23,6 +23,7 @@ class PesertaController extends Controller
     {
         $this->route = 'peserta';
         $this->index = 'peserta';
+        $this->sort = 'nama';
         $this->paginate = 20;
         $this->middleware('permission:view-' . $this->route, ['only' => ['index', 'show']]);
         $this->middleware('permission:create-' . $this->route, ['only' => ['create', 'store']]);
@@ -53,6 +54,10 @@ class PesertaController extends Controller
                 'name' => 'bidang',
                 'alias' => 'KPU',
             ],
+            // [
+            //     'name' => 'kpu',
+            //     'alias' => 'KPU Pusat',
+            // ],
             [
                 'name' => 'jabatan',
                 'alias' => 'Jabatan',
@@ -226,117 +231,8 @@ class PesertaController extends Controller
         $countAll = 0;
         $queryArray = [];
         $queryRaw = '';
-        foreach ($searches as $key => $val) {
-            $search[$key] = request()->input($val['name']);
-            $hasilSearch[$val['name']] = $search[$key];
-            if ($val['input'] === "rupiah" || $val['input'] === "nominal") {
-                $search[$key] = str_replace(".", "", request()->input($val['name']));
-            }
 
-            // return $search[$key];
-            if ($search[$key]) {
-
-                if ($val['input'] != 'daterange') {
-
-                    $searchValues[$key] = preg_split('/\s+/', $search[$key], -1, PREG_SPLIT_NO_EMPTY);
-
-                    if (count($searchValues[$key]) == 1) {
-                        foreach ($searchValues[$key] as $index => $value) {
-                            $query->where($val['name'], 'like', "%{$value}%");
-                            $countAll = $countAll + 1;
-                        }
-                    } else {
-                        $lastquery = '';
-
-                        foreach ($searchValues[$key] as $index => $word) {
-                            if (preg_match("/^[a-zA-Z0-9]+$/", $word) == 1) {
-
-                                if ($queryRaw) {
-                                    $count = $this->model()->whereRaw(rtrim($queryRaw, " and"))->count();
-                                    if ($count > 0) {
-                                        $countAll = $countAll + 1;
-                                        $lastquery = $queryRaw;
-
-                                        $queryRaw .= $val['name'] . ' LIKE "%' . $word . '%" and ';
-                                        if ($this->model()->whereRaw(rtrim($queryRaw, " and"))->count() == 0) {
-                                            $queryRaw = $lastquery;
-                                        }
-                                    }
-                                } else {
-                                    $count = $this->model()->where($val['name'], 'like', "%{$word}%")->count();
-                                    if ($count > 0) {
-                                        $countAll = $countAll + 1;
-
-                                        $queryRaw .= $val['name'] . ' LIKE "%' . $word . '%" and ';
-                                        continue;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if ($queryRaw) {
-                        $query->whereRaw(rtrim($queryRaw, " and "));
-                    }
-                    if (count($queryArray) > 0) {
-                        $query->where($queryArray);
-                    }
-                } else {
-                    $date = explode(' - ', request()->input($val['name']));
-                    $start = Carbon::parse($date[0])->format('Y-m-d') . ' 00:00:01';
-                    $end = Carbon::parse($date[1])->format('Y-m-d') . ' 23:59:59';
-                    // $query = $query->whereBetween(DB::raw('DATE(' . $val['name'] . ')'), array($start, $end));
-                    $query = $query->whereRaw(
-                        "(" . $val['name'] . " >= ? AND " . $val['name'] . " <= ?)",
-                        [
-                            $start . " 00:00:00",
-                            $end . " 23:59:59"
-                        ]
-                    );
-
-                    $export .= 'from=' . $start . '&to=' . $end;
-                    $countAll = $countAll + 1;
-                }
-
-                if ($countAll == 0) {
-                    $query->where('id', "");
-                }
-            }
-            $export .= $val['name'] . '=' . $search[$key] . '&';
-        }
-
-        //akhir pencarian --------------------------------
-        // relatio
-        // sort by
-        if ($this->user) {
-            if (!Auth::user()->hasRole('superadmin') && !Auth::user()->hasRole('admin')) {
-                $query->where('user_id', Auth::user()->id);
-            }
-        }
-
-        if ($this->queryScope() != null) {
-
-            // return $this->queryScope();
-            foreach ($this->queryScope() as $key => $value) {
-
-                if (isset($value['field']) && isset($value['value']) && isset($value['operator'])) {
-                    $field = $value['field'];
-
-                    $value = $value['value'];
-                    $query->$field($value);
-                } elseif (isset($value['field']) && isset($value['field'])) {
-                    $field = $value['field'];
-
-                    $value = $value['value'];
-                    $query->$field($value);
-                } else {
-                    $field = $value['field'];
-
-                    $query->$field();
-                    // $query->$queryScope();
-                }
-            }
-        }
+        
 
 
         if ($this->sort) {

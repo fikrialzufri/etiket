@@ -6,6 +6,7 @@ use App\Models\Bidang;
 use App\Models\Element;
 use App\Models\Event;
 use App\Models\Group;
+use App\Models\Jabatan;
 use App\Models\JenisUnit;
 use App\Models\Peserta;
 use App\Models\SubElement;
@@ -46,12 +47,14 @@ class HomeController extends Controller
         $pekerjaanCount = 0;
         $rekananCount = 0;
 
+        $bidang_id = request()->bidang_id;
+
         $dataEvent =Event::orderBy('nama')->get();
-        $dataBidang =Bidang::with('hasEntrance')->get()->sortBy(function($value){
-                 return (int) str_replace("BDG","",$value->kode);;
-        });
+        $dataBidang =Bidang::orderBy('no_urut')->get();
 
         $pesertaCount = Peserta::where('hadir','Hadir')->count();
+
+        $dataJabatan = Jabatan::orderBy('no_urut', 'asc')->get();
 
         return view('home.index', compact(
             'title',
@@ -60,6 +63,7 @@ class HomeController extends Controller
             'pekerjaanCount',
             'grafikGroup',
             'rekananCount',
+            'dataJabatan',
             'dataUnit',
             'dataJenisUnit',
             'anggota',
