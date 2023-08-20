@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class MonitorController extends Controller
 {
         function index() {
-            $dataEvent = Event::get();
+            $dataEvent = Event::orderBy('nama')->get();
             return view('monitor.index',compact('dataEvent'));
         }
         function show($id) {
