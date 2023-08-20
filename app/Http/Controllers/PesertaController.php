@@ -54,10 +54,10 @@ class PesertaController extends Controller
                 'name' => 'bidang',
                 'alias' => 'KPU',
             ],
-            // [
-            //     'name' => 'kpu',
-            //     'alias' => 'KPU Pusat',
-            // ],
+            [
+                'name' => 'kpu',
+                'alias' => 'KPU Pusat',
+            ],
             [
                 'name' => 'jabatan',
                 'alias' => 'Jabatan',
@@ -227,13 +227,123 @@ class PesertaController extends Controller
         //mulai pencarian --------------------------------
         $searches = $this->configSearch();
         $searchValues = [];
+        $DaTabidangId = [];
         $n = 0;
         $countAll = 0;
         $queryArray = [];
         $queryRaw = '';
+        foreach ($searches as $key => $val) {
+            $search[$key] = request()->input($val['name']);
+            $hasilSearch[$val['name']] = $search[$key];
+            if ($val['input'] === "rupiah" || $val['input'] === "nominal") {
+                $search[$key] = str_replace(".", "", request()->input($val['name']));
+            }
 
-        
+            $bidangId = [];
 
+            // return $search[$key];
+            // if ($search[$key]) {
+
+            //     if ($val['input'] != 'daterange') {
+
+            //         $searchValues[$key] = preg_split('/\s+/', $search[$key], -1, PREG_SPLIT_NO_EMPTY);
+
+            //         if (count($searchValues[$key]) == 1) {
+            //             foreach ($searchValues[$key] as $index => $value) {
+            //                 $query->where($val['name'], 'like', "%{$value}%");
+            //                 $countAll = $countAll + 1;
+            //             }
+            //         } else {
+            //             $lastquery = '';
+
+            //             foreach ($searchValues[$key] as $index => $word) {
+            //                 if (preg_match("/^[a-zA-Z0-9]+$/", $word) == 1) {
+
+            //                     if ($queryRaw) {
+            //                         $count = $this->model()->whereRaw(rtrim($queryRaw, " and"))->count();
+            //                         if ($count > 0) {
+            //                             $countAll = $countAll + 1;
+            //                             $lastquery = $queryRaw;
+
+
+            //                             $queryRaw .= $val['name'] . ' LIKE "%' . $word . '%" and ';
+            //                             if ($this->model()->whereRaw(rtrim($queryRaw, " and"))->count() == 0) {
+            //                                 $queryRaw = $lastquery;
+            //                             }
+            //                         }
+            //                     } else {
+            //                         $count = $this->model()->where($val['name'], 'like', "%{$word}%")->count();
+
+            //                         // return $val['name'];
+
+            //                         if ($count > 0) {
+            //                             $countAll = $countAll + 1;
+
+            //                             $queryRaw .= $val['name'] . ' LIKE "%' . $word . '%" and ';
+            //                             continue;
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+
+            //         if ($queryRaw) {
+            //             $query->whereRaw(rtrim($queryRaw, " and "));
+            //         }
+            //         if (count($queryArray) > 0) {
+            //             $query->where($queryArray);
+            //         }
+
+            //         if ($val['name'] == 'bidang_id') {
+            //               $DaTabidangId = Bidang::where('id',$search[$key])->get();
+            //               continue;
+
+            //         }
+            //     } else {
+            //         $date = explode(' - ', request()->input($val['name']));
+            //         $start = Carbon::parse($date[0])->format('Y-m-d') . ' 00:00:01';
+            //         $end = Carbon::parse($date[1])->format('Y-m-d') . ' 23:59:59';
+            //         // $query = $query->whereBetween(DB::raw('DATE(' . $val['name'] . ')'), array($start, $end));
+            //         $query = $query->whereRaw(
+            //             "(" . $val['name'] . " >= ? AND " . $val['name'] . " <= ?)",
+            //             [
+            //                 $start . " 00:00:00",
+            //                 $end . " 23:59:59"
+            //             ]
+            //         );
+
+            //         $export .= 'from=' . $start . '&to=' . $end;
+            //         $countAll = $countAll + 1;
+            //     }
+
+            //     if ($countAll == 0) {
+            //         $query->where('id', "");
+            //     }
+            // }
+            // $export .= $val['name'] . '=' . $search[$key] . '&';
+        }
+
+        //akhir pencarian --------------------------------
+        // relatio
+        // sort by
+        $bidang_id = request()->bidang_id;
+        $nama = request()->nama;
+        // $bidang_id = request()->bidang_id;
+
+        if ($nama) {
+            # code...
+            $query->where('nama', $nama);
+        }
+        if ($bidang_id) {
+            $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
+            // return $DaTabidangId;
+            $bidang_id = $DaTabidangId->pluck('id');
+            $query->where(function($subquery)  use ($bidang_id){
+
+                    $subquery->whereIn('bidang_id',$bidang_id);
+            });
+
+        }
 
         if ($this->sort) {
             if ($this->desc) {
@@ -242,7 +352,7 @@ class PesertaController extends Controller
                 $data = $query->orderBy($this->sort);
             }
         }
-        $cetak = $this->model()::where('hadir','Hadir')->paginate(20);
+        $cetak = $this->model()::where('hadir','Hadir')->orderBy('nama')->paginate(20);
         $pesertaHadir = $this->model()::where('hadir','Hadir')->count();
         $pesertaTidakHadir = $this->model()::where('hadir','Tidak Hadir')->count();
         //mendapilkan data model setelah query pencarian

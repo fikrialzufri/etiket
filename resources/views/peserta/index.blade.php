@@ -39,7 +39,7 @@
 
         body,
         page[size="legal"] {
-            background: rgba(46, 46, 46, 0);
+            background: #680101;
             width: 21cm;
             padding: 40px;
             height: 29.7cm;
@@ -251,10 +251,10 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </div>
-<page id="contentStriker" style="display: block; backgroud-color:#680101;" >
-    <div class="row">
+<page id="contentStriker" style="display: none; background-color:#680101;" >
+    <div class="row pt-15">
         @forelse ($cetak as $item)
-        <div class="col-3 col-md-3 col-lg-3 text-center">
+        <div class="col-3 col-md-3 col-lg-3 text-center" style="border: 1pt solid;">
             <div >
 
                 <span style="width: 14rem;  font-size: 8pt; color: #ffff;">{{ $item->kode }}</span>
@@ -273,7 +273,7 @@
                 <p class="" style="width: 14rem; font-size: 10pt; color: #ffff;">{{ strtoupper($item->kpu) }}</p>
             </div>
             @endif
-            <div style="display: flex;justify-content: center;" class="pb-1">
+            <div style="display: flex;justify-content: center; margin-top:-5px" class="pb-1">
                 <p class="" style="width: 14rem; font-size: 10pt; color: #ffff;">{{ strtoupper($item->bidang) }}</p>
             </div>
             <div  class="d-inline-flex p-2">
