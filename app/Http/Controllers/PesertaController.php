@@ -24,7 +24,7 @@ class PesertaController extends Controller
         $this->route = 'peserta';
         $this->index = 'peserta';
         $this->sort = 'nama';
-        $this->paginate = 165;
+        $this->paginate = 15;
         $this->middleware('permission:view-' . $this->route, ['only' => ['index', 'show']]);
         $this->middleware('permission:create-' . $this->route, ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-' . $this->route, ['only' => ['edit', 'update']]);
