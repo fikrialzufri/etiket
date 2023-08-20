@@ -39,7 +39,7 @@
 
         body,
         page[size="legal"] {
-            background: rgb(93, 93, 93);
+            background: rgba(46, 46, 46, 0);
             width: 21cm;
             padding: 40px;
             height: 29.7cm;

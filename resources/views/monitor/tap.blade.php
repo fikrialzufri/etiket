@@ -204,45 +204,63 @@
         var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
 
-        Html5Qrcode.getCameras().then(devices => {
-            if (devices && devices.length) {
-                var cameraId;
-                var cameraLabel;
-                if (devices.length === 1) {
-                    cameraId = devices[0].id;
-                } else {
-                    cameraId = devices[1].id;
-                    if (cameraLabel.includes("front")) {
-                        cameraId = devices[2].id;
-                    }
-                }
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                // Handle on success condition with the decoded message.
+                // var $tes = 'https://192.168.1.19/absensi-qr/public/absen/' + decodedText + '/hadir';
+                var $tes = decodedText;
+                window.location.href = $tes;
+            }
+        }
 
-                const html5QrCode = new Html5Qrcode("qr-reader");
-                html5QrCode.start(
-                        cameraId, {
-                            fps: 10,
-                            qrbox: 250
-                        },
-                        qrCodeMessage => {
-                            //Things you want to do when you match a QR Code
+        // Html5Qrcode.getCameras().then(devices => {
+        //     console.log(devices);
+        //     if (devices && devices.length) {
+        //         var cameraId;
+        //         var cameraLabel;
+        //         if (devices.length === 1) {
+        //             cameraId = devices[0].id;
+        //         } else {
+        //             cameraId = devices[1].id;
+        //             if (cameraLabel.includes("front")) {
+        //                 cameraId = devices[2].id;
+        //             }
+        //         }
 
-                            if (qrCodeMessage) {
-                                $('#barcode').val(qrCodeMessage);
-                                $('#tabqrcode').first().trigger("submit");
-                            }
-                        },
-                        errorMessage => {
-                            // parse error, ignore it.
-                        })
-                    .catch(err => {
-                        // Start failed, handle it.
-                    });
+        //         const html5QrCode = new Html5Qrcode("qr-reader");
+        //         html5QrCode.start(
+        //                 cameraId, {
+        //                     fps: 10,
+        //                     qrbox: 250
+        //                 },
+        //                 qrCodeMessage => {
+        //                     //Things you want to do when you match a QR Code
 
-                }
-                 html5QrCode.render(onScanSuccess);
-        }).catch(err => {
+        //                     if (qrCodeMessage) {
+        //                         $('#barcode').val(qrCodeMessage);
+        //                         $('#tabqrcode').first().trigger("submit");
+        //                     }
+        //                 },
+        //                 errorMessage => {
+        //                     // parse error, ignore it.
+        //                 })
+        //             .catch(err => {
+        //                 // Start failed, handle it.
+        //             });
 
+        //         }
+        //          html5QrCode.render(onScanSuccess);
+        // }).catch(err => {
+
+        // });
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+        "qr-reader", {
+            fps: 10,
+            qrbox: 250
         });
+        html5QrcodeScanner.render(onScanSuccess);
     </script>
 </body>
 
