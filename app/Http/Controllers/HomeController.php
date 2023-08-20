@@ -50,7 +50,12 @@ class HomeController extends Controller
         $bidang_id = request()->bidang_id;
 
         $dataEvent =Event::orderBy('nama')->get();
-        $dataBidang =Bidang::orderBy('no_urut')->get();
+        $dataFilterbidang = Bidang::orderBy('no_urut')->get();
+        $dataBidang =Bidang::query();
+        if ($bidang_id) {
+            // $dataBidang->where('parent_id',$bidang_id) ;
+        }
+        $dataBidang = $dataBidang->orderBy('no_urut')->get();
 
         $pesertaCount = Peserta::where('hadir','Hadir')->count();
 
@@ -59,6 +64,7 @@ class HomeController extends Controller
         return view('home.index', compact(
             'title',
             'pegawai',
+            'dataFilterbidang',
             'pesertaCount',
             'pekerjaanCount',
             'grafikGroup',

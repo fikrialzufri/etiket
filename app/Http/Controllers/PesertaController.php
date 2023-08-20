@@ -343,10 +343,11 @@ class PesertaController extends Controller
             $query->where('jabatan_id',$jabatan_id);
         }
         if ($bidang_id) {
-            $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
 
+            $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
             $bidang_id = $DaTabidangId->pluck('id');
-            $query->where(function($subquery)  use ($bidang_id){
+            $query->where('id', $bidang_id);
+            $query->orWhere(function($subquery)  use ($bidang_id){
 
                     $subquery->whereIn('bidang_id',$bidang_id);
             });

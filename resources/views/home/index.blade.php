@@ -11,20 +11,22 @@
                     {{-- <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}">
                     <i class="fa fa-file"></i> Download Peserta
                     </a> --}}
-                    <div class="col-lg-2">
+                     <form action="" id="form"  enctype="multipart/form-data">
+                        <div class="col-lg-12">
 
-                        <div class="form-group ">
-                            <label >Filter KPU</label>
-                            <select name="cmb" class="selected2 form-control" id="cmbFilter" required>
-                                <option value="">--Pilih KPU--</option>
-                                @foreach ($dataBidang as $bd)
-                                <option value="{{ $bd->id }}" {{ old('rule') == $bd->id ? 'selected' : '' }}>
-                                    {{ $bd->nama }}
-                                </option>
-                                @endforeach
-                            </select>
+                            <div class="form-group ">
+                                <label >Filter KPU</label>
+                                <select name="bidang_id" class="selected2 form-control" id="cmbFilter" required>
+                                    <option value="">--Pilih KPU--</option>
+                                    @foreach ($dataFilterbidang as $bd)
+                                    <option value="{{ $bd->id }}" {{ old('rule') == $bd->id ? 'selected' : '' }}>
+                                        {{ $bd->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                     </form>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered nowrap  " id="tablePeserta">
@@ -144,6 +146,10 @@
                 placeholder: '--- Pilih Hak Akses ---',
                 width: '100%'
             });
+         $('#cmbFilter').change(function(){
+            $('#form').submit();
+        });
+
     </script>
 @endpush
 
