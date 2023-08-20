@@ -53,6 +53,13 @@ class HomeController extends Controller
         $dataFilterbidang = Bidang::orderBy('no_urut')->get();
         $dataBidang =Bidang::query();
         if ($bidang_id) {
+            $dataBidang->where('id', $bidang_id);
+            $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
+            $bidang_id = $DaTabidangId->pluck('id');
+            $dataBidang->orWhere(function($subquery)  use ($bidang_id){
+
+                    $subquery->whereIn('bidang_id',$bidang_id);
+            });
             // $dataBidang->where('parent_id',$bidang_id) ;
         }
         $dataBidang = $dataBidang->orderBy('no_urut')->get();
@@ -63,6 +70,7 @@ class HomeController extends Controller
 
         return view('home.index', compact(
             'title',
+            'bidang_id',
             'pegawai',
             'dataFilterbidang',
             'pesertaCount',

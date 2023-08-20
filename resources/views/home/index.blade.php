@@ -19,7 +19,7 @@
                                 <select name="bidang_id" class="selected2 form-control" id="cmbFilter" required>
                                     <option value="">--Pilih KPU--</option>
                                     @foreach ($dataFilterbidang as $bd)
-                                    <option value="{{ $bd->id }}" {{ old('rule') == $bd->id ? 'selected' : '' }}>
+                                    <option value="{{ $bd->id }}" {{ $bidang_id== $bd->id ? 'selected' : '' }}>
                                         {{ $bd->nama }}
                                     </option>
                                     @endforeach
