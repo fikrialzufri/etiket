@@ -64,7 +64,7 @@
                                     $totalPesertaTidakHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
                                 }else{
                                     $totalPesertaKota += $bidang->hasPeserta()->count();
-                                     $totalPesertaHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
+                                     $totalPesertaHadirKota += $bidang->hasPeserta()->where('hadir','Hadir')->count();
                                      $totalPesertaTidakHadirKota += $bidang->hasPeserta()->where('hadir','Tidak Hadir')->count();
                                 }
                             @endphp
