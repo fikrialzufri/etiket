@@ -78,4 +78,5 @@ class Bidang extends Model
     {
         return $this->hasMany(Entrance::class,'bidang_id','id')->where('event_id',$id);
     }
+
 }

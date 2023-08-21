@@ -44,7 +44,20 @@
                             @endforeach
                         </thead>
                         <tbody>
+                            @php
+                                $totaPesertaProvinsi = 0;
+                                $totaPesertaKota = 0;
+                            @endphp
                             @forelse ($dataBidang as $index => $bidang)
+                            @php
+                                if ($bidang->jumlah_min == 2) {
+                                    # code...
+                                    $totaPesertaProvinsi += $bidang->hasPeserta()->count();
+                                }else{
+                                    $totaPesertaKota += $bidang->hasPeserta()->count();
+
+                                }
+                            @endphp
                             <tr>
                                 <td rowspan="{{$bidang->hasPeserta()->count() + 1}}">{{$index +1}} </td>
                                 <td rowspan="{{$bidang->hasPeserta()->count() + 1}}">{{$bidang->nama}} </td>
@@ -87,6 +100,16 @@
 
                                 @endforeach
 
+                            </tr>
+                            <tr>
+                                <td>Total Peserta Provinsi</td>
+                                <td>:</td>
+                                <td>{{$totaPesertaProvinsi}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Peserta Kabupaten / Kota</td>
+                                <td>:</td>
+                                <td>{{$totaPesertaKota}}</td>
                             </tr>
                         </tfoot>
                     </table>
