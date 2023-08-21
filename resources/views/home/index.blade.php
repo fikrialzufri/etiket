@@ -52,7 +52,7 @@
                             @php
                                 if ($bidang->jumlah_min == 2) {
                                     # code...
-                                    $totaPesertaProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
+                                    $totaPesertaProvinsi += $bidang->hasPeserta()->count();
                                 }else{
                                     $totaPesertaKota += $bidang->hasPeserta()->count();
 
@@ -166,7 +166,7 @@
     <script script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"> </script>
     <script>
          $('#cmbFilter').select2({
-                placeholder: '--- Pilih Hak Akses ---',
+                placeholder: '--- Pilih KPU ---',
                 width: '100%'
             });
          $('#cmbFilter').change(function(){

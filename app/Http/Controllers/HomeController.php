@@ -58,7 +58,7 @@ class HomeController extends Controller
             $bidang_id = $DaTabidangId->pluck('id');
             $dataBidang->orWhere(function($subquery)  use ($bidang_id){
 
-                    $subquery->whereIn('bidang_id',$bidang_id);
+                    $subquery->whereIn('id',$bidang_id);
             });
             // $dataBidang->where('parent_id',$bidang_id) ;
         }

@@ -59,6 +59,12 @@ class Bidang extends Model
         // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
         return $this->hasMany(Peserta::class)->where('hadir','Hadir');
     }
+
+    function hasPesertaTidakHadir()
+    {
+        // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+        return $this->hasMany(Peserta::class)->where('hadir','Tidak Hadir');
+    }
     function hasJabatan()
     {
         // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
