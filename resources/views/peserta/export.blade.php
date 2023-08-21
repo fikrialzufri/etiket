@@ -21,28 +21,28 @@
 
     <tbody>
         <tr>
-            <td style="border: 3px solid #000000;  text-align: center;" width="50px">No.</td>
-            <td style="border: 3px solid #000000;  text-align: center;" width="400px">KPU</td>
-            {{-- <td style="border: 3px solid #000000;  text-align: center; text-align: center;" width="100px">Jumlah Peserta</td> --}}
-            <td style="border: 3px solid #000000;  text-align: center;" width="400px">Nama Peserta</td>
-            <td style="border: 3px solid #000000;  text-align: center;" width="400px">No Hp Peserta</td>
-            <td style="border: 3px solid #000000;  text-align: center;" width="400px">Jabatan </td>
-            <td style="border: 3px solid #000000;  text-align: center;" width="400px">Tanda Terima </td>
+            <td style="border: 3px solid #000000;  text-align: center; font-size:14pt;" width="50px">No.</td>
+            <td style="border: 3px solid #000000;  text-align: center; font-size:14pt;" width="400px">KPU</td>
+            {{-- <td style="border: 3px solid #000000;  text-align: center; font-size:14pt; text-align: center; font-size:14pt;" width="100px">Jumlah Peserta</td> --}}
+            <td style="border: 3px solid #000000;  text-align: center; font-size:14pt;" width="400px">Nama Peserta</td>
+            <td style="border: 3px solid #000000;  text-align: center; font-size:14pt;" width="400px">No Hp Peserta</td>
+            <td style="border: 3px solid #000000;  text-align: center; font-size:14pt;" width="400px">Jabatan </td>
+            <td style="border: 3px solid #000000;  text-align: center; font-size:14pt;" width="400px">Tanda Terima </td>
 
         </tr>
         @forelse ($dataBidang as $index => $bidang)
         <tr style="border: 3px solid #000000;">
-            <td style="border: 3px solid #000000; text-align: center;  vertical-align: middle;text-align: center;" rowspan="{{$bidang->hasPeserta()->count() + 1 }}">{{$index + 1}} </td>
-            <td style="border: 3px solid #000000; text-align: center;  vertical-align: middle;text-align: center;"  rowspan="{{$bidang->hasPeserta()->count() + 1 }}">{{$bidang->nama}} </td>
+            <td style="border: 3px solid #000000;  font-size:14pt;  vertical-align: middle;text-align: center; font-size:14pt;" rowspan="{{$bidang->hasPeserta()->count() + 1 }}">{{$index + 1}} </td>
+            <td style="border: 3px solid #000000;  font-size:14pt;  vertical-align: middle;text-align: center; font-size:14pt;"  rowspan="{{$bidang->hasPeserta()->count() + 1 }}">{{$bidang->nama}} </td>
         </tr>
         @foreach ($bidang->hasPeserta()->get()->sortBy(function($value){
                                 return $value->jabatan_no_urut;
                                 }) as $peserta)
         <tr style="border: 3px solid #000000;">
-            <td style="border: 3px solid #000000; text-align: center;  vertical-align: middle;text-align: center;">{{$peserta->nama}}</td>
-            <td style="border: 3px solid #000000; text-align: center;  vertical-align: middle;text-align: center;">{{$peserta->no_hp}}</td>
-            <td style="border: 3px solid #000000; text-align: center;  vertical-align: middle;text-align: center;">{{$peserta->jabatan}}</td>
-            <td style="border: 3px solid #000000; text-align: center;  vertical-align: middle;text-align: center; height:100px; "> </td>
+            <td style="border: 3px solid #000000; text-align: center; font-size:14pt;  vertical-align: middle; font-size:14pt;">{{$peserta->nama}}</td>
+            <td style="border: 3px solid #000000; text-align: center; font-size:14pt;  vertical-align: middle; font-size:14pt;">{{$peserta->no_hp}}</td>
+            <td style="border: 3px solid #000000; text-align: center; font-size:14pt;  vertical-align: middle; font-size:14pt;">{{$peserta->jabatan}}</td>
+            <td style="border: 3px solid #000000; text-align: center; font-size:14pt;  vertical-align: middle; font-size:14pt; height:100px; "> </td>
         </tr>
         @endforeach
         @empty
