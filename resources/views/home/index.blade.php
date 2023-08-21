@@ -53,8 +53,6 @@
                                 $totalPesertaTidakHadirProvinsi = 0;
                                 $totalPesertaHadirKota = 0;
                                 $totalPesertaTidakHadirKota = 0;
-
-
                             @endphp
                             @forelse ($dataBidang as $index => $bidang)
                             @php
@@ -85,7 +83,8 @@
                                 <td>{{$peserta->no_hp}}</td>
                                 <td>{{$peserta->jabatan}}</td>
                                 <td>{{$peserta->hadir}}</td>
-                                @foreach ($dataEvent as $event)
+                                @foreach ($dataEvent as $index => $event)
+
                                 <td class="text-center {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() == 0 ? "bg-danger" : ""}}"
                                     >
                                     {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() > 0 ? "Absen" : "Tidak Absen"}}</td>
@@ -108,8 +107,12 @@
                                 <td class="text-center">{{$totalPesertaAll}}</td>
                                 <td colspan="4" class="text-right">Total Peserta Absen</td>
                                 @foreach ($dataEvent as $event)
+                                @if ($bidang_id != '')
 
-                                <td class="text-center">{{$event->hasEntrance($bidang_id)->where('bidang_id',$bidang_id)->count()}} </td>
+                                <td class="text-center">{{$event->hasEntrance()->where('bidang_id',$bidang_id)->count()}} </td>
+                                @else
+                                 <td class="text-center">{{$event->hasEntrance()->count()}}</td>
+                                @endif
 
                                 @endforeach
 
@@ -152,6 +155,9 @@
                             </tr>
                         </tfoot>
                     </table>
+                    {{-- <div class="">
+                      {{ $dataBidang->links()}}
+                    </div> --}}
                 </div>
             </div>
         </div>
