@@ -52,7 +52,7 @@
                             @php
                                 if ($bidang->jumlah_min == 2) {
                                     # code...
-                                    $totaPesertaProvinsi += $bidang->hasPeserta()->count();
+                                    $totaPesertaProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
                                 }else{
                                     $totaPesertaKota += $bidang->hasPeserta()->count();
 
@@ -102,12 +102,12 @@
 
                             </tr>
                             <tr>
-                                <td>Total Peserta Provinsi</td>
+                                <td  colspan="2">Total Peserta Provinsi</td>
                                 <td>:</td>
                                 <td>{{$totaPesertaProvinsi}}</td>
                             </tr>
                             <tr>
-                                <td>Total Peserta Kabupaten / Kota</td>
+                                <td  colspan="2">Total Peserta Kabupaten / Kota</td>
                                 <td>:</td>
                                 <td>{{$totaPesertaKota}}</td>
                             </tr>
