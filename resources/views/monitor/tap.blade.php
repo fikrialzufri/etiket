@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="input-group input-group-button">
                                     <div class="input-group-prepend">
-                                        <button class="btn btn-primary" type="button">Scan Qrcode</button>
+                                        <button class="btn btn-primary" type="button" id="scanQrcode">Scan Qrcode</button>
                                     </div>
                                     <input type="text" class="form-control" name="barcode" id="barcode"
                                         placeholder="Scan Qrcode" autofocus>
@@ -206,6 +206,7 @@
         var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
 
+
         function onScanSuccess(decodedText, decodedResult) {
 
             console.log(decodedResult);
@@ -306,6 +307,34 @@
             qrbox: 250
         });
         html5QrcodeScanner.render(onScanSuccess);
+
+        $('#scanQrcode').on( "click", function() {
+            console.log( $( this ).text() );
+            let event_id = $('#event_id').val();
+            let barcode = $('#barcode').val();
+            $.ajax({
+                    type: 'post',
+                    url: "{{ route('monitor.tab') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "barcode":barcode,
+                        "event_id":event_id
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        swall2a(data);
+                        $('#barcode').val("");
+                        // $("#no_ticket").val(data.data);
+                    }, error: function(data) {
+                        swall2a(data.responseJSON);
+                        $('#barcode').val("");
+                        // $("#no_ticket").val(data.data);
+                    },
+                });
+            });
     </script>
 </body>
 
