@@ -122,13 +122,7 @@
                                 <td  colspan="3">Total Peserta Provinsi</td>
                                 <td>:</td>
                                 <td>{{$totalPesertaProvinsi}}</td>
-                                <td  colspan="3">Total Belum Absen/Scan</td>
-
-                            </tr>
-                            <tr>
-                                <td  colspan="3">Total Peserta Kabupaten / Kota</td>
-                                <td>:</td>
-                                <td>{{$totalPesertaKota}}</td>
+                                <td >Total Belum Absen/Scan</td>
                                  @foreach ($dataEvent as $event)
                                 @if ($bidang_id != '')
 
@@ -138,6 +132,12 @@
                                 @endif
 
                                 @endforeach
+                            </tr>
+                            <tr>
+                                <td  colspan="3">Total Peserta Kabupaten / Kota</td>
+                                <td>:</td>
+                                <td>{{$totalPesertaKota}}</td>
+
                             </tr>
                            <tr>
                                 <td colspan="3"></td>
