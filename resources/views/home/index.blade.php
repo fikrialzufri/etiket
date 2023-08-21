@@ -58,11 +58,12 @@
                             @php
                                 $totalPesertaAll += $bidang->hasPeserta()->count();
                                 if ($bidang->jumlah_min == 2) {
-                                    # code...
+                                    // Provinsi
                                     $totalPesertaProvinsi += $bidang->hasPeserta()->count();
                                     $totalPesertaHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
-                                    $totalPesertaTidakHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
+                                    $totalPesertaTidakHadirProvinsi += $bidang->hasPeserta()->where('hadir','Tidak Hadir')->count();
                                 }else{
+                                    //
                                     $totalPesertaKota += $bidang->hasPeserta()->count();
                                      $totalPesertaHadirKota += $bidang->hasPeserta()->where('hadir','Hadir')->count();
                                      $totalPesertaTidakHadirKota += $bidang->hasPeserta()->where('hadir','Tidak Hadir')->count();
