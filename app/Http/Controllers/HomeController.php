@@ -47,7 +47,7 @@ class HomeController extends Controller
         $pekerjaanCount = 0;
         $rekananCount = 0;
 
-        $bidang_id = request()->bidang_id;
+         $bidang_id = request()->bidang_id;
 
         $dataEvent =Event::orderBy('nama')->get();
         $dataFilterbidang = Bidang::orderBy('no_urut')->get();
@@ -55,10 +55,10 @@ class HomeController extends Controller
         if ($bidang_id) {
             $dataBidang->where('id', $bidang_id);
             $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
-            $bidang_id = $DaTabidangId->pluck('id');
-            $dataBidang->orWhere(function($subquery)  use ($bidang_id){
+            $bidang_id_pluck = $DaTabidangId->pluck('id');
+            $dataBidang->orWhere(function($subquery)  use ($bidang_id_pluck){
 
-                    $subquery->whereIn('id',$bidang_id);
+                    $subquery->whereIn('id',$bidang_id_pluck);
             });
             // $dataBidang->where('parent_id',$bidang_id) ;
         }

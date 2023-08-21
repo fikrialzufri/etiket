@@ -339,36 +339,45 @@ class PesertaController extends Controller
         $jabatan_id = request()->jabatan_id;
         $hadir = request()->hadir;
         // $bidang_id = request()->bidang_id;
-
+        $cetak = $this->model()::query();
         if ($nama) {
             $query->where('nama', "like",'%'.$nama.'%');
+            $cetak->where('nama', "like",'%'.$nama.'%');
         }
         if ($kode) {
             $query->where('kode', "like",'%'.$kode.'%');
+            $cetak->where('kode', "like",'%'.$kode.'%');
         }
         if ($no_hp) {
             $query->where('no_hp', "like",'%'.$no_hp.'%');
+            $cetak->where('no_hp', "like",'%'.$no_hp.'%');
         }
         if ($jabatan_id) {
             $query->where('jabatan_id',$jabatan_id);
+            $cetak->where('jabatan_id',$jabatan_id);
         }
         if ($bidang_id) {
 
             $query->where('bidang_id', $bidang_id);
+            $cetak->where('bidang_id', $bidang_id);
             $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
             $bidang_id = $DaTabidangId->pluck('id');
             $query->orWhere(function($subquery)  use ($bidang_id){
 
                     $subquery->whereIn('bidang_id',$bidang_id);
             });
+            $cetak->orWhere(function($subquery)  use ($bidang_id){
+
+                    $subquery->whereIn('bidang_id',$bidang_id);
+            });
 
         }
 
-        $cetak = $query->where('hadir','Hadir')->orderBy('nama')->paginate(15);
 
         if ($hadir) {
             $query->where('hadir',$hadir);
         }
+        $cetak = $cetak->where('hadir','Hadir')->orderBy('nama')->paginate(15);
 
         if ($this->sort) {
             if ($this->desc) {

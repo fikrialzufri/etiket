@@ -15,7 +15,7 @@
                         <div class="col-lg-12">
 
                             <div class="form-group ">
-                                <label >Filter KPU</label>
+                                <label >Filter KPU </label>
                                 <select name="bidang_id" class="selected2 form-control" id="cmbFilter" required>
                                     <option value="">--Pilih KPU--</option>
                                     @foreach ($dataFilterbidang as $bd)
@@ -37,6 +37,7 @@
                             <th>Nama Peserta</th>
                             <th>No Hp Peserta</th>
                             <th width="25%">Jabatan </th>
+                            <th>Kehadiran</th>
                             @foreach ($dataEvent as $event)
                             <th width="15%" class="text-center" rowspan="3">
                                 {{$event->nama}}
@@ -45,17 +46,28 @@
                         </thead>
                         <tbody>
                             @php
-                                $totaPesertaProvinsi = 0;
-                                $totaPesertaKota = 0;
+                                $totalPesertaAll = 0;
+                                $totalPesertaProvinsi = 0;
+                                $totalPesertaKota = 0;
+                                $totalPesertaHadirProvinsi = 0;
+                                $totalPesertaTidakHadirProvinsi = 0;
+                                $totalPesertaHadirKota = 0;
+                                $totalPesertaTidakHadirKota = 0;
+
+
                             @endphp
                             @forelse ($dataBidang as $index => $bidang)
                             @php
+                                $totalPesertaAll += $bidang->hasPeserta()->count();
                                 if ($bidang->jumlah_min == 2) {
                                     # code...
-                                    $totaPesertaProvinsi += $bidang->hasPeserta()->count();
+                                    $totalPesertaProvinsi += $bidang->hasPeserta()->count();
+                                    $totalPesertaHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
+                                    $totalPesertaTidakHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
                                 }else{
-                                    $totaPesertaKota += $bidang->hasPeserta()->count();
-
+                                    $totalPesertaKota += $bidang->hasPeserta()->count();
+                                     $totalPesertaHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
+                                     $totalPesertaTidakHadirKota += $bidang->hasPeserta()->where('hadir','Tidak Hadir')->count();
                                 }
                             @endphp
                             <tr>
@@ -72,6 +84,7 @@
                                 <td>{{$peserta->nama}}</td>
                                 <td>{{$peserta->no_hp}}</td>
                                 <td>{{$peserta->jabatan}}</td>
+                                <td>{{$peserta->hadir}}</td>
                                 @foreach ($dataEvent as $event)
                                 <td class="text-center {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() == 0 ? "bg-danger" : ""}}"
                                     >
@@ -92,24 +105,50 @@
                         <tfoot>
                             <tr>
                                 <td class="text-right" colspan="2">Total Peserta</td>
-                                <td class="text-center">{{$pesertaCount}}</td>
-                                <td colspan="3" class="text-right">Total Peserta Hadir</td>
+                                <td class="text-center">{{$totalPesertaAll}}</td>
+                                <td colspan="4" class="text-right">Total Peserta Absen</td>
                                 @foreach ($dataEvent as $event)
 
-                                <td class="text-center">{{$event->hasEntrance()->count()}} </td>
+                                <td class="text-center">{{$event->hasEntrance($bidang_id)->where('bidang_id',$bidang_id)->count()}} </td>
 
                                 @endforeach
 
                             </tr>
                             <tr>
-                                <td  colspan="2">Total Peserta Provinsi</td>
+                                <td  colspan="3">Total Peserta Provinsi</td>
                                 <td>:</td>
-                                <td>{{$totaPesertaProvinsi}}</td>
+                                <td>{{$totalPesertaProvinsi}}</td>
                             </tr>
                             <tr>
-                                <td  colspan="2">Total Peserta Kabupaten / Kota</td>
+                                <td  colspan="3">Total Peserta Kabupaten / Kota</td>
                                 <td>:</td>
-                                <td>{{$totaPesertaKota}}</td>
+                                <td>{{$totalPesertaKota}}</td>
+                            </tr>
+                           <tr>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td  colspan="3">Total Peserta Hadir Provinsi</td>
+                                <td>:</td>
+                                <td>{{$totalPesertaHadirProvinsi}}</td>
+                            </tr>
+                            <tr>
+                                <td  colspan="3">Total Peserta Tidak Hadir Provinsi</td>
+                                <td>:</td>
+                                <td>{{$totalPesertaTidakHadirProvinsi}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td  colspan="3">Total Peserta Hadir Kabupaten / Kota</td>
+                                <td>:</td>
+                                <td>{{$totalPesertaHadirKota}}</td>
+                            </tr>
+                            <tr>
+                                <td  colspan="3">Total Peserta Tidak Hadir Kabupaten / Kota</td>
+                                <td>:</td>
+                                <td>{{$totalPesertaTidakHadirKota}}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -166,7 +205,7 @@
     <script script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"> </script>
     <script>
          $('#cmbFilter').select2({
-                placeholder: '--- Pilih KPU ---',
+                // placeholder: '--- Pilih KPU ---',
                 width: '100%'
             });
          $('#cmbFilter').change(function(){

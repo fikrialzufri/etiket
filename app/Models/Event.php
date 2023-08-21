@@ -49,7 +49,7 @@ class Event extends Model
         return tanggal_indonesia_waktu($this->tanggal_selesai);
     }
 
-    function hasEntrance()
+    function hasEntrance($id)
     {
         return $this->hasMany(Entrance::class,'event_id','id');
     }
