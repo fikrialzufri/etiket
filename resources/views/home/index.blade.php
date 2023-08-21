@@ -122,11 +122,22 @@
                                 <td  colspan="3">Total Peserta Provinsi</td>
                                 <td>:</td>
                                 <td>{{$totalPesertaProvinsi}}</td>
+                                <td  colspan="3">Total Belum Absen/Scan</td>
+
                             </tr>
                             <tr>
                                 <td  colspan="3">Total Peserta Kabupaten / Kota</td>
                                 <td>:</td>
                                 <td>{{$totalPesertaKota}}</td>
+                                 @foreach ($dataEvent as $event)
+                                @if ($bidang_id != '')
+
+                                <td class="text-center">{{ $totalPesertaAll - $event->hasEntrance()->where('bidang_id',$bidang_id)->count()}} </td>
+                                @else
+                                 <td class="text-center">{{$totalPesertaAll - $event->hasEntrance()->count()}}</td>
+                                @endif
+
+                                @endforeach
                             </tr>
                            <tr>
                                 <td colspan="3"></td>
