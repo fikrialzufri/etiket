@@ -8,9 +8,9 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    {{-- <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}">
+                    <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}?bidang_id={{$bidang_id}}">
                     <i class="fa fa-file"></i> Download Peserta
-                    </a> --}}
+                    </a>
                      <form action="" id="form"  enctype="multipart/form-data">
                         <div class="col-lg-12">
 
@@ -47,6 +47,7 @@
                         <tbody>
                             @php
                                 $totalPesertaAll = 0;
+                                $totalPesertaKouta = 0;
                                 $totalPesertaProvinsi = 0;
                                 $totalPesertaKota = 0;
                                 $totalPesertaHadirProvinsi = 0;
@@ -71,7 +72,9 @@
                             @endphp
                             <tr>
                                 <td rowspan="{{$bidang->hasPeserta()->count() + 1}}">{{$index +1}} </td>
-                                <td rowspan="{{$bidang->hasPeserta()->count() + 1}}">{{$bidang->nama}} </td>
+                                <td rowspan="{{$bidang->hasPeserta()->count() + 1}}"
+
+                                    >{{$bidang->nama}} </td>
                                 <td class="text-center" rowspan="{{$bidang->hasPeserta()->count() + 1}} ">
                                     {{$bidang->hasPeserta()->count()}} </td>
 

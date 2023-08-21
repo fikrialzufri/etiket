@@ -521,7 +521,19 @@ class PesertaController extends Controller
     public function excelpeserta()
     {
         $now = Carbon::now();
-        return Excel::download(new ExportPeserta(), 'Export Kehadiran Peserta '.$now.'.xlsx');
+        $id = request()->get('bidang_id') ?: "";
+
+        $title = 'Export Kehadiran Peserta '.$now.'.xlsx';
+
+        if ($id) {
+            $bidang = Bidang::find($id);
+            if ($bidang) {
+               $title = 'Export Kehadiran Peserta '. $bidang->nama. " "  .$now.'.xlsx';
+            }
+        }
+
+
+        return Excel::download(new ExportPeserta($id), $title);
     }
     public function excellistpeserta()
     {
