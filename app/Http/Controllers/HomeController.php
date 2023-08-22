@@ -49,7 +49,7 @@ class HomeController extends Controller
 
          $bidang_id = request()->bidang_id;
 
-        $dataEvent =Event::orderBy('created_at','ASC')->get();
+        $dataEvent =Event::orderBy('nama','ASC')->get();
         $dataFilterbidang = Bidang::orderBy('no_urut')->get();
         $dataBidang =Bidang::query();
         if ($bidang_id) {
