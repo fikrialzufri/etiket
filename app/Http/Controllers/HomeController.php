@@ -50,6 +50,7 @@ class HomeController extends Controller
          $bidang_id = request()->bidang_id;
 
         $dataEvent =Event::orderBy('nama','ASC')->get();
+        $countEvent = Event::count();
         $dataFilterbidang = Bidang::orderBy('no_urut')->get();
         $dataBidang =Bidang::query();
         if ($bidang_id) {
@@ -68,9 +69,13 @@ class HomeController extends Controller
 
         $dataJabatan = Jabatan::orderBy('no_urut', 'asc')->get();
 
+        $jumlahRowSpan =  $countEvent + 3;
+
         return view('home.index', compact(
             'title',
             'bidang_id',
+            'jumlahRowSpan',
+            'countEvent',
             'pegawai',
             'dataFilterbidang',
             'pesertaCount',

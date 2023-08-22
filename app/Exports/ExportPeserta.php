@@ -22,6 +22,7 @@ class ExportPeserta implements FromView
     {
         $dataEvent =Event::orderBy('nama')->get();
         $id = $this->id;
+        $bidang_id = $this->id;
         $dataBidang =Bidang::query();
         if ($id) {
             $dataBidang->where('id', $id);
@@ -39,6 +40,7 @@ class ExportPeserta implements FromView
 
         return view('peserta.export', compact(
             'dataBidang',
+            'bidang_id',
             'pesertaCount',
             'dataEvent',
         ));
