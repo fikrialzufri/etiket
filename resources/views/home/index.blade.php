@@ -29,7 +29,7 @@
                      </form>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered nowrap  " id="tablePeserta">
+                    <table class="table table-bordered nowrap table-responsive-lg  table-responsive-md" id="tablePeserta">
                         <thead>
                             <th>No.</th>
                             <th>KPU</th>
