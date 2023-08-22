@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         @endif
-                        <form method="POST" action="{{ route('simpan.pendaftaran') }}">
+                        {{-- <form method="POST" action="{{ route('simpan.pendaftaran') }}">
                             @csrf
                             <div>
                                 <span style="font-size: 9pt" for="nama">Nama Peserta</span>
@@ -201,7 +201,7 @@
                                 <button class="btn btn-custom">Daftar</button>
                             </div>
 
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>
