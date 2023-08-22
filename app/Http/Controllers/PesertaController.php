@@ -430,15 +430,14 @@ class PesertaController extends Controller
         $dataBidang = Bidang::whereStatus(1)->orderBy('kode')->get();
         $dataJabatan = Jabatan::orderBy('no_urut', 'asc')->get();
         $dataJabatanOld = [];
+        $bidang_id =  old('bidang_id');
         if (old('bidang_id')) {
-            $bidang_id = old('bidang_id');
-            $bidang = Bidang::find($bidang_id);
-            if ($bidang) {
-                $dataJabatanOld = Jabatan::where('jumlah_min', '>=', $bidang->jumlah_min)->orderBy('created_at', 'desc')->get();
-            }
+             $bidang = Bidang::find($bidang_id);
+
+            $dataJabatanOld = Jabatan::where('jumlah_min', '>=', $bidang->jumlah_min)->orderBy('no_urut')->get();
         }
 
-        return view('peserta.pendafataran', compact('dataBidang', 'dataJabatan', 'dataJabatanOld'));
+        return view('peserta.pendafataran', compact('dataBidang', 'dataJabatan', 'dataJabatanOld','bidang_id'));
     }
     function simpanpendaftaran(Request $request)
     {

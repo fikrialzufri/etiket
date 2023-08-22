@@ -118,14 +118,15 @@
                                 @enderror
                             </div>
                             <div>
-                                <span style="font-size: 9pt" for="jabatan_id">Pilih Jabatan</span>
+                                <span style="font-size: 9pt" for="jabatan_id">Pilih Jabatan </span>
                             </div>
                             <div class="form-group">
-                                <select class="form-control select2" id="jabatan_id" name="jabatan_id" required oninvalid="this.setCustomValidity('Pilih Jabatan, Jabatan harus dipilih')" oninput="this.setCustomValidity('')">
+                                <select class="form-control select2" id="jabatan_id" name="jabatan_id" required oninvalid="this.setCustomValidity('Pilih Jabatan, Jabatan harus dipilih')">
+                                    <option value=""> --- Pilih Jabatan ---</option>
                                     @foreach ($dataJabatanOld as $bidang)
 
                                     <option value="{{ $bidang->id }}" id="bidang_{{ $bidang->id }}" data-max="{{ $bidang->jumlah_max }}"
-                                        data-min="{{ $bidang->jumlah_min }}" {{ old('bidang_id')==$bidang->id ? "selected" : '' }}>{{ $bidang->nama}}
+                                        data-min="{{ $bidang->jumlah_min }}" {{$bidang_id== $bidang->id ? "selected" : '' }}>{{ $bidang->nama }}
                                     </option>
                                     @endforeach
                                 </select>
@@ -216,6 +217,7 @@
     <script>
         const dataJabatan = @json($dataJabatan);
         // console.log(dataJabatan);
+
         $("#bidang_id").select2({
             placeholder: '--- Pilih KPU ---',
         });
@@ -229,7 +231,7 @@
             let listJabatanArray = '';
 
             listJabatan = Object.fromEntries(filterJabatan);
-            listJabatanArray += `<option value=""> Pilih Jabatan</option>`;
+            listJabatanArray += `<option value=""> ---- Pilih Jabatan ---</option>`;
 
             $.each( listJabatan, function( key, value ) {
                 listJabatanArray += `
@@ -239,7 +241,7 @@
                 `;
             });
             $("#jabatan_id").html(listJabatanArray);
-            $('#jabatan_id').select2({});
+            $('#jabatan_id').select2();
         });
         $('#bidang_id').on("select2:select", function(e) {
             $("#bidang_id").select2('close');
@@ -247,9 +249,8 @@
         $('#jabatan_id').on("select2:select", function(e) {
             $("#jabatan_id").select2('close');
         });
+
         $("#jabatan_id").select2();
-        $("#jabatan_id").on("change", function(e) {
-        });
 
         // $(".checkbox").change(function() {
         //     console.log($("input[type='checkbox']").val());

@@ -250,7 +250,10 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
-                    {{ $data->appends(request()->input())->links('template.pagination') }}
+                    <div class="row">
+
+                        {{ $data->appends(request()->input())->links('template.pagination') }}
+                    </div>
                 </div>
             </div>
             <!-- ./col -->
@@ -261,7 +264,7 @@
     </div><!-- /.container-fluid -->
 </div>
 <div class="">
-    
+
 </div>
 <page id="contentStriker" style="display: block;" >
     <div class="row pt-15">
