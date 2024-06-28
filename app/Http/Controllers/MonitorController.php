@@ -79,10 +79,10 @@ class MonitorController extends Controller
 
              $hadir = Entrance::where('event_id', $event_id)->where('peserta_id',$peserta->id)->first();
 
-            if ($hadir) {
-                  return $this->sendError("Peserta sudah masuk", "", 404);
+            // if ($hadir) {
+            //       return $this->sendError("Peserta sudah masuk", "", 404);
 
-            }
+            // }
             $now = Carbon::now();
 
             $hadir = new Entrance();
