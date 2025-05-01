@@ -2,234 +2,116 @@
 @section('title', ucwords(str_replace([':', '_', '-', '*'], ' ', $title)))
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <!-- page statustic chart start -->
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between">
-                    <a class="btn btn-sm btn-warning float-right text-light mr-5" href="{{route('peserta.excelpeserta')}}?bidang_id={{$bidang_id}}">
-                    <i class="fa fa-file"></i> Download Peserta
-                    </a>
-                     <form action="" id="form"  enctype="multipart/form-data">
-                        <div class="col-lg-12">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- page statustic chart start -->
+            <div class="col-lg-12 col-md-12">
+                <div class="row">
 
-                            <div class="form-group ">
-                                <label >Filter KPU </label>
-                                <select name="bidang_id" class="selected2 form-control" id="cmbFilter" required>
-                                    <option value="">--Pilih KPU--</option>
-                                    @foreach ($dataFilterbidang as $bd)
-                                    <option value="{{ $bd->id }}" {{ $bidang_id== $bd->id ? 'selected' : '' }}>
-                                        {{ $bd->nama }}
-                                    </option>
-                                    @endforeach
-                                </select>
+                    @foreach ($paslon as $item)
+                        <div class="col-md-4">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <h5 class="text-center" style="font-size: 40px; font-weight: bold;">{{ $item->nama }}
+                                    </h5>
+                                    {{-- Jumlah Peserta Masuk --}}
+                                    <p class="card-text text-center" style="font-size: 20px; font-weight: bold;">Jumlah
+                                        Peserta Masuk</p>
+                                    <h1 class="text-center" style="font-size: 200px; font-weight: bold;">
+                                        {{ $item->hasEntrance ? $item->hasEntrance->count() : 0 }}
+                                    </h1>
+                                    {{-- Jumlah Peserta Belum Masuk --}}
+                                    <p class="card-text">Jumlah Peserta Belum Masuk:
+                                        {{ $item->hasPeserta ? $item->hasPeserta->count() - ($item->hasEntrance ? $item->hasEntrance->count() : 0) : 0 }}
+                                    </p>
+
+                                </div>
                             </div>
                         </div>
-                     </form>
+                    @endforeach
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered nowrap table-responsive-lg  table-responsive-md table-responsive" id="tablePeserta">
-                        <thead>
-                            <th>No.</th>
-                            <th>KPU</th>
-                            <th class="text-center">Jumlah Peserta</th>
-                            <th>Nama Peserta</th>
-                            <th>No Hp Peserta</th>
-                            <th width="25%">Jabatan </th>
-                            <th>Kehadiran</th>
-                            @foreach ($dataEvent as $event)
-                            <th width="15%" class="text-center" rowspan="3">
-                                {{$event->nama}}
-                            </th>
-                            @endforeach
-                        </thead>
-                        <tbody>
-                            @php
-                                $totalPesertaAll = 0;
-                                $totalPesertaKouta = 0;
-                                $totalPesertaProvinsi = 0;
-                                $totalPesertaKota = 0;
-                                $totalPesertaHadirProvinsi = 0;
-                                $totalPesertaTidakHadirProvinsi = 0;
-                                $totalPesertaHadirKota = 0;
-                                $totalPesertaTidakHadirKota = 0;
-                            @endphp
-                            @forelse ($dataBidang as $index => $bidang)
-                            @php
-                                $totalPesertaAll += $bidang->hasPeserta()->count();
-                                if ($bidang->jumlah_min == 2) {
-                                    // Provinsi
-                                    $totalPesertaProvinsi += $bidang->hasPeserta()->count();
-                                    $totalPesertaHadirProvinsi += $bidang->hasPeserta()->where('hadir','Hadir')->count();
-                                    $totalPesertaTidakHadirProvinsi += $bidang->hasPeserta()->where('hadir','Tidak Hadir')->count();
-                                }else{
-                                    //
-                                    $totalPesertaKota += $bidang->hasPeserta()->count();
-                                     $totalPesertaHadirKota += $bidang->hasPeserta()->where('hadir','Hadir')->count();
-                                     $totalPesertaTidakHadirKota += $bidang->hasPeserta()->where('hadir','Tidak Hadir')->count();
-                                }
-                            @endphp
-                            <tr>
-                                <td rowspan="{{$bidang->hasPeserta()->count() + 1}}">{{$index +1}} </td>
-                                <td rowspan="{{$bidang->hasPeserta()->count() + 1}}"
+            </div>
+            {{-- log peserta --}}
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Log Peserta</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Jumlah Peserta Masuk</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($entrance as $key => $value)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $value->hasPeserta->kode }}</td>
+                                        <td>{{ tanggal_indonesia_waktu($value->created_at, false) }}</td>
+                                    </tr>
+                                @empty
 
-                                    >{{$bidang->nama}} </td>
-                                <td class="text-center" rowspan="{{$bidang->hasPeserta()->count() + 1}} ">
-                                    {{$bidang->hasPeserta()->count()}} </td>
-
-                                @forelse ($bidang->hasPeserta()->get()->sortBy(function($value){
-                                return $value->jabatan_no_urut;
-                                }) as $peserta)
-                            <tr>
-
-                                <td>{{$peserta->nama}}</td>
-                                <td>{{$peserta->no_hp}}</td>
-                                <td>{{$peserta->jabatan}}</td>
-                                <td>{{$peserta->hadir}}</td>
-                                @foreach ($dataEvent as $index => $event)
-
-                                <td class="text-center {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() == 0 ? "bg-danger" : ""}}"
-                                    >
-                                    {{$bidang->hasEntranceByIdPeserta([$event->id, $peserta->id])->count() > 0 ? "Absen" : "Tidak Absen"}}</td>
-                                @endforeach
-
-                                {{-- <td>{{$peserta->jabatan_no_urut}}</td> --}}
-                            </tr>
-                            @empty
-                            {{-- <td rowspan="3"></td> --}}
-                            @endforelse
-
-                            </tr>
-                            @empty
-
-                            @endforelse
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td class="text-right" colspan="2">Total Peserta</td>
-                                <td class="text-center">{{$totalPesertaAll}}</td>
-                                <td colspan="4" class="text-right">Total Peserta Absen</td>
-                                @foreach ($dataEvent as $event)
-                                @if ($bidang_id != '')
-
-                                <td class="text-center">{{$event->hasEntrance()->where('bidang_id',$bidang_id)->count()}} </td>
-                                @else
-                                 <td class="text-center">{{$event->hasEntrance()->count()}}</td>
-                                @endif
-
-                                @endforeach
-
-                            </tr>
-                            <tr>
-                                <td  colspan="3">Total Peserta Provinsi</td>
-                                <td>:</td>
-                                <td>{{$totalPesertaProvinsi}}</td>
-                                <td colspan="2" class="text-right">Total Belum Absen/Scan</td>
-                                 @foreach ($dataEvent as $event)
-                                @if ($bidang_id != '')
-
-                                <td class="text-center">{{ $totalPesertaAll - $event->hasEntrance()->where('bidang_id',$bidang_id)->count()}} </td>
-                                @else
-                                 <td class="text-center">{{$totalPesertaAll - $event->hasEntrance()->count()}}</td>
-                                @endif
-
-                                @endforeach
-                            </tr>
-                            <tr>
-                                <td  colspan="3">Total Peserta Kabupaten / Kota</td>
-                                <td>:</td>
-                                <td>{{$totalPesertaKota}}</td>
-
-                            </tr>
-                           <tr>
-                                <td colspan="3"></td>
-                            </tr>
-                            <tr>
-                                <td  colspan="3">Total Peserta Hadir Provinsi</td>
-                                <td>:</td>
-                                <td>{{$totalPesertaHadirProvinsi}}</td>
-                            </tr>
-                            <tr>
-                                <td  colspan="3">Total Peserta Tidak Hadir Provinsi</td>
-                                <td>:</td>
-                                <td>{{$totalPesertaTidakHadirProvinsi}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"></td>
-                            </tr>
-                            <tr>
-                                <td  colspan="3">Total Peserta Hadir Kabupaten / Kota</td>
-                                <td>:</td>
-                                <td>{{$totalPesertaHadirKota}}</td>
-                            </tr>
-                            <tr>
-                                <td  colspan="3">Total Peserta Tidak Hadir Kabupaten / Kota</td>
-                                <td>:</td>
-                                <td>{{$totalPesertaTidakHadirKota}}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    {{-- <div class="">
-                      {{ $dataBidang->links()}}
-                    </div> --}}
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-</div>
 @stop
 
 @push('chart')
 @endpush
 @push('style')
-<style>
-    .logox {
-        height: 10px;
-        top: 0;
-    }
-
-    @media (max-width: 500px) {
-        #perda {
-            height: 52px;
+    <style>
+        .logox {
+            height: 10px;
+            top: 0;
         }
-    }
 
-    .modal {
-        text-align: center;
-    }
+        @media (max-width: 500px) {
+            #perda {
+                height: 52px;
+            }
+        }
 
-    @media screen and (min-width: 768px) {
-        .modal:before {
+        .modal {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 768px) {
+            .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                position: absolute;
+                height: 100%;
+
+            }
+        }
+
+        .modal-dialog {
             display: inline-block;
+            text-align: left;
             vertical-align: middle;
-            content: " ";
-            position: absolute;
-            height: 100%;
-
+            top: 50%;
         }
-    }
-
-    .modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-        top: 50%;
-    }
-</style>
-
-
+    </style>
 @endpush
 @push('script')
-    <script script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"> </script>
+    <script script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
-         $('#cmbFilter').select2({
-                // placeholder: '--- Pilih KPU ---',
-                width: '100%'
-            });
-         $('#cmbFilter').change(function(){
+        $('#cmbFilter').select2({
+            // placeholder: '--- Pilih KPU ---',
+            width: '100%'
+        });
+        $('#cmbFilter').change(function() {
             $('#form').submit();
         });
         setInterval(() => {
@@ -237,9 +119,5 @@
             // console.log("refresh 2");
             $("#tablePeserta").load(location.href + " #tablePeserta");
         }, 5000);
-
-
     </script>
 @endpush
-
-

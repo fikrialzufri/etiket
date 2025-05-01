@@ -80,4 +80,11 @@ class PaslonController extends Controller
             )
         );
     }
+
+    public function paslonmonitor()
+    {
+        $paslon = $this->model()->get();
+        $title = 'Paslon Monitor';
+        return view('paslon.monitor', compact('paslon', 'title'));
+    }
 }

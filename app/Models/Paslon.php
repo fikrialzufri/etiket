@@ -47,4 +47,9 @@ class Paslon extends Model
         // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
         return $this->hasMany(Peserta::class);
     }
+
+    function hasEntrance()
+    {
+        return $this->hasMany(Entrance::class);
+    }
 }

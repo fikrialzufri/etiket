@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', BerandaController::class)->name('beranda');
 Route::get('/cetakpeserta/{slug}', [PaslonController::class, 'cetakpeserta'])->name('paslon.cetak');
+// paslon monitor
+Route::get('/paslonmonitor', [PaslonController::class, 'paslonmonitor'])->name('paslon.monitor');
 // Route::get('/pendaftaran', [PesertaController::class, 'pendaftaran'])->name('peserta.pendaftaran');
 Route::post('/simpanpendaftaran', [PesertaController::class, 'simpanpendaftaran'])->name('simpan.pendaftaran');
 
