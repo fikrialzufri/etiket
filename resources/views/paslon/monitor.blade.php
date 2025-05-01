@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     <script src="{{ asset('src/js/vendor/modernizr-2.8.3.min.js') }}"></script>
+    {{-- <script type="application/javascript" src="{{ asset('js/app.js') }}"></script> --}}
+
     <style>
         body,
         html {
@@ -46,30 +48,32 @@
                     <h1 class="text-white text-center">
                         <b> Counter Paslon</b>
                     </h1>
+                    <div id="paslonmonitor">
 
-                    <div class="row">
-                        @foreach ($paslon as $item)
-                            <div class="col-md-4">
-                                <div class="card">
+                        <div class="row" >
+                            @foreach ($paslon as $item)
+                                <div class="col-md-4">
+                                    <div class="card">
 
-                                    <div class="card-body">
-                                        <h5 class="text-center" style="font-size: 40px; font-weight: bold;">
-                                            {{ $item->nama }}</h5>
-                                        {{-- Jumlah Peserta Masuk --}}
-                                        <p class="card-text text-center" style="font-size: 20px; font-weight: bold;">
-                                            Jumlah Peserta Masuk</p>
-                                        <h1 class="text-center" style="font-size: 200px; font-weight: bold;">
-                                            {{ $item->hasEntrance ? $item->hasEntrance->count() : 0 }}
-                                        </h1>
-                                        {{-- Jumlah Peserta Belum Masuk --}}
-                                        <p class="card-text">Jumlah Peserta Belum Masuk:
-                                            {{ $item->hasPeserta ? $item->hasPeserta->count() - ($item->hasEntrance ? $item->hasEntrance->count() : 0) : 0 }}
-                                        </p>
+                                        <div class="card-body">
+                                            <h5 class="text-center" style="font-size: 40px; font-weight: bold;">
+                                                {{ $item->nama }}</h5>
+                                            {{-- Jumlah Peserta Masuk --}}
+                                            <p class="card-text text-center" style="font-size: 20px; font-weight: bold;">
+                                                Jumlah Peserta Masuk</p>
+                                            <h1 class="text-center" style="font-size: 200px; font-weight: bold;">
+                                                {{ $item->hasEntrance ? $item->hasEntrance->count() : 0 }}
+                                            </h1>
+                                            {{-- Jumlah Peserta Belum Masuk --}}
+                                            <p class="card-text">Jumlah Peserta Belum Masuk:
+                                                {{ $item->hasPeserta ? $item->hasPeserta->count() - ($item->hasEntrance ? $item->hasEntrance->count() : 0) : 0 }}
+                                            </p>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
@@ -87,6 +91,13 @@
     <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
+    <script type="text/javascript">
+
+        // set interval
+        setInterval(function() {
+            $('#paslonmonitor').load(location.href + ' #paslonmonitor');
+        }, 1000);
+    </script>
 </body>
 
 </html>

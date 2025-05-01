@@ -83,7 +83,7 @@ class PaslonController extends Controller
 
     public function paslonmonitor()
     {
-        $paslon = $this->model()->get();
+        $paslon = $this->model()->orderBy('kode')->get();
         $title = 'Paslon Monitor';
         return view('paslon.monitor', compact('paslon', 'title'));
     }

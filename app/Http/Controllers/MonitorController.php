@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EventEntrance;
 use App\Models\Entrance;
 use App\Models\Event;
 use App\Models\Peserta;
@@ -104,6 +105,8 @@ class MonitorController extends Controller
         $hadir->paslon_id = $paslon ?? null;
         $hadir->tanggal_masuk = $now;
         $hadir->save();
+
+        event(new EventEntrance($hadir));
 
         $response = [
             'success' => true,
