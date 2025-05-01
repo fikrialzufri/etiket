@@ -206,6 +206,11 @@
         //   "pageLength": 20,
         // });
     </script>
+    <script type="text/javascript">
+        window.print();
+
+    </script>
+
 </body>
 
 </html>
