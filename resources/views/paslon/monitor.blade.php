@@ -96,7 +96,7 @@
         // set interval
         setInterval(function() {
             $('#paslonmonitor').load(location.href + ' #paslonmonitor');
-        }, 1000);
+        }, 2000);
     </script>
 </body>
 
