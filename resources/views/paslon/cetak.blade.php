@@ -9,7 +9,8 @@
     <meta name="keywords" content="Borneo Corner">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" href="{{ asset('favicon.jpg') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('img/favicon.png') }}" />
+
 
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
 
@@ -59,8 +60,8 @@
         }
 
         .col-md-3point5 {
-            width: 6.8cm;
-            height: 6.5cm;
+            width: 5.5cm;
+            height: 5.8cm;
             margin-bottom: 0.5cm;
             page-break-inside: avoid;
         }
@@ -130,41 +131,25 @@
             <page id="contentStriker">
                 @php $counter = 0; @endphp
                 @forelse ($cetak as $item)
-                    @if($counter % 12 == 0 && $counter != 0)
+                    @if($counter % 20 == 0 && $counter != 0)
                         </div>
                         </page>
                         <page class="contentStriker">
                         <div class="row pt-15">
                     @endif
 
-                    @if($counter % 12 == 0)
+                    @if($counter % 24 == 0)
                         <div class="row pt-15">
                     @endif
                         <div class="col-md-3point5 text-center" style="border: 1pt solid; ">
                             <div class="">
                                 <span style="width: 14rem;  font-size: 12pt; ">{{ $item->kode }}</span>
                             </div>
-                            {{-- <div >
 
-                <span style="width: 14rem;  font-size: 14pt;color:#ffff;">
-                   <b>{{ strtoupper($item->nama) }}</b>
-                </span>
 
-            </div>
-            @if ($item->kpu !== $item->bidang)
-
-            <div style="display: flex;justify-content: center; ">
-                <p class="" style="width: 14rem; font-size: 10pt;color:#ffff;">{{ strtoupper($item->kpu) }}</p>
-            </div>
-            @endif --}}
-                            <div style="display: flex;justify-content: center; margin-top:-5px" class="pb-1">
-                                <p class="" style="width: 14rem; font-size: 15pt;">
-                                    {{ strtoupper($item->bidang) }}</p>
-                            </div>
-
-                            <div class="d-inline-flex p-1">
-                                <div width="50%" style="background-color: #ffff; padding:8px; margin-top:-10px;">
-                                    {{ QrCode::size(180)->generate($item->kode) }}<br>
+                            <div class="d-inline-flex">
+                                <div width="50%" style="background-color: #ffff; padding:8px;">
+                                    {{ QrCode::size(170)->generate($item->kode) }}<br>
 
                                 </div>
                             </div>
