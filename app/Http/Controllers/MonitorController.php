@@ -48,7 +48,10 @@ class MonitorController extends Controller
         $hadir = Entrance::where('event_id', $event_id)->where('peserta_id', $peserta->id)->first();
 
         if ($hadir) {
-            return redirect()->route("monitor.show", $dataEvent->id)->with('message', "Peserta Sudah Masuk")->with('Class', 'danger');
+            // check crew
+            if ($peserta->crew == false) {
+                return redirect()->route("monitor.show", $dataEvent->id)->with('message', "Peserta Sudah Masuk")->with('Class', 'danger');
+            }
         }
         $now = Carbon::now();
         $paslon = $peserta->paslon_id;
@@ -91,7 +94,9 @@ class MonitorController extends Controller
         $hadir = Entrance::where('event_id', $event_id)->where('peserta_id', $peserta->id)->first();
 
         if ($hadir) {
-            return $this->sendError("Peserta sudah masuk", "", 404);
+            if ($peserta->crew == false) {
+                return $this->sendError("Peserta sudah masuk", "", 404);
+            }
         }
         $now = Carbon::now();
         $paslon = $peserta->paslon_id;

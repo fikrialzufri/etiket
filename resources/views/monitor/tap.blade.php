@@ -47,8 +47,8 @@
                         <b> Selamat Datang Peserta</b>
                     </h1>
                     <h1 class="text-white text-center">
-
-                        <b> {{$dataEvent->nama}}</b>
+                        {{-- ambil 2 kata dari nama event --}}
+                        <b> {{Str::limit($dataEvent->nama, 20)}}</b>
                     </h1>
 
                     <div class="row">
@@ -254,8 +254,8 @@
             let title = data.code == 200 ? "Absensi Sukses" : "Absensi gagal";
             let type = data.code == 200 ? "success" : "error";
            swal({
-           title: title,
-           text: data.message,
+           title: data.message,
+           text: title,
            type: type,
            timer:3000
        });

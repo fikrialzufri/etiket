@@ -42,5 +42,22 @@ class PesertaSeeder extends Seeder
                 }
             }
         }
+
+        $listCrew = [
+            ['nama' => 'Crew 01'],
+        ];
+
+        foreach ($listCrew as $crew) {
+            // count crew
+            $countCrew = Peserta::where('crew', true)->count();
+            $no = str_pad($countCrew + 1, 4, "0", STR_PAD_LEFT);
+            $kode = "CREW/" . $no;
+            Peserta::updateOrCreate([
+                'kode' => $kode,
+                'nama' => $crew['nama'],
+            ], [
+                'crew' => true,
+            ]);
+        }
     }
 }

@@ -27,6 +27,8 @@ class CreatePesertasTable extends Migration
             $table->string('paslon_id')->nullable()->references('id')->on('paslon');
             $table->string('jabatan_id')->nullable()->references('id')->on('jabatan');
             $table->enum('hadir', ['Hadir', 'Tidak Hadir'])->default('Hadir');
+            // crew
+            $table->boolean('crew')->default(false);
             $table->text('catatan')->nullable();
             $table->softDeletes();
 

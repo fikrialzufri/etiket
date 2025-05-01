@@ -69,7 +69,10 @@
                                                 <i class="far fa-calendar-check text-red f-30"></i>
                                             </div>
                                             <div class="col pl-0">
-                                                <h6 class="mb-5">{{$event->nama}}</h6>
+                                                <h6 class="mb-5">
+                                                    {{-- ambil 2 kata dari nama event --}}
+                                                    {{Str::limit($event->nama, 20)}}
+                                                </h6>
                                             </div>
                                         </div>
                                         <div class="row align-items-center text-center">
