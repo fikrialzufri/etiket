@@ -41,4 +41,10 @@ class Paslon extends Model
         $this->attributes['nama'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    function hasPeserta()
+    {
+        // return $this->hasOne(Jabatan::class, 'id', 'jabatan_id');
+        return $this->hasMany(Peserta::class);
+    }
 }

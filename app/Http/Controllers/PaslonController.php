@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paslon;
+use App\Models\Peserta;
 use App\Traits\CrudTrait;
 
 class PaslonController extends Controller
@@ -17,6 +18,7 @@ class PaslonController extends Controller
         $this->middleware('permission:edit-' . $this->route, ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete-' . $this->route, ['only' => ['delete']]);
         $this->sort = 'nama';
+        $this->index = 'paslon';
     }
 
     public function configHeaders()
@@ -60,5 +62,22 @@ class PaslonController extends Controller
     public function model()
     {
         return new Paslon();
+    }
+    public function cetakpeserta($slug)
+    {
+        $paslon = $this->model()->where('slug', $slug)->first();
+        if (!$paslon) {
+            // 404
+            abort(404);
+        }
+        $cetak = Peserta::where('paslon_id', $paslon->id)->where('hadir', 'Hadir')->orderBy('kode')->get();
+        $title = 'Cetak Peserta - ' . $paslon->nama;
+        return view(
+            'paslon.cetak',
+            compact(
+                "title",
+                "cetak",
+            )
+        );
     }
 }
