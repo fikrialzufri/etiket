@@ -18,10 +18,11 @@ class CreateEntrancesTable extends Migration
             $table->dateTime('tanggal_masuk')->nullable();
             $table->dateTime('tanggal_keluar')->nullable();
             $table->string('peserta_id')->references('id')->on('peserta');
-            $table->string('event_id')->references('id')->on('event');
-            $table->string('kota_id')->references('id')->on('kota');
-             $table->string('bidang_id')->references('id')->on('bidang');
-            $table->string('jabatan_id')->references('id')->on('jabatan');
+            $table->string('event_id')->nullable()->references('id')->on('event');
+            $table->string('kota_id')->nullable()->references('id')->on('kota');
+            $table->string('bidang_id')->nullable()->references('id')->on('bidang');
+            $table->string('jabatan_id')->nullable()->references('id')->on('jabatan');
+            $table->string('paslon_id')->nullable()->references('id')->on('paslon');
 
             $table->softDeletes();
             $table->timestamps();

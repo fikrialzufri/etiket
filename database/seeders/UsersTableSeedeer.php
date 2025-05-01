@@ -39,6 +39,7 @@ class UsersTableSeedeer extends Seeder
 
         $roleSuperadmin = Role::where('slug', 'superadmin')->first();
         $roleAdminn = Role::where('slug', 'admin')->first();
+        $roleoperator = Role::where('slug', 'operator')->first();
 
         // list User
         $listUser = [
@@ -56,6 +57,14 @@ class UsersTableSeedeer extends Seeder
                 'password' => bcrypt('secret'),
                 'role_id' => $roleAdminn->id,
             ],
+            [
+                'name' => 'Operator',
+                'username' => 'operator',
+                'email' => 'operator@mail.com',
+                'password' => bcrypt('operator2025'),
+                'role_id' => $roleoperator->id,
+            ],
+            // operator
         ];
 
         foreach ($listUser as $key => $value) {
