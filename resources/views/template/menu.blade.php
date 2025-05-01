@@ -24,7 +24,7 @@
                         <span>{{ __('Dashboard') }}</span>
                     </a>
                 </div>
-                @canany(['view-provinsi', 'view-kota'])
+                {{-- @canany(['view-provinsi', 'view-kota'])
                     <div class="nav-lavel">{{ __('Lokasi') }} </div>
                     @can('view-provinsi')
                         <div class="nav-item {{ $segment2 == 'provinsi' ? 'active' : '' }}">
@@ -53,7 +53,7 @@
                             <span>{{ __('Entrance') }}</span>
                         </a>
                     </div>
-                @endcan
+                @endcan --}}
                 @can('view-event')
                     <div class="nav-item {{ $segment2 == 'event' ? 'active' : '' }}">
                         <a href="{{ route('event.index') }}">
@@ -62,7 +62,15 @@
                         </a>
                     </div>
                 @endcan
+                @can('view-paslon')
+                    <div class="nav-item {{ $segment2 == 'paslon' ? 'active' : '' }}">
+                        <a href="{{ route('paslon.index') }}">
+                            <i class="ik ik-map"></i>
+                            <span>{{ __('Paslon') }}</span>
+                        </a>
+                    </div>
                 @endcan
+                {{-- @endcan --}}
                 @canany(['view-peserta', 'view-bidang'])
                 <div class="nav-lavel">{{ __('Peserta') }} </div>
                 @can('view-peserta')
@@ -73,7 +81,7 @@
                         </a>
                     </div>
                 @endcan
-                @can('view-bidang')
+                {{-- @can('view-bidang')
                     <div class="nav-item {{ $segment2 == 'bidang' ? 'active' : '' }}">
                         <a href="{{ route('bidang.index') }}">
                             <i class="ik ik-map"></i>
@@ -88,7 +96,7 @@
                             <span>{{ __('Jabatan') }}</span>
                         </a>
                     </div>
-                @endcan
+                @endcan --}}
                 @endcan
                 {{-- if auth --}}
                 @auth

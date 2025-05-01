@@ -39,7 +39,7 @@
         width: 6.8cm;
         height: 6.5cm;
         /* background-image:""; */
-        background: url("{{ asset('img/back-emoney.jpg') }}");
+        /* background: url("{{ asset('img/back-emoney.jpg') }}"); */
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -74,7 +74,7 @@
                     </h3>
                     {{ $data->appends(request()->input())->links() }}
                     <div class="">
-                        @if ($upload == 'true')
+                        {{-- @if ($upload == 'true')
                         @canany(['import-' . str_replace('_', '-', $route)])
                         <a href="{{ route($route . '.upload') }}"
                             class="btn btn-sm btn-warning float-right text-light mr-5">
@@ -94,7 +94,7 @@
                         </span>
                         <a class="btn btn-sm btn-success float-right text-light mr-5" href="{{route('peserta.excellistpeserta')}}">
                             <i class="ik ik-file-text"></i> Export Peserta
-                        </a>
+                        </a> --}}
 
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                                         <td>{{ $item[$header['name']] }}</td>
                                     @endif
                                 @endforeach
-                                <td class="text-center">
+                                {{-- <td class="text-center">
                                     @if ($edit != 'false'|| $hapus != 'false')
                                         @canany(['edit-' . $route, 'delete-' . $route])
                                         @if (isset($button))
@@ -216,7 +216,7 @@
                                         <a href="{{ route('peserta.kirimemail', $item->id) }}" class="btn btn-sm btn-primary text-light" data-toggle="tooltip"
                                             data-placement="top" title="Kirim Email">
                                             <i class="nav-icon fas fa-envelope"></i> Kirim Email</a>
-                                    </td>
+                                    </td> --}}
                             </tr>
                             @empty
                             <tr>
@@ -225,10 +225,10 @@
                             </tr>
                             @endforelse
                         </tbody>
-                        <tfoot>
+                        {{-- <tfoot>
                             <tr>
-                                <td colspan="7" class="text-right">
-                                   <b>Total Peserta Hadir</b>
+                                <td  class="text-right">
+                                   <b>Total Peserta Hadir :</b>
                                 </td>
                                 <td>:</td>
                                 <td>
@@ -236,8 +236,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="7" class="text-right">
-                                  <b>Total Peserta Tidak Hadir</b>
+                                <td  class="text-right">
+                                  <b>Total Peserta </b>
                                 </td>
                                 <td>:</td>
                                 <td>
@@ -245,7 +245,7 @@
 
                                 </td>
                             </tr>
-                        </tfoot>
+                        </tfoot> --}}
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -271,9 +271,9 @@
         @forelse ($cetak as $item)
         <div class="col-md-3point5 text-center" style="border: 1pt solid; ">
              <div class="">
-                <span style="width: 14rem;  font-size: 8pt; color:#ffff;">{{ $item->kode }}</span>
+                <span style="width: 14rem;  font-size: 12pt; ">{{ $item->kode }}</span>
             </div>
-            <div >
+            {{-- <div >
 
                 <span style="width: 14rem;  font-size: 14pt;color:#ffff;">
                    <b>{{ strtoupper($item->nama) }}</b>
@@ -285,14 +285,14 @@
             <div style="display: flex;justify-content: center; ">
                 <p class="" style="width: 14rem; font-size: 10pt;color:#ffff;">{{ strtoupper($item->kpu) }}</p>
             </div>
-            @endif
+            @endif --}}
             <div style="display: flex;justify-content: center; margin-top:-5px" class="pb-1">
-                <p class="" style="width: 14rem; font-size: 10pt;color:#ffff;">{{ strtoupper($item->bidang) }}</p>
+                <p class="" style="width: 14rem; font-size: 15pt;">{{ strtoupper($item->bidang) }}</p>
             </div>
 
             <div  class="d-inline-flex p-1" >
                 <div width="50%" style="background-color: #ffff; padding:8px; margin-top:-10px;">
-                    {{ QrCode::size(50)->generate($item->kode) }}<br>
+                    {{ QrCode::size(180)->generate($item->kode) }}<br>
 
                 </div>
             </div>

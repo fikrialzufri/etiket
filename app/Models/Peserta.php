@@ -78,14 +78,21 @@ class Peserta extends Model
 
         self::creating(function ($model) {
             $countModel = $model->withTrashed()->count();
-            if ($countModel >= 1) {
-                $no = str_pad($countModel + 1, 4, "0", STR_PAD_LEFT);
-                $kode = "PSRT/" . $no . "/" . rand(0, 900);
-            } else {
-                $no = str_pad(1, 4, "0", STR_PAD_LEFT);
-                $kode = "PSRT/" . $no . "/" . rand(0, 900);
-            }
-            $model->kode = $kode;
+            // $paslon = Paslon::find($model->paslon_id);
+
+            // if ($model->kode != null || $model->kode != '') {
+            //     if ($paslon) {
+            //         $kodePaslon = $paslon->kode;
+            //         if ($countModel >= 1) {
+            //             $no = str_pad($countModel + 1, 4, "0", STR_PAD_LEFT);
+            //             $kode = "PSRT/"  . $kodePaslon . "/" . $no . "/" . rand(0, 900);
+            //         } else {
+            //             $no = str_pad(1, 4, "0", STR_PAD_LEFT);
+            //             $kode = "PSRT/" . $kodePaslon . "/"  . $no . "/" . rand(0, 900);
+            //         }
+            //         $model->kode = $kode;
+            //     }
+            // }
         });
     }
 }

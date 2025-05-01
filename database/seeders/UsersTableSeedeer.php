@@ -104,6 +104,10 @@ class UsersTableSeedeer extends Seeder
                 'description' => 'Manajemen Jabatan',
             ],
             [
+                'nama' => 'Paslon',
+                'description' => 'Manajemen Paslon',
+            ],
+            [
                 'nama' => 'Peserta',
                 'description' => 'Manajemen Peserta',
             ],

@@ -23,7 +23,7 @@ class PesertaController extends Controller
     {
         $this->route = 'peserta';
         $this->index = 'peserta';
-        $this->sort = 'nama';
+        $this->sort = 'kode';
         $this->paginate = 15;
         $this->middleware('permission:view-' . $this->route, ['only' => ['index', 'show']]);
         $this->middleware('permission:create-' . $this->route, ['only' => ['create', 'store']]);
@@ -38,38 +38,38 @@ class PesertaController extends Controller
                 'name' => 'kode',
                 'alias' => 'Kode Peserta',
             ],
-            [
-                'name' => 'nama',
-                'alias' => 'Nama Peserta',
-            ],
-            [
-                'name' => 'no_hp',
-                'alias' => 'No HP Peserta',
-            ],
-            [
-                'name' => 'email',
-                'alias' => 'Email Peserta',
-            ],
-            [
-                'name' => 'bidang',
-                'alias' => 'KPU',
-            ],
-            [
-                'name' => 'kpu',
-                'alias' => 'KPU Pusat',
-            ],
-            [
-                'name' => 'jabatan',
-                'alias' => 'Jabatan',
-            ],
-            [
-                'name' => 'hadir',
-                'alias' => 'Kehadiran',
-            ],
-            [
-                'name' => 'catatan',
-                'alias' => 'Catatan Tidak Hadir',
-            ],
+            // [
+            //     'name' => 'nama',
+            //     'alias' => 'Nama Peserta',
+            // ],
+            // [
+            //     'name' => 'no_hp',
+            //     'alias' => 'No HP Peserta',
+            // ],
+            // [
+            //     'name' => 'email',
+            //     'alias' => 'Email Peserta',
+            // ],
+            // [
+            //     'name' => 'bidang',
+            //     'alias' => 'KPU',
+            // ],
+            // [
+            //     'name' => 'kpu',
+            //     'alias' => 'KPU Pusat',
+            // ],
+            // [
+            //     'name' => 'jabatan',
+            //     'alias' => 'Jabatan',
+            // ],
+            // [
+            //     'name' => 'hadir',
+            //     'alias' => 'Kehadiran',
+            // ],
+            // [
+            //     'name' => 'catatan',
+            //     'alias' => 'Catatan Tidak Hadir',
+            // ],
         ];
     }
     public function configSearch()
@@ -81,109 +81,109 @@ class PesertaController extends Controller
                 'alias' => 'Kode Peserta',
                 'value' => null
             ],
-            [
-                'name' => 'nama',
-                'input' => 'text',
-                'alias' => 'Nama Peserta',
-                'value' => null
-            ],
-            [
-                'name' => 'no_hp',
-                'input' => 'text',
-                'alias' => 'No HP Peserta',
-                'value' => null
-            ],
-            [
-                'name' => 'bidang_id',
-                'input' => 'combo',
-                'alias' => 'KPU',
-                'value' => $this->combobox('Bidang', null, null, null, 'nama'),
-                'validasi' => ['required']
-            ],
-            [
-                'name' => 'jabatan_id',
-                'input' => 'combo',
-                'alias' => 'Jabatan',
-                'value' => $this->combobox('Jabatan', null, null, null, 'nama'),
-                'validasi' => ['required']
-            ],
-             [
-                'name' => 'hadir',
-                'input' => 'radio',
-                'alias' => 'Kehadiran',
-                'value' => [ 'Hadir', 'Tidak Hadir'],
-                'default' => null,
-            ],
+            // [
+            //     'name' => 'nama',
+            //     'input' => 'text',
+            //     'alias' => 'Nama Peserta',
+            //     'value' => null
+            // ],
+            // [
+            //     'name' => 'no_hp',
+            //     'input' => 'text',
+            //     'alias' => 'No HP Peserta',
+            //     'value' => null
+            // ],
+            // [
+            //     'name' => 'bidang_id',
+            //     'input' => 'combo',
+            //     'alias' => 'KPU',
+            //     'value' => $this->combobox('Bidang', null, null, null, 'nama'),
+            //     'validasi' => ['required']
+            // ],
+            // [
+            //     'name' => 'jabatan_id',
+            //     'input' => 'combo',
+            //     'alias' => 'Jabatan',
+            //     'value' => $this->combobox('Jabatan', null, null, null, 'nama'),
+            //     'validasi' => ['required']
+            // ],
+            // [
+            //     'name' => 'hadir',
+            //     'input' => 'radio',
+            //     'alias' => 'Kehadiran',
+            //     'value' => ['Hadir', 'Tidak Hadir'],
+            //     'default' => null,
+            // ],
         ];
     }
     public function configForm()
     {
 
         return [
-             [
+            [
                 'name' => 'kode',
                 'input' => 'text',
                 'alias' => 'Kode Peserta',
             ],
-            [
-                'name' => 'nama',
-                'input' => 'text',
-                'alias' => 'Nama Peserta',
-                'validasi' => ['required', 'unique', 'min:1'],
-            ],
-            [
-                'name' => 'no_hp',
-                'input' => 'text',
-                'alias' => 'Nomor HP Peserta',
-                'validasi' => ['required', 'unique', 'min:1'],
-            ],
-            [
-                'name' => 'email',
-                'input' => 'email',
-                'alias' => 'Email Peserta',
-                'validasi' => ['required', 'unique', 'min:1'],
-            ],
             // [
-            //     'name' => 'tanggal_lahir',
-            //     'input' => 'date',
-            //     'alias' => 'Tanggal Lahir Peserta',
+            //     'name' => 'nama',
+            //     'input' => 'text',
+            //     'alias' => 'Nama Peserta',
+            //     'validasi' => ['required', 'unique', 'min:1'],
+            // ],
+            // [
+            //     'name' => 'no_hp',
+            //     'input' => 'text',
+            //     'alias' => 'Nomor HP Peserta',
+            //     'validasi' => ['required', 'unique', 'min:1'],
+            // ],
+            // [
+            //     'name' => 'email',
+            //     'input' => 'email',
+            //     'alias' => 'Email Peserta',
+            //     'validasi' => ['required', 'unique', 'min:1'],
+            // ],
+            // // [
+            // //     'name' => 'tanggal_lahir',
+            // //     'input' => 'date',
+            // //     'alias' => 'Tanggal Lahir Peserta',
+            // //     'validasi' => null,
+            // // ],
+            // [
+            //     'name' => 'bidang_id',
+            //     'input' => 'combo',
+            //     'alias' => 'KPU',
+            //     'value' => $this->combobox('Bidang', null, null, null, 'nama'),
+            //     'validasi' => ['required']
+            // ],
+            // [
+            //     'name' => 'jabatan_id',
+            //     'input' => 'combo',
+            //     'alias' => 'Jabatan',
+            //     'value' => $this->combobox('Jabatan', null, null, null, 'nama'),
+            //     'validasi' => ['required']
+            // ],
+            // [
+            //     'name' => 'alamat',
+            //     'input' => 'textarea',
+            //     'alias' => 'Alamat Peserta',
             //     'validasi' => null,
             // ],
-            [
-                'name' => 'bidang_id',
-                'input' => 'combo',
-                'alias' => 'KPU',
-                'value' => $this->combobox('Bidang', null, null, null, 'nama'),
-                'validasi' => ['required']
-            ],
-            [
-                'name' => 'jabatan_id',
-                'input' => 'combo',
-                'alias' => 'Jabatan',
-                'value' => $this->combobox('Jabatan', null, null, null, 'nama'),
-                'validasi' => ['required']
-            ],
-            [
-                'name' => 'alamat',
-                'input' => 'textarea',
-                'alias' => 'Alamat Peserta',
-                'validasi' => null,
-            ],
-            [
-                'name' => 'status',
-                'input' => 'radio',
-                'alias' => 'Status',
-                'value' => ['0', '1'],
-                'default' => '1',
-                'multiple' => true,
-            ],
-             [
-                'name' => 'hadir',
-                'input' => 'radio',
-                'alias' => 'Kehadiran',
-                'value' => ['Tidak Hadir ', 'Hadir'],
-                'default' => 'Hadir',
-            ],
+            // [
+            //     'name' => 'status',
+            //     'input' => 'radio',
+            //     'alias' => 'Status',
+            //     'value' => ['0', '1'],
+            //     'default' => '1',
+            //     'multiple' => true,
+            // ],
+            // [
+            //     'name' => 'hadir',
+            //     'input' => 'radio',
+            //     'alias' => 'Kehadiran',
+            //     'value' => ['Tidak Hadir ', 'Hadir'],
+            //     'default' => 'Hadir',
+            // ],
         ];
     }
 
@@ -219,8 +219,8 @@ class PesertaController extends Controller
 
         //tambah data
         $tambah = $this->tambah;
-        $edit = $this->edit;
-        $hapus = $this->hapus;
+        $edit = "false";
+        $hapus = "false";
 
         //tambah data
         $upload = $this->upload;
@@ -341,43 +341,42 @@ class PesertaController extends Controller
         // $bidang_id = request()->bidang_id;
         $cetak = $this->model()::query();
         if ($nama) {
-            $query->where('nama', "like",'%'.$nama.'%');
-            $cetak->where('nama', "like",'%'.$nama.'%');
+            $query->where('nama', "like", '%' . $nama . '%');
+            $cetak->where('nama', "like", '%' . $nama . '%');
         }
         if ($kode) {
-            $query->where('kode', "like",'%'.$kode.'%');
-            $cetak->where('kode', "like",'%'.$kode.'%');
+            $query->where('kode', "like", '%' . $kode . '%');
+            $cetak->where('kode', "like", '%' . $kode . '%');
         }
         if ($no_hp) {
-            $query->where('no_hp', "like",'%'.$no_hp.'%');
-            $cetak->where('no_hp', "like",'%'.$no_hp.'%');
+            $query->where('no_hp', "like", '%' . $no_hp . '%');
+            $cetak->where('no_hp', "like", '%' . $no_hp . '%');
         }
         if ($jabatan_id) {
-            $query->where('jabatan_id',$jabatan_id);
-            $cetak->where('jabatan_id',$jabatan_id);
+            $query->where('jabatan_id', $jabatan_id);
+            $cetak->where('jabatan_id', $jabatan_id);
         }
         if ($bidang_id) {
 
             $query->where('bidang_id', $bidang_id);
             $cetak->where('bidang_id', $bidang_id);
-            $DaTabidangId = Bidang::where('parent_id',$bidang_id)->get();
+            $DaTabidangId = Bidang::where('parent_id', $bidang_id)->get();
             $bidang_id = $DaTabidangId->pluck('id');
-            $query->orWhere(function($subquery)  use ($bidang_id){
+            $query->orWhere(function ($subquery)  use ($bidang_id) {
 
-                    $subquery->whereIn('bidang_id',$bidang_id);
+                $subquery->whereIn('bidang_id', $bidang_id);
             });
-            $cetak->orWhere(function($subquery)  use ($bidang_id){
+            $cetak->orWhere(function ($subquery)  use ($bidang_id) {
 
-                    $subquery->whereIn('bidang_id',$bidang_id);
+                $subquery->whereIn('bidang_id', $bidang_id);
             });
-
         }
 
 
         if ($hadir) {
-            $query->where('hadir',$hadir);
+            $query->where('hadir', $hadir);
         }
-        $cetak = $cetak->where('hadir','Hadir')->orderBy('nama')->paginate(15);
+        $cetak = $cetak->where('hadir', 'Hadir')->orderBy('kode')->paginate(15);
 
         if ($this->sort) {
             if ($this->desc) {
@@ -386,9 +385,10 @@ class PesertaController extends Controller
                 $data = $query->orderBy($this->sort);
             }
         }
-        $pesertaHadir = $this->model()::where('hadir','Hadir')->count();
-        $pesertaTidakHadir = $this->model()::where('hadir','Tidak Hadir')->count();
+        $pesertaHadir = $this->model()::where('hadir', 'Hadir')->count();
+        $pesertaTidakHadir = $this->model()::where('hadir', 'Tidak Hadir')->count();
         //mendapilkan data model setelah query pencarian
+
         if ($paginate) {
             $data = $query->paginate($paginate);
         } else {
@@ -432,12 +432,12 @@ class PesertaController extends Controller
         $dataJabatanOld = [];
         $bidang_id =  old('bidang_id');
         if (old('bidang_id')) {
-             $bidang = Bidang::find($bidang_id);
+            $bidang = Bidang::find($bidang_id);
 
             $dataJabatanOld = Jabatan::where('jumlah_min', '>=', $bidang->jumlah_min)->orderBy('no_urut')->get();
         }
 
-        return view('peserta.pendafataran', compact('dataBidang', 'dataJabatan', 'dataJabatanOld','bidang_id'));
+        return view('peserta.pendafataran', compact('dataBidang', 'dataJabatan', 'dataJabatanOld', 'bidang_id'));
     }
     function simpanpendaftaran(Request $request)
     {
@@ -469,7 +469,7 @@ class PesertaController extends Controller
             return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' sudah melebihi limit')->with('Class', 'danger');
         }
         if ($countBidangJabatanPeserta > 1) {
-            return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' Jabatan '.$dataJabatan->nama.' sudah di isi')->with('Class', 'danger');
+            return redirect()->route("peserta.pendaftaran")->with('message', ucwords(str_replace(str_split('\\/:*?"<>|_-'), ' ', $this->route)) . ' Bidang ' . $checkBidang->nama . ' Jabatan ' . $dataJabatan->nama . ' sudah di isi')->with('Class', 'danger');
         }
         DB::beginTransaction();
         try {
@@ -522,12 +522,12 @@ class PesertaController extends Controller
         $now = Carbon::now();
         $id = request()->get('bidang_id') ?: "";
 
-        $title = 'Export Kehadiran Peserta '.$now.'.xlsx';
+        $title = 'Export Kehadiran Peserta ' . $now . '.xlsx';
 
         if ($id) {
             $bidang = Bidang::find($id);
             if ($bidang) {
-               $title = 'Export Kehadiran Peserta '. $bidang->nama. " "  .$now.'.xlsx';
+                $title = 'Export Kehadiran Peserta ' . $bidang->nama . " "  . $now . '.xlsx';
             }
         }
 
@@ -537,6 +537,6 @@ class PesertaController extends Controller
     public function excellistpeserta()
     {
         $now = Carbon::now();
-        return Excel::download(new ExportListPeserta(), 'Export Daftar Peserta '.$now.'.xlsx');
+        return Excel::download(new ExportListPeserta(), 'Export Daftar Peserta ' . $now . '.xlsx');
     }
 }

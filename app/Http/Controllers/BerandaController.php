@@ -11,6 +11,6 @@ class BerandaController extends Controller
      */
     public function __invoke()
     {
-        return redirect()->route('peserta.pendaftaran');
+        return redirect()->route('monitor.index');
     }
 }

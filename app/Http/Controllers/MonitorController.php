@@ -95,7 +95,7 @@ class MonitorController extends Controller
             $hadir->save();
 
             $response = [
-                'success' => false,
+                'success' => true,
                 'message' => "Peserta dipersilahkan masuk",
                 'code' => '200'
             ];

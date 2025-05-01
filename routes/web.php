@@ -14,6 +14,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MonitorController;
+use App\Http\Controllers\PaslonController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,14 +30,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', BerandaController::class)->name('beranda');
 
-Route::get('/pendaftaran', [PesertaController::class, 'pendaftaran'])->name('peserta.pendaftaran');
+// Route::get('/pendaftaran', [PesertaController::class, 'pendaftaran'])->name('peserta.pendaftaran');
 Route::post('/simpanpendaftaran', [PesertaController::class, 'simpanpendaftaran'])->name('simpan.pendaftaran');
 
 Route::get('/reload-captcha', [RegisterController::class, 'reloadCaptcha']);
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('monitor',MonitorController::class);
+    Route::resource('monitor', MonitorController::class);
 
     Route::prefix('admin')->group(function () {
 
@@ -55,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Event
         Route::resource('event', EventController::class);
         Route::resource('entrance', EntranceController::class);
+        Route::resource('paslon', PaslonController::class);
 
         // Peserta
         Route::resource('peserta', PesertaController::class);
