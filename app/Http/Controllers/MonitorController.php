@@ -51,6 +51,10 @@ class MonitorController extends Controller
         }
         $now = Carbon::now();
         $paslon = $peserta->paslon_id;
+        // jika peserta sudah masuk maka tidak boleh masuk lagi
+        if ($hadir) {
+            return redirect()->route("monitor.show", $dataEvent->id)->with('message', "Peserta Sudah Masuk")->with('Class', 'danger');
+        }
         $hadir = new Entrance();
         $hadir->peserta_id = $peserta->id;
         $hadir->bidang_id = $peserta->bidang_id ?? null;
@@ -85,10 +89,9 @@ class MonitorController extends Controller
 
         $hadir = Entrance::where('event_id', $event_id)->where('peserta_id', $peserta->id)->first();
 
-        // if ($hadir) {
-        //       return $this->sendError("Peserta sudah masuk", "", 404);
-
-        // }
+        if ($hadir) {
+            return $this->sendError("Peserta sudah masuk", "", 404);
+        }
         $now = Carbon::now();
         $paslon = $peserta->paslon_id;
 
