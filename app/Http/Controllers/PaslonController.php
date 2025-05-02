@@ -69,10 +69,19 @@ class PaslonController extends Controller
         $paslon = $this->model()->where('slug', $slug)->first();
         if (!$paslon) {
             // 404
-            abort(404);
+            // cetak crew
+            $cetak = Peserta::where('crew', true)->orderBy('kode')->get();
+            $title = 'Cetak Crew';
+            return view(
+                'paslon.cetak',
+                compact(
+                    "title",
+                    "cetak",
+                )
+            );
         }
-        $cetak = Peserta::where('paslon_id', $paslon->id)->where('hadir', 'Hadir')->orderBy('kode')->get();
         $title = 'Cetak Peserta - ' . $paslon->nama;
+        $cetak = Peserta::where('paslon_id', $paslon->id)->where('hadir', 'Hadir')->orderBy('kode')->get();
         return view(
             'paslon.cetak',
             compact(
