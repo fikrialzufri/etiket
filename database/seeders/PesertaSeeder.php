@@ -44,20 +44,57 @@ class PesertaSeeder extends Seeder
         }
 
         $listCrew = [
-            ['nama' => 'Crew 01'],
+            ['nama' => 'Crew 01', 'kode' => 'CREW/0001'],
         ];
 
         foreach ($listCrew as $crew) {
             // count crew
-            $countCrew = Peserta::where('crew', true)->count();
+            $countCrew = Peserta::where('kode', 'like', 'CREW/%')->count();
             $no = str_pad($countCrew + 1, 4, "0", STR_PAD_LEFT);
             $kode = "CREW/" . $no;
-            Peserta::updateOrCreate([
+
+            // if peserta sudah ada, maka skip
+            if (Peserta::where('kode', $crew['kode'])->exists()) {
+                $this->command->info($crew['nama'] . " - " . $crew['kode'] . " sudah ada");
+                continue;
+            }
+
+            $peserta = Peserta::updateOrCreate([
                 'kode' => $kode,
                 'nama' => $crew['nama'],
             ], [
                 'crew' => true,
             ]);
+
+            // info peserta
+            $this->command->info($peserta->nama . " - " . $peserta->kode);
+        }
+
+        $listVip = [
+            ['nama' => 'VVIP', 'kode' => 'VVIP'],
+            ['nama' => 'KPU', 'kode' => 'KPU'],
+        ];
+
+        foreach ($listVip as $vip) {
+            $countVip = Peserta::where('kode', 'like', $vip['kode'] . '/%')->count();
+            $no = str_pad($countVip + 1, 4, "0", STR_PAD_LEFT);
+            $kode = 'PSRT/' . $vip['kode'] . "/" . $no;
+
+            // if peserta sudah ada, maka skip
+            if (Peserta::where('kode', $kode)->exists()) {
+                $this->command->info($vip['nama'] . " - " . $kode . " sudah ada");
+                continue;
+            }
+
+            $peserta = Peserta::updateOrCreate([
+                'kode' => $kode,
+                'nama' => $vip['nama'],
+            ], [
+                'crew' => true,
+            ]);
+
+            // info peserta
+            $this->command->info($peserta->nama . " - " . $peserta->kode);
         }
     }
 }
