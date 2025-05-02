@@ -52,4 +52,10 @@ class Paslon extends Model
     {
         return $this->hasMany(Entrance::class);
     }
+
+    // hasEntrance by id
+    function hasEntranceById($id)
+    {
+        return $this->hasEntrance()->where('event_id', $id);
+    }
 }

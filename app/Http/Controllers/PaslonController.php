@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Paslon;
 use App\Models\Peserta;
 use App\Traits\CrudTrait;
@@ -83,8 +84,14 @@ class PaslonController extends Controller
 
     public function paslonmonitor()
     {
+        $event_id = request()->event_id;
+        $listEvent = Event::all();
+        $dataEvent = null;
         $paslon = $this->model()->orderBy('kode')->get();
+        if ($event_id) {
+            $dataEvent = Event::find($event_id);
+        }
         $title = 'Paslon Monitor';
-        return view('paslon.monitor', compact('paslon', 'title'));
+        return view('paslon.monitor', compact('paslon', 'title', 'listEvent', 'event_id', 'dataEvent'));
     }
 }

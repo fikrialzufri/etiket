@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
         $title =  "Dashboard";
 
-        $paslon = Paslon::all();
+        $paslon = Paslon::orderBy('kode')->get();
 
         $entrance = Entrance::all();
 

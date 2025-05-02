@@ -45,36 +45,75 @@
                         <a href="#"><img width="7%" src="{{ asset('KPU_Logo.png') }}"
                                 alt="Borneo Corner"></a>
                     </div>
-                    <h1 class="text-white text-center">
-                        <b> Counter Paslon</b>
-                    </h1>
-                    <div id="paslonmonitor">
-
-                        <div class="row" >
-                            @foreach ($paslon as $item)
-                                <div class="col-md-4">
-                                    <div class="card">
-
-                                        <div class="card-body">
-                                            <h5 class="text-center" style="font-size: 40px; font-weight: bold;">
-                                                {{ $item->nama }}</h5>
-                                            {{-- Jumlah Peserta Masuk --}}
-                                            <p class="card-text text-center" style="font-size: 20px; font-weight: bold;">
-                                                Jumlah Peserta Masuk</p>
-                                            <h1 class="text-center" style="font-size: 200px; font-weight: bold;">
-                                                {{ $item->hasEntrance ? $item->hasEntrance->count() : 0 }}
-                                            </h1>
-                                            {{-- Jumlah Peserta Belum Masuk --}}
-                                            <p class="card-text">Jumlah Peserta Belum Masuk:
-                                                {{ $item->hasPeserta ? $item->hasPeserta->count() - ($item->hasEntrance ? $item->hasEntrance->count() : 0) : 0 }}
-                                            </p>
-
+                    @if ($dataEvent)
+                        <h1 class="text-white text-center">
+                            <b> {{ $dataEvent->nama }}</b>
+                        </h1>
+                        <div id="paslonmonitor">
+    
+                            <div class="row" >
+                                @foreach ($paslon as $item)
+                                    <div class="col-md-4">
+                                        <div class="card">
+    
+                                            <div class="card-body">
+                                                <h5 class="text-center" style="font-size: 40px; font-weight: bold;">
+                                                    {{ $item->nama }}</h5>
+                                                {{-- Jumlah Peserta Masuk --}}
+                                                <p class="card-text text-center" style="font-size: 20px; font-weight: bold;">
+                                                    Jumlah Peserta Masuk</p>
+                                                <h1 class="text-center" style="font-size: 200px; font-weight: bold;">
+                                                    {{ $item->hasEntranceById($dataEvent->id) ? $item->hasEntranceById($dataEvent->id)->count() : 0 }}
+                                                </h1>
+                                                {{-- Jumlah Peserta Belum Masuk --}}
+                                                <p class="card-text text-center" style="font-size: 20px; font-weight: bold;">Jumlah Peserta Belum Masuk:
+                                                </p>
+                                                <h1 class="text-center" style="font-size: 20px; font-weight: bold;">
+                                                    {{ $item->hasPeserta ? $item->hasPeserta->count() - ($item->hasEntranceById($dataEvent->id) ? $item->hasEntranceById($dataEvent->id)->count() : 0) : 0 }}
+                                                </h1>
+    
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @else
+                    @foreach ($listEvent as $event)
+                    <a href="{{route('paslon.monitor', ['event_id' => $event->id])}}" >
+                        <div class="row">
+                            <div class="col-5 m-auto">
+                                <div class="card proj-t-card">
+                                    <div class="card-body">
+                                        <div class="row align-items-center mb-30">
+                                            <div class="col-auto">
+                                                <i class="far fa-calendar-check text-red f-30"></i>
+                                            </div>
+                                            <div class="col pl-0">
+                                                <h6 class="mb-5">
+                                                    {{-- ambil 2 kata dari nama event --}}
+                                                    {{Str::limit($event->nama, 20)}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center text-center">
+                                            <div class="col">
+                                                <h6 class="mb-0">Tanggal Mulai : <br>{{$event->start}}</h6>
+                                            </div>
+                                            <div class="col"><i class="ik ik-arrow-right text-red f-18"></i></div>
+                                            <div class="col">
+                                                <h6 class="mb-0">Tanggal Selesai : <br>{{$event->end}}</h6>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </a>
+                    @endforeach
+                    @endif
                 </div>
 
 
