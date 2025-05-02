@@ -66,7 +66,7 @@
                                                     {{ $item->hasEntranceById($dataEvent->id) ? $item->hasEntranceById($dataEvent->id)->count() : 0 }}
                                                 </h1>
                                                 {{-- Jumlah Peserta Belum Masuk --}}
-                                                <p class="card-text text-center" style="font-size: 20px; font-weight: bold;">Jumlah Peserta Belum Masuk:
+                                                <p class="card-text text-center" style="font-size: 15px; font-weight: bold;">Jumlah Peserta Belum Masuk:
                                                 </p>
                                                 <h1 class="text-center" style="font-size: 20px; font-weight: bold;">
                                                     {{ $item->hasPeserta ? $item->hasPeserta->count() - ($item->hasEntranceById($dataEvent->id) ? $item->hasEntranceById($dataEvent->id)->count() : 0) : 0 }}
