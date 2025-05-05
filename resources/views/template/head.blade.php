@@ -4,7 +4,7 @@
 <meta name="keywords" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<link rel="icon" href="{{ asset('img/favicon.png') }}" />
+<link rel="icon" href="{{ asset('img/logo.png') }}" />
 
 <!-- font awesome library -->
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
@@ -25,18 +25,8 @@
 <link rel="stylesheet" href="{{ asset('plugins/owl.carousel/dist/assets/owl.theme.default.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/chartist/dist/chartist.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/jquery-toast-plugin/dist/jquery.toast.min.css') }}">
-{{-- <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}"> --}}
-
 
 <!-- Stack array for including inline css or head elements -->
 @stack('head')
 <script src="{{ asset('js/swall.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<style>
-    @media (min-width: 768px) {
-    .modal-xl {
-    width: 90%;
-    max-width:1400px;
-    }
-    }
-</style>

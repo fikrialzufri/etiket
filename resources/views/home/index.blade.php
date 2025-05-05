@@ -105,6 +105,7 @@
     </style>
 @endpush
 @push('script')
+
     <script script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
         $('#cmbFilter').select2({
